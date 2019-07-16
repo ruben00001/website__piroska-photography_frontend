@@ -1,0 +1,103 @@
+.home-container {
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.home-banner {
+  width: 100%;
+  height: 100vh;
+
+  &_image {
+    position: relative;
+    width: 60vw;
+    height: 60vh;
+    max-width: 1200px;
+    margin-top: 20vh;
+    margin-left: 25%;
+    // border: 1px solid black;
+
+    @media ( max-width: 500px ) {
+      width: 100vw;
+      height: 100vh;
+      margin-top: 0;
+      margin-left: 0;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &_title {
+    position: absolute;
+    top: -68px;
+    left: -167px;
+    font-size: 100px;
+    font-weight: 400;
+    color: transparent;
+    background-image: url('./img/Theatre\ against\ dictatorship\ background.jpg');
+    background-size: 800px 300px;
+    background-clip: text;
+    -webkit-background-clip: text;
+    font-family: 'Cormorant', serif;
+    // border: 1px solid black;
+
+    @media ( max-width:  1024px ) {
+      top: -44px;
+      left: -116px;
+      font-size: 70px;
+      background-size: 60vw 100px;
+    }
+
+    @media ( max-width:  500px ) {
+      top: 110px;
+      left: 20px;
+      font-size: 50px;
+      color: white;
+    }
+
+    @media ( max-width:  359px ) {
+      font-size: 40px;
+      top: 100px;
+    }
+
+    &--2 {
+      background-image: linear-gradient(to bottom, transparent 22.5%, white 22.5%, white 100%);
+
+      @media ( max-width:  1024px ) {
+        background-image: linear-gradient(to bottom, transparent 44%, white 44%, white 100%);
+      }
+    }
+
+    &--photo {
+      top: 8%;
+
+      @media ( max-width:  500px ) {
+        top: 170px;
+      } 
+      
+      @media ( max-width:  359px ) {
+        top: 150px;
+      }
+
+      &--2 {
+        background-image: linear-gradient(to right, transparent 20.8%, white 20.8%, white 100%);
+
+        @media ( max-width:  1024px ) {
+          background-image: linear-gradient(to right, transparent 18.9%, white 18.9%, white 100%);
+        }
+
+        @media ( max-width:  960px ) {
+          background-image: linear-gradient(to right, transparent 20.1%, white 20.1%, white 100%);
+        }
+
+        @media ( max-width:  800px ) {
+          background-image: linear-gradient(to right, transparent 24.1%, white 24.1%, white 100%);
+        }
+      }
+    }
+  }
+}

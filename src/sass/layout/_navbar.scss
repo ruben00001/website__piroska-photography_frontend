@@ -1,0 +1,144 @@
+.navbar {
+  z-index: 100;
+  position: fixed;
+  top: 25px;
+  right: 40px;
+
+  &--home {
+    background: white;
+    padding: 10px;
+
+    @media ( max-width:  500px ) {
+      background: none;
+      color: white;
+      top: 0;
+      right: 0;
+      padding: 0;
+    }
+  }
+
+  &--stories {
+    background: white;
+    padding: 5px;
+
+    @media ( max-width: 500px ) {
+      top: 0;
+      right: 0;
+      background: white;
+      width: 100vw;
+      padding-bottom: 5px;
+    }
+  }
+
+  &--gallery {
+    background: white;
+    padding: 5px;
+
+    @media ( max-width: 500px ) {
+      top: 0;
+      right: 0;
+      background: white;
+      width: 100vw;
+      padding-bottom: 5px;
+    }
+  }
+
+  &_index-button {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    // border: 1px solid black;
+
+    &_text {
+      color: transparent;
+      background-image: url('./img/Theatre\ against\ dictatorship\ background.jpg');
+      background-size: cover;
+      background-clip: text;
+      -webkit-background-clip: text;
+      font-weight: bold;
+      font-size: 30px;
+      font-family: 'Lato', sans-serif;
+
+      @media ( max-width:  1900px ) {
+        margin-right: 0;
+      }
+
+      @media ( max-width:  1700px ) {
+        font-size: 20px;
+      }
+
+      @media ( max-width:  1024px ) {
+        font-size: 18px;
+      }
+
+      @media ( max-width:  500px ) {
+        color: white;
+        padding-top: 15px;
+        padding-right: 15px;
+        padding-left: 15px;
+      }
+
+      &--stories {
+        color: black;
+
+        @media ( max-width:  500px ) {
+          margin-left: 30px;
+        }
+      }
+    }
+
+    &_icon {
+      color: #7D7D7D;
+
+      @media ( max-width:  500px ) {
+        color: white;
+        font-size: 20px;
+        margin-top: 15px;
+        margin-right: 20px;
+      }
+
+      &--stories {
+        color: black;
+      }
+    }
+  }
+
+
+  ul {
+    margin-top: 30px;
+    list-style: none;
+    font-size: 30px;
+    color: black;
+    background: white;
+
+    @media ( max-width:  1024px ) {
+      font-size: 18px;
+    }
+
+    @media ( max-width:  500px ) {
+      width: 100vw; /* a bug leads to 100vw being too big */
+      height: 50vh;
+      font-size: 30px;
+      text-align: center
+    }
+
+    @media ( max-width:  359px ) {
+      height: 60vh;
+      font-size: 24px;
+    }
+
+    li {
+      font-family: 'Lato', sans-serif;
+      padding-top: 30px;
+      padding-bottom: 10px;
+
+      @media ( max-width:  500px ) {
+        color: transparent;
+        background-image: url('./img/Theatre\ against\ dictatorship\ background.jpg');
+        background-size: cover;
+        background-clip: text;
+        -webkit-background-clip: text;
+      }
+    }
+  }
+}
