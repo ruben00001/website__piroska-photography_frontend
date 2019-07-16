@@ -13,6 +13,7 @@ class About extends Component {
     }
   }
 
+  homeURL = strapiAPI;
 
   componentDidMount() {
     axios.get(`${this.homeURL}/abouts`)
@@ -23,8 +24,6 @@ class About extends Component {
       });
     });
   }
-
-  homeURL = strapiAPI;
 
   render() {
     return ( 

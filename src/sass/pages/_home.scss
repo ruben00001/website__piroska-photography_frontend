@@ -38,12 +38,11 @@
     font-size: 100px;
     font-weight: 400;
     color: transparent;
-    background-image: url('./img/Theatre\ against\ dictatorship\ background.jpg');
+    background-image: linear-gradient(to right, rgb(66, 65, 65) 21%, white 21%, white 100%);
     background-size: 800px 300px;
     background-clip: text;
     -webkit-background-clip: text;
     font-family: 'Cormorant', serif;
-    // border: 1px solid black;
 
     @media ( max-width:  1024px ) {
       top: -44px;
@@ -65,10 +64,11 @@
     }
 
     &--2 {
-      background-image: linear-gradient(to bottom, transparent 22.5%, white 22.5%, white 100%);
+      background-image: linear-gradient(to bottom, rgb(66, 65, 65) 22.5%, transparent 22.5%, transparent 100%);
+      background-color: rgb(66, 65, 65);
 
       @media ( max-width:  1024px ) {
-        background-image: linear-gradient(to bottom, transparent 44%, white 44%, white 100%);
+        background-image: linear-gradient(to bottom, rgb(66, 65, 65) 22.5%, transparent 22.5%, transparent 100%);
       }
     }
 
