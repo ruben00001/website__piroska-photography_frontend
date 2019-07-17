@@ -24,34 +24,34 @@ class Gallery extends Component {
     
     componentDidMount() {
         axios.get(`${this.homeURL}/images`)
-        .then(response => {
-          this.setState({
-            images: response.data.map( image => {
-              return (
-                { url: image.image.url,
-                  tags: image.tags.map(tag => tag.title),
-                  key: image.id
-                }
-              )
-            }),
+          .then(response => {
+            this.setState({
+              images: response.data.map( image => {
+                return (
+                  { url: image.image.url,
+                    tags: image.tags.map(tag => tag.title),
+                    key: image.id
+                  }
+                )
+              }),
+            });
+          })
+          .then( _ => {
+            this.setState({
+              filteredImages: this.state.images,
+              numberImages: this.state.images.length
+            });
           });
-        })
-        .then( _ => {
-          this.setState({
-            filteredImages: this.state.images,
-            numberImages: this.state.images.length
-          });
-        });
         axios.get(`${this.homeURL}/tags`)
-        .then(response => {
-          this.setState({
-            tags: response.data.map(tag => {
-              return (
-                <p onClick={this.filterImages} className='gallery-page_tag' key={tag.id} value={tag.name}>{tag.name}</p>
-              )
-            })
+          .then(response => {
+            this.setState({
+              tags: response.data.map(tag => {
+                return (
+                  <p onClick={this.filterImages} className='gallery-page_tag' key={tag.id} value={tag.name}>{tag.name}</p>
+                )
+              })
+            });
           });
-        });
     }
 
     filterImages = (e) => { 
