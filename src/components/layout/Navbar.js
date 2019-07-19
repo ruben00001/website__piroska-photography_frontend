@@ -3,8 +3,10 @@ import {NavLink} from 'react-router-dom';
 import onClickOutside from "react-onclickoutside";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 
-class Navbar extends Component {
+class Navigation extends Component {
   constructor(props) {
     super(props)
 
@@ -32,25 +34,20 @@ class Navbar extends Component {
 
   render() {
     return (
-      <div className={this.props.navClass}>
-        <div onClick={this.changeMenu} className='navbar_index-button'>
-          <p className={this.props.navTextClass}>Index</p>
-          { this.state.menu && 
-            <FontAwesomeIcon className={this.props.iconClass} icon={faTimesCircle}></FontAwesomeIcon>
-          }
-        </div>
-        { this.state.menu && 
-          <ul >
-            <li className='navbar_index-link' onClick={this.changeMenu}><NavLink to='/'>Homepage</NavLink></li>
-            <li className='navbar_index-link' onClick={this.changeMenu}><NavLink to='/stories'>Stories</NavLink></li>
-            <li className='navbar_index-link' onClick={this.changeMenu}><NavLink to='/gallery'>Gallery</NavLink></li>
-            <li className='navbar_index-link' onClick={this.changeMenu}><NavLink to='/about'>About</NavLink></li>
-          </ul>
-        }
-      </div>
+      <Navbar class='navbar' bg="none" expand="sm">
+        <Navbar.Toggle className='ml-auto' class='navbar__control' aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ml-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href='/stories'>Stories</Nav.Link>
+            <Nav.Link href="/gallery">Gallery</Nav.Link>
+            <Nav.Link href="/about">About</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     );
   }
 }
 
-export default onClickOutside(Navbar);
+export default onClickOutside(Navigation);
 // export default Navbar

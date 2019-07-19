@@ -13,7 +13,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className='root-container'>
-        <Route exact path="/" render={() => <Home />  } />
+        <Route exact path="/" render={() => <Home />} />
         <Route path="/stories" render={() => <Stories />} />
         <Route path="/gallery" render={() => <Gallery />} />
         <Route path="/about" render={() => <About />} />

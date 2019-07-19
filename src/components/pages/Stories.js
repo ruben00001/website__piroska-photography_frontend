@@ -3,7 +3,7 @@ import { Route, NavLink } from 'react-router-dom';
 import { withRouter } from "react-router";
 import { animateScroll as scroller } from 'react-scroll'
 import Axios from 'axios';
-import Navbar from '../layout/Navbar'
+import Navigation from '../layout/Navbar'
 import Story from './Story';
 import { strapiAPI } from '../../enviroment/strapi-api';
 
@@ -29,32 +29,37 @@ class StoriesX extends Component {
             .then(response => {
                 this.setState({
                     stories: response.data.map( story => {
-                    return (
-                        { 
-                            title: story.title,
-                            mainImageURL: story.mainimage.url,  
-                            imageURLs: story.images.map(image => image.url),
-                            key: story.id
-                        }
-                    )
-                }),
-            });
-        })
+                        return (
+                            { 
+                                title: story.title,
+                                mainImageURL: story.mainimage.url,  
+                                imageURLs: story.images.map(image => image.url),
+                                key: story.id
+                            }
+                        )
+                    }),
+                });
+            })
+            .then(_ => {
+                console.log('====================================');
+                console.log(this.state.stories);
+                console.log('====================================');
+            })
         Axios.get(`${this.homeURL}/shortstories`)
             .then(response => {
                 this.setState({
                     shortStories: response.data.map( story => {
-                    return (
-                        { 
-                            title: story.title,
-                            mainImageURL: story.mainimage.url,  
-                            imageURLs: story.images.map(image => image.url),
-                            key: story.id
-                        }
-                    )
-                }),
-            });
-        })
+                        return (
+                            { 
+                                title: story.title,
+                                mainImageURL: story.mainimage.url,  
+                                imageURLs: story.images.map(image => image.url),
+                                key: story.id
+                            }
+                        )
+                    }),
+                });
+            })
     }
 
     showStory = (e) => {
@@ -87,22 +92,27 @@ class StoriesX extends Component {
             <React.Fragment>
                 <Route exact path="/stories" render={() => 
                     <div className='stories-page'>
-                        <Navbar navClass='navbar navbar--stories' iconClass='navbar_index-button_icon navbar_index-button_icon--stories' navTextClass='navbar_index-button_text navbar_index-button_text--stories' />
+                        <Navigation />
                         <div className='stories-page_title'>
-                            <h1>Essays</h1>
-                            <p>Stories of humans and the world told through my camera</p>
+                            <h1>Stories</h1>
+                            <p>of humans and the world told through my camera</p>
                         </div>
                         <div className='stories-page_story_container'>
-                            { this.state.stories.map( story => 
-                                <div className='stories-page_story' key={story.key} >
+                            { this.state.stories.map( (story, i) => 
+                                <div className={`stories-page_story stories-page_story--${i}`} key={i} >
                                     <NavLink to={`/stories/${story.title}`}>
-                                        <img onClick={this.showStory} src={`${this.homeURL}${story.mainImageURL}`} value={story.key} alt=''></img>
+                                        <div className={`stories-page_story_img-container stories-page_story_img-container--${i}`}>
+                                            <img onClick={this.showStory} className={`stories-page_story_image stories-page_story_image--${i}`} src={`${this.homeURL}${story.mainImageURL}`} value={story.key} alt=''></img>
+                                            <div className={`stories-page_story_title stories-page_story_title--${i}`}>
+                                                <div></div>
+                                                <h3>{story.title}</h3>
+                                            </div>                                            
+                                        </div>
                                     </NavLink>
-                                    <h3>{story.title}</h3>
                                 </div>
                             ) }
                         </div>
-                        <div className='stories-page_title stories-page_title--2'>
+                        {/* <div className='stories-page_title stories-page_title--2'>
                             <h1>Short Stories</h1>
                             <p>Snapshots. The curious and interesting</p>
                         </div>
@@ -115,7 +125,7 @@ class StoriesX extends Component {
                                     <h3>{story.title}</h3>
                                 </div>
                             ) }
-                        </div>
+                        </div> */}
                     </div>
                 } />
                 { this.state.stories.map( story => 

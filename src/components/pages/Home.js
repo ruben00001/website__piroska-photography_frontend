@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import Navbar from '../layout/Navbar';
+import Navigation from '../layout/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
 
 class Home extends Component {
@@ -43,7 +43,7 @@ class Home extends Component {
 
       return (
         <div className='home-container'>
-          <Navbar navClass='navbar navbar--home' iconClass='navbar_index-button_icon navbar_index-button_icon--home' navTextClass='navbar_index-button_text' />
+          <Navigation />
           <div className='home-banner'>
             <div className='home-banner_image'>
               <img src={`${this.homeURL}${this.state.image}`} alt=''></img>
