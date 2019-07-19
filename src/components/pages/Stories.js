@@ -5,7 +5,12 @@ import { animateScroll as scroller } from 'react-scroll'
 import Axios from 'axios';
 import Navigation from '../layout/Navbar'
 import Story from './Story';
+import { Icons } from '../../data/Icons';
 import { strapiAPI } from '../../enviroment/strapi-api';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGripLinesVertical } from "@fortawesome/free-solid-svg-icons";
+import { faGripLines } from "@fortawesome/free-solid-svg-icons";
+import { faTenge } from "@fortawesome/free-solid-svg-icons";
 
 
 class StoriesX extends Component {
@@ -42,7 +47,7 @@ class StoriesX extends Component {
             })
             .then(_ => {
                 console.log('====================================');
-                console.log(this.state.stories);
+                console.log(this.randomIcon());
                 console.log('====================================');
             })
         Axios.get(`${this.homeURL}/shortstories`)
@@ -77,6 +82,12 @@ class StoriesX extends Component {
     showref = () => {
         scroller.scrollTo('stories-page_short')
     }
+
+    randomIcon = () => {
+        return Math.floor(Math.random() * Icons.length)
+    }
+
+    Icons = Icons
     
 
     render() {
@@ -104,6 +115,7 @@ class StoriesX extends Component {
                                         <div className={`stories-page_story_img-container stories-page_story_img-container--${i}`}>
                                             <img onClick={this.showStory} className={`stories-page_story_image stories-page_story_image--${i}`} src={`${this.homeURL}${story.mainImageURL}`} value={story.key} alt=''></img>
                                             <div className={`stories-page_story_title stories-page_story_title--${i}`}>
+                                                <img src={require(`../../img/${this.Icons[this.randomIcon()]}`)}></img>
                                                 <div></div>
                                                 <h3>{story.title}</h3>
                                             </div>                                            
@@ -112,20 +124,6 @@ class StoriesX extends Component {
                                 </div>
                             ) }
                         </div>
-                        {/* <div className='stories-page_title stories-page_title--2'>
-                            <h1>Short Stories</h1>
-                            <p>Snapshots. The curious and interesting</p>
-                        </div>
-                        <div className='stories-page_short'>
-                            { this.state.shortStories.map( story => 
-                                <div className='stories-page_short_story' key={story.key} >
-                                    <NavLink to={`/stories/${story.title}`}>
-                                        <img onClick={this.showStory} src={`${this.homeURL}${story.mainImageURL}`} value={story.key} alt=''></img>
-                                    </NavLink>
-                                    <h3>{story.title}</h3>
-                                </div>
-                            ) }
-                        </div> */}
                     </div>
                 } />
                 { this.state.stories.map( story => 
