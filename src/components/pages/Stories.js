@@ -91,13 +91,6 @@ class StoriesX extends Component {
     
 
     render() {
-        if( this.props.location.state !== undefined) {
-            if(this.props.location.state.fromHome) {
-                scroller.scrollTo('stories-page_short_title', {
-                    offset: 400
-                })
-            }
-        }
 
         return (
             <React.Fragment>

@@ -31,14 +31,14 @@ class Home extends Component {
 
       const title1Style = {
         backgroundImage: this.state.piroska === 'white' ? 
-        `linear-gradient(to right, #707070 21%, white 21%, white 100%)` : 
-        `linear-gradient(to right, #707070 21%, #707070 21%, #707070 100%)`
+        `linear-gradient(to right, #3f3f3f 21%, white 21%, white 100%)` : 
+        `linear-gradient(to right, #3f3f3f 21%, #3f3f3f 21%, #3f3f3f 100%)`
       }
 
       const title2Style = {
         backgroundImage: this.state.photography === 'white' ? 
         `linear-gradient(to right, transparent 20.8%, white 20.8%, white 100%)` : 
-        `linear-gradient(to right, transparent 20.8%, #707070 20.8%, #707070 100%)`
+        `linear-gradient(to right, transparent 20.8%, #3f3f3f 20.8%, #3f3f3f 100%)`
       }
 
       return (

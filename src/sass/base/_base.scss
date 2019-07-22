@@ -3,6 +3,11 @@
 @import url('https://fonts.googleapis.com/css?family=Lora:100,300,400');
 @import url('https://fonts.googleapis.com/css?family=Lato:100,300,400');
 
+$main-color: #3f3f3f;
+$main-font: 'Cormorant', serif;
+$secondary-font: 'Raleway';
+$border-basic: 1px solid black;
+
 * {
   margin: 0;
   padding: 0;
@@ -21,8 +26,8 @@ a:link, a:visited {
 }
 
 body {
-  font-family: 'Cormorant', serif;
-  color: #707070;
+  font-family: $main-font;
+  color: $main-color;
 }
 
 button:focus {
