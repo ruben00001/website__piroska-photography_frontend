@@ -71,50 +71,47 @@
     // border: 1px solid black;
     overflow: auto;
 
-    &--0 {
-      float: left;
-      width: 50%;
-    }
+    // &--0 {
+    //   float: left;
+    //   width: 50%;
+    // }
 
-    &--1 {
-      float: right;
-      width: 50%;
-    }
+    // &--1 {
+    //   float: right;
+    //   width: 50%;
+    // }
 
-    &--2 {
-      width: 100%; //needs to be declared after a floated element
-    }
+    // &--2 {
+    //   width: 100%; //needs to be declared after a floated element
+    // }
 
-    &--3 {
-
-    }
 
     &_img-container {
       display: inline-block;
 
-      &--0 {
-        width: 40%;
-        margin-left: 20%;
-        margin-top: 24vh;
-      }
+      // &--0 {
+      //   width: 40%;
+      //   margin-left: 20%;
+      //   margin-top: 24vh;
+      // }
   
-      &--1 {
-        margin-left: 30%;
-        width: 70%;
-      }
+      // &--1 {
+      //   margin-left: 30%;
+      //   width: 70%;
+      // }
   
-      &--2 {
-        margin-top: 200px;
-        margin-left: 30%;
-        width: 33%;
-      }
+      // &--2 {
+      //   margin-top: 200px;
+      //   margin-left: 30%;
+      //   width: 33%;
+      // }
 
-      &--3 {
-        margin-top: 150px;
-        margin-left: 46%;
-        min-width: 33%;
-        max-width: 33%;
-      }
+      // &--3 {
+      //   margin-top: 150px;
+      //   margin-left: 46%;
+      //   min-width: 33%;
+      //   max-width: 33%;
+      // }
     }
 
     &_image {
