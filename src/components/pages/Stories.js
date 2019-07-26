@@ -16,9 +16,8 @@ class StoriesX extends Component {
             stories: [],
             currentStory: 0,
             images: [],
-            floated: 0,
             floats: [],
-            padding: false,
+            storyPaddingTop: false,
             containerStyle: [],
         }
 
@@ -32,37 +31,27 @@ class StoriesX extends Component {
 
         Axios.get(`${this.homeURL}/stories`)
             .then(response => {
-                console.log('====================================');
-                console.log(this.state.floats);
-                console.log('====================================');
+
                 this.setState({
-                    stories: response.data.map( story => {
+                    stories: response.data.map( (story, i) => {
                         return (
                             { 
                                 title: story.title,
                                 mainImageURL: story.mainimage.url,  
                                 imageURLs: story.images.map(image => image.url),
                                 dimensions: story.width/story.height,
-                                style: {
-                                        width: `${this.imgWidth(story.width/story.height)}%`,
-                                        marginLeft: ``
-                                        },
+                                style: this.imgWidthMargin(story.width/story.height, i),
                                 key: story.id
                             }
                         )
                     }),
                 });
             })
-            // .then(_ => {
-            //     console.log('====================================');
-            //     console.log(this.state.stories[0].style);
-            //     console.log('====================================');
-            // })
             .then(_ => {
                 this.setState({
                     images: this.state.stories.map( (story, i) => 
                                 <div className={`stories-page_story stories-page_story--${i}`} key={i} 
-                                     style={this.rdmFloat()} 
+                                     style={this.rdmFloat(i)} 
                                 >
                                     <NavLink to={`/stories/${story.title}`}>
                                         <div className={`stories-page_story_img-container stories-page_story_img-container--${i}`}
@@ -82,6 +71,11 @@ class StoriesX extends Component {
                                 </div>
                     )
                 })
+            })
+            .then(_ => {
+                console.log('====================================');
+                console.log(this.state.stories[0].style);
+                console.log('====================================');
             })
     }
 
@@ -103,12 +97,29 @@ class StoriesX extends Component {
         return x + Math.random() * (y - x);
     }
 
-    imgWidth = (x) => {
-        if(x < 0.65) return x * this.rdmNum(29, 32)
-        if(x > .65 && x < .9) return x * this.rdmNum(25, 33)
-        if(x > .9 && x < 1.1) return x * this.rdmNum(20, 33)
-        if(x > 1.1 && x < 1.3) return x * this.rdmNum(17, 28)
-        if(x > 1.3) return x * this.rdmNum(14, 18)
+    imgWidthMargin = (x, i) => {
+        let width = 0;
+        let multiplier = 1;
+        if(this.state.floats[i]) multiplier = 2;
+        const calcStyle = (a, b) => {
+            width = x * multiplier * this.rdmNum(a, b);
+            return {width: `${width}%`, marginLeft: `${this.rdmNum(width, 90) - width}%`}
+        }
+        if(x < 0.65) { 
+            return calcStyle(29, 32)
+        }
+        if((x > .65 && x < .9)) { 
+            return calcStyle(25, 33)
+        }
+        if(x > .9 && x < 1.1) { 
+            return calcStyle(20, 33)
+        }
+        if(x > 1.1 && x < 1.3) { 
+            return calcStyle(17, 28)
+        }
+        if(x > 1.3) { 
+            return calcStyle(14, 18)
+        }
     }
 
     float = () => {
@@ -128,49 +139,48 @@ class StoriesX extends Component {
         })
     }
 
-    rdmFloat = () => {
+    rdmFloat = (i) => {
         let style = null;
+        let paddingTop = 100;
 
-        if(this.state.floated === 0 && Math.random() < 6/11) {
-            let paddingTop = 100;
-            if(!this.state.padding && Math.random() < 1/2) {
+        if(this.state.floats[i] === 1) {
+            
+            if(!this.state.storyPaddingTop && Math.random() < 1/2) {
                 paddingTop = this.rdmNum(200,370);
                 this.setState({
-                    margin: true
+                    storyPaddingTop: true
                 })
             }
+
             style = {
                 float: 'left',
                 width: '50%',
                 paddingTop: paddingTop
             };
-            this.setState({
-                floated: 1
-            });
-        } else if (this.state.floated === 1) {
-            let paddingTop = 100;
-            if(!this.state.padding) {
+
+        } else if (this.state.floats[i] === 2) {
+
+            if(!this.state.storyPaddingTop) {
                 paddingTop = this.rdmNum(200,370);
             }
+
             this.setState({
-                margin: false
+                storyPaddingTop: false
             })
+
             style = {
                 float: 'right',
                 width: '50%',
                 paddingTop: paddingTop
             }
-            this.setState({
-                floated: 2
-            });
+
         } else {
+
             style = {
                 width: '100%',
                 paddingTop: this.rdmNum(200, 300)
             }
-            this.setState({
-                floated: 0
-            })
+
         }
         return style;
     }
