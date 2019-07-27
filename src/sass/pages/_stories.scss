@@ -1,7 +1,6 @@
 .stories-page {
   margin: auto;
-  // max-width: 1800px;
-  // border: 1px solid black;
+  padding-bottom: 200px;
 
   @media ( max-width: 500px ) {
     margin-top: 90px;
@@ -15,6 +14,9 @@
     padding-left: 16vw;
     max-width: 1800px;
 
+    @media ( max-width: 2100px ) {
+      max-width: 90%;
+    }
     @media ( max-width: 500px ) {
       padding-left: 7vw;
     }
@@ -22,6 +24,10 @@
     h1 {
       font-size: 60px;
       font-weight: 600;
+
+      @media ( max-width: 960px ) {
+        font-size: 55px;
+      }
     }
 
     p {
@@ -30,7 +36,7 @@
       margin-top: 30px;
 
       @media ( max-width: 960px ) {
-        margin-bottom: 100px;
+        margin-top: 20px;
       }
 
       @media ( max-width: 500px ) {
@@ -66,31 +72,37 @@
       margin: auto;
       margin-top: 100px;
       max-width: 1800px;
+
+      @media ( max-width: 2100px ) {
+        max-width: 90%;
+      }
+      @media ( max-width: 960px ) {
+        margin-top: 0px;
+      }
     }
 
-    // border: 1px solid black;
     overflow: auto;
 
 
     &_img-container {
       display: inline-block;
-      // border: $border;
-
     }
 
     &_image {
-      // border: $border--red;
       width: 100%;
     }
 
     &_title {
       display: flex;
-      height: 40px;
+      height: 50px; // neede to align vertically with flexbox
       align-items: center;
       padding-left: 4px;
       margin-top: 8px;
-      // border: 1px solid black;
       font-family: 'raleway';
+
+      @media ( max-width: 960px ) {
+        height: 60px;
+      }
 
       img {
         width: 20px;
@@ -109,6 +121,13 @@
         font-weight: 600;
         // border: 1px solid black;
         margin-bottom: 0;
+
+        @media ( max-width: 1024px ) {
+          font-size: 14px;
+        }
+        @media ( max-width: 960px ) {
+          font-size: 13px;
+        }
       }
     }
   }  

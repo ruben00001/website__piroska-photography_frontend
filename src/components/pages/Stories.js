@@ -19,16 +19,16 @@ class StoriesX extends Component {
             floats: [],
             storyPaddingTop: false,
             containerStyle: [],
+            windowWidth: window.innerWidth
         }
 
-        this.rdmFloat = this.rdmFloat.bind(this);
+        this.setFloatAndPaddingTop = this.setFloatAndPaddingTop.bind(this);
     }
 
     homeURL = strapiAPI;
 
     componentDidMount() {
-        this.float();
-
+        this.determineFloat();
         Axios.get(`${this.homeURL}/stories`)
             .then(response => {
 
@@ -51,7 +51,7 @@ class StoriesX extends Component {
                 this.setState({
                     images: this.state.stories.map( (story, i) => 
                                 <div className={`stories-page_story stories-page_story--${i}`} key={i} 
-                                     style={this.rdmFloat(i)} 
+                                     style={this.setFloatAndPaddingTop(i)} 
                                 >
                                     <NavLink to={`/stories/${story.title}`}>
                                         <div className={`stories-page_story_img-container stories-page_story_img-container--${i}`}
@@ -71,30 +71,88 @@ class StoriesX extends Component {
                                 </div>
                     )
                 })
-            })
-            .then(_ => {
-                console.log('====================================');
-                console.log(this.state.stories[0].style);
-                console.log('====================================');
-            })
+            });
+             
+            // .then(_ => {
+            //     console.log('====================================');
+            //     console.log(window.innerWidth);
+            //     console.log('====================================');
+            // })
     }
 
 
-
-    Icons = Icons
-
-    showStory = (e) => {
+    determineFloat = () => {
+        let floats = [];
+        floats.push(Math.round(Math.random()))
+        for (let i = 1; i < 100; i++) {
+            if(floats[i-1] === 0 && Math.random() < 6/11) {
+                floats.push(1)   
+            } else if (floats[i-1] === 1) {
+                floats.push(2)
+            } else {
+                floats.push(0)
+            }
+        }
         this.setState({
-            currentStory: Number(e.currentTarget.getAttribute('value')) - 1
+            floats: floats
         })
-    }
-
-    randomIcon = () => {
-        return Math.floor(Math.random() * Icons.length)
     }
 
     rdmNum = (x, y) => {
         return x + Math.random() * (y - x);
+    }
+
+    setFloatAndPaddingTop = (i) => {
+        let style = null;
+        let paddingTop = 0;
+        if (this.state.windowWidth > 1200) paddingTop = this.rdmNum(110,180);
+        if (this.state.windowWidth <= 1200 && this.state.windowWidth > 960) paddingTop = this.rdmNum(80,150);
+        if (this.state.windowWidth <= 960) paddingTop = this.rdmNum(60, 130);
+
+        if(this.state.floats[i] === 1) {
+            
+            if(this.state.storyPaddingTop && Math.random() < 1/2) {
+                paddingTop = 0;
+                this.setState({
+                    storyPaddingTop: true
+                })
+            } else {
+                paddingTop += 70;
+            }
+
+            style = {
+                float: 'left',
+                width: '50%',
+                paddingTop: paddingTop
+            };
+
+        } else if (this.state.floats[i] === 2) {
+
+            if(this.state.storyPaddingTop) {
+                paddingTop = 0;
+            } else {
+                paddingTop += 70;
+            }
+
+            this.setState({
+                storyPaddingTop: false
+            })
+
+            style = {
+                float: 'right',
+                width: '50%',
+                paddingTop: paddingTop
+            }
+
+        } else {
+
+            style = {
+                width: '100%',
+                paddingTop: paddingTop
+            }
+
+        }
+        return style;
     }
 
     imgWidthMargin = (x, i) => {
@@ -122,71 +180,25 @@ class StoriesX extends Component {
         }
     }
 
-    float = () => {
-        let floats = [];
-        floats.push(Math.round(Math.random()))
-        for (let i = 1; i < 100; i++) {
-            if(floats[i-1] === 0 && Math.random() < 6/11) {
-                floats.push(1)   
-            } else if (floats[i-1] === 1) {
-                floats.push(2)
-            } else {
-                floats.push(0)
-            }
-        }
+    Icons = Icons
+
+    showStory = (e) => {
         this.setState({
-            floats: floats
+            currentStory: Number(e.currentTarget.getAttribute('value')) - 1
         })
     }
 
-    rdmFloat = (i) => {
-        let style = null;
-        let paddingTop = 100;
-
-        if(this.state.floats[i] === 1) {
-            
-            if(!this.state.storyPaddingTop && Math.random() < 1/2) {
-                paddingTop = this.rdmNum(200,370);
-                this.setState({
-                    storyPaddingTop: true
-                })
-            }
-
-            style = {
-                float: 'left',
-                width: '50%',
-                paddingTop: paddingTop
-            };
-
-        } else if (this.state.floats[i] === 2) {
-
-            if(!this.state.storyPaddingTop) {
-                paddingTop = this.rdmNum(200,370);
-            }
-
-            this.setState({
-                storyPaddingTop: false
-            })
-
-            style = {
-                float: 'right',
-                width: '50%',
-                paddingTop: paddingTop
-            }
-
-        } else {
-
-            style = {
-                width: '100%',
-                paddingTop: this.rdmNum(200, 300)
-            }
-
-        }
-        return style;
+    randomIcon = () => {
+        return Math.floor(Math.random() * Icons.length)
     }
 
+
+
+
+
+
     test = () => {
-        this.float();
+        console.log(this.state.windowWidth);
     }
 
 
