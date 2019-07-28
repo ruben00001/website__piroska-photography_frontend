@@ -107,75 +107,95 @@ class StoriesX extends Component {
         let paddingTop = 0;
         if (this.state.windowWidth > 1200) paddingTop = this.rdmNum(110,180);
         if (this.state.windowWidth <= 1200 && this.state.windowWidth > 960) paddingTop = this.rdmNum(80,150);
-        if (this.state.windowWidth <= 960) paddingTop = this.rdmNum(60, 130);
+        if (this.state.windowWidth <= 960 && this.state.windowWidth > 800) paddingTop = this.rdmNum(60, 130);
+        if (this.state.windowWidth > 600 && this.state.windowWidth <= 800) paddingTop = this.rdmNum(50, 90);
+        if (this.state.windowWidth <= 600) paddingTop = this.rdmNum(30, 90);
 
-        if(this.state.floats[i] === 1) {
+        if (this.state.windowWidth > 800) {
+            if(this.state.floats[i] === 1) {
             
-            if(this.state.storyPaddingTop && Math.random() < 1/2) {
-                paddingTop = 0;
+                if(!this.state.storyPaddingTop && Math.random() < 1/2) {
+                    paddingTop += 70;
+                    this.setState({
+                        storyPaddingTop: true
+                    })
+                } else {
+                    paddingTop = 60;
+                }
+    
+                style = {
+                    float: 'left',
+                    width: '50%',
+                    paddingTop: paddingTop
+                };
+    
+            } else if (this.state.floats[i] === 2) {
+    
+                if(!this.state.storyPaddingTop) {
+                    paddingTop += 70;
+                } else {
+                    paddingTop = 60;
+                }
+    
                 this.setState({
-                    storyPaddingTop: true
+                    storyPaddingTop: false
                 })
+    
+                style = {
+                    float: 'right',
+                    width: '50%',
+                    paddingTop: paddingTop
+                }
+    
             } else {
-                paddingTop += 70;
+    
+                style = {
+                    width: '100%',
+                    paddingTop: paddingTop
+                }
+    
             }
-
-            style = {
-                float: 'left',
-                width: '50%',
-                paddingTop: paddingTop
-            };
-
-        } else if (this.state.floats[i] === 2) {
-
-            if(this.state.storyPaddingTop) {
-                paddingTop = 0;
-            } else {
-                paddingTop += 70;
-            }
-
-            this.setState({
-                storyPaddingTop: false
-            })
-
-            style = {
-                float: 'right',
-                width: '50%',
-                paddingTop: paddingTop
-            }
-
         } else {
-
             style = {
                 width: '100%',
                 paddingTop: paddingTop
             }
-
         }
+
+        
         return style;
     }
 
     imgWidthMargin = (x, i) => {
+
         let width = 0;
         let multiplier = 1;
-        if(this.state.floats[i]) multiplier = 2;
+
+        if(this.state.windowWidth > 600 && this.state.windowWidth <= 800) multiplier = 1.5;
+        else if(this.state.windowWidth <= 600) multiplier = 2.5;
+        else if (this.state.floats[i]) multiplier = 2;
+
         const calcStyle = (a, b) => {
             width = x * multiplier * this.rdmNum(a, b);
             return {width: `${width}%`, marginLeft: `${this.rdmNum(width, 90) - width}%`}
         }
+
         if(x < 0.65) { 
             return calcStyle(29, 32)
         }
-        if((x > .65 && x < .9)) { 
+        if((x >= .65 && x < .9)) { 
             return calcStyle(25, 33)
         }
-        if(x > .9 && x < 1.1) { 
+        if(x >= .9 && x < 1.1) { 
             return calcStyle(20, 33)
         }
-        if(x > 1.1 && x < 1.3) { 
+        if(x >= 1.1 && x < 1.3) { 
             return calcStyle(17, 28)
         }
-        if(x > 1.3) { 
+        if(x >= 1.3 && x < 1.6) { 
+            return calcStyle(15, 23)
+        }
+        if(x >= 1.6) { 
             return calcStyle(14, 18)
         }
     }

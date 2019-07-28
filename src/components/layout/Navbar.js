@@ -33,7 +33,7 @@ class Navigation extends Component {
   render() {
     return (
       <Navbar className='navbar fixed-top' bg="none" expand="sm">
-        <Navbar.Toggle className='ml-auto navbar__control' aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle className='ml-auto navbar__control custom-toggler' aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Link href="/">Home</Nav.Link>

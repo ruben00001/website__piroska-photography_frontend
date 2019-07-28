@@ -23,7 +23,7 @@ class Gallery extends Component {
     homeURL = strapiAPI;
     
     componentDidMount() {
-        axios.get(`${this.homeURL}/images`)
+        axios.get(`${this.homeURL}/galleries`)
           .then(response => {
             this.setState({
               images: response.data.map( image => {
