@@ -120,23 +120,23 @@
   /* IMAGE LIST */
 
   &_images {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 100px;
+    // width: 100%;
+    // display: flex;
+    // flex-wrap: wrap;
+    // justify-content: center;
+    // align-items: center;
+    // padding-bottom: 100px;
     // border: 1px solid black;
 
     &_image {
-      width: 15vw;
-      height: 15vw;
-      margin-left: 7px;
-      margin-right: 7px;
-      margin-bottom: 15px;
+      // width: 15vw;
+      // height: 15vw;
+      // margin-left: 7px;
+      // margin-right: 7px;
+      // margin-bottom: 15px;
 
       img {
-        object-fit: cover;
+        object-fit: contain;
         width: 100%;
         height: 100%;
         cursor: pointer;
