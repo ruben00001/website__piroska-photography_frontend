@@ -6,28 +6,46 @@
   padding-top: 100px;
   margin-top: 100px;
 
-  &_back {
+  &_buttons {
     position: absolute;
     top: 0;
     left: 15%;
-    display: inline-block;
-    border: .5px solid black;
-    border-radius: 2px;
-    padding: 2px 5px;
-    cursor: pointer;
 
-    @media (max-width: 1279px) {
-      top: -25px;
-    }
+    &_button {
+      display: inline-block;
+      border: .5px solid black;
+      border-radius: 2px;
+      padding: 2px 5px;
+      cursor: pointer;
+      font-family: $secondary-font;
+      font-size: 14px;
+  
+      @media (max-width: 1279px) {
+        top: -25px;
+      }
+  
+      @media (max-width: 1023px) {
+        top: -40px;
+      }
+  
+      &--back {
+        margin-right: 25px;
+      }
+  
+      &--previous {
+        margin-right: 15px;
+      }
+  
+      &--next {
+  
+      }
 
-    @media (max-width: 1023px) {
-      top: -40px;
-    }
-
-    &_icon {
-      font-size: 12px;
-      font-weight: lighter;
-      margin-right: 5px;
+      &_icon {
+        font-size: 12px;
+        font-weight: lighter;
+        margin-right: 5px;
+        margin-left: 5px;
+      }
     }
   }
 
@@ -105,7 +123,7 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     padding-bottom: 100px;
     // border: 1px solid black;
@@ -113,9 +131,9 @@
     &_image {
       width: 15vw;
       height: 15vw;
-      // border: 1px solid black;
+      margin-left: 7px;
+      margin-right: 7px;
       margin-bottom: 15px;
-      display: flex;
 
       img {
         object-fit: cover;

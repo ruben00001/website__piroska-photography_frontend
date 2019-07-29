@@ -53,7 +53,13 @@ class StoriesX extends Component {
                                 <div className={`stories-page_story stories-page_story--${i}`} key={i} 
                                      style={this.setFloatAndPaddingTop(i)} 
                                 >
-                                    <NavLink to={`/stories/${story.title}`}>
+                                    <NavLink to={{
+                                        pathname: `/stories/story`,
+                                        state: { story: i,
+                                                 images: this.state.stories.map(story => story.imageURLs),
+                                                 titles: this.state.stories.map(story => story.title) 
+                                        }  
+                                        }}>
                                         <div className={`stories-page_story_img-container stories-page_story_img-container--${i}`}
                                              style={story.style}      
                                         >
@@ -202,18 +208,16 @@ class StoriesX extends Component {
 
     Icons = Icons
 
-    showStory = (e) => {
-        this.setState({
-            currentStory: Number(e.currentTarget.getAttribute('value')) - 1
-        })
-    }
-
     randomIcon = () => {
         return Math.floor(Math.random() * Icons.length)
     }
 
 
-
+    showStory = (e) => {
+        this.setState({
+            currentStory: Number(e.currentTarget.getAttribute('value')) - 1
+        })
+    }
 
 
 
@@ -238,11 +242,15 @@ class StoriesX extends Component {
                         </div>
                     </div>
                 } />
-                { this.state.stories.map( story => 
-                    <Route path={`/stories/${story.title}`} key={story.key} render={() => 
-                        <Story title={story.title} imageURLs={story.imageURLs} />                      
-                    } /> 
-                )}                     
+                <Route path={`/stories/story`} 
+                       render={({ location }) => {
+                           const { state } = location;
+                           return (
+                            <Story state={state} />   
+                           )
+                       }
+                   
+                } /> 
             </React.Fragment>
         )
     }
@@ -251,81 +259,3 @@ class StoriesX extends Component {
 const Stories = withRouter(StoriesX)
 
 export default Stories;
-
-
-// { this.state.stories.map( (story, i) => 
-//     <div className={`stories-page_story stories-page_story--${i}`} key={i} >
-//         <NavLink to={`/stories/${story.title}`}>
-//             <div className={`stories-page_story_img-container stories-page_story_img-container--${i}`}>
-//                 <img onClick={this.showStory} className={`stories-page_story_image stories-page_story_image--${i}`} src={`${this.homeURL}${story.mainImageURL}`} value={story.key} alt=''></img>
-//                 <div className={`stories-page_story_title stories-page_story_title--${i}`}>
-//                     <img src={require(`../../img/${this.Icons[this.randomIcon()]}`)} alt=''></img>
-//                     <div></div> {/* makes a line don't delete */}
-//                     <h3>{story.title}</h3>
-//                 </div>                                            
-//             </div>
-//         </NavLink>
-//     </div>
-// ) }
-
-// test = () => {
-//     console.log('====================================');
-//     console.log(this.state.floated);
-//     console.log('====================================');
-//     if(this.state.floated === 0 ) {
-//         console.log('====================================');
-//         console.log(`left`);
-//         console.log('====================================');
-//         this.setState({
-//             floated: 1
-//         });
-//     } else if (this.state.floated === 1) {
-//         console.log('====================================');
-//         console.log(`right`);
-//         console.log('====================================');
-//         this.setState({
-//             floated: 2
-//         });
-//     } else {
-//         console.log('====================================');
-//         console.log(`center`);
-//         console.log('====================================');
-//         this.setState({
-//             floated: 0
-//         })
-//     }
-//     console.log('====================================');
-//     console.log(`***fin***....${this.state.floated}`);
-//     console.log('====================================');
-// }
-
-// .then(_ => {
-//     console.log('====================================');
-//     console.log(this.state.containerStyle);
-//     console.log('====================================');
-// })
-
-// getDimensions = ({target:img}) => {
-//     this.setState({
-//         dimensions: [...this.state.dimensions, img.naturalHeight/img.naturalWidth]
-//     },
-//         () => this.setState({
-//             containerStyle: this.state.dimensions.map(_ => {
-//                 return {width: '30%', marginLeft: '30%'}
-//             })
-//         },
-//             () => this.setState({images: this.state.images})              
-//         )
-//     );
-// }
-
-            // .then(_=> {
-            //     this.setState({
-            //         containerStyle: this.state.stories.map(story => { 
-            //             return {
-            //                 width: '50%', 
-            //                 marginLeft: '10%'
-            //             }
-            //         })
-            //     })
-            // })
