@@ -32,7 +32,7 @@ class Navigation extends Component {
 
   render() {
     return (
-      <Navbar className='navbar fixed-top' bg="none" expand="sm">
+      <Navbar className='navbar fixed-top' bg="none" expand=''>
         <Navbar.Toggle className='ml-auto navbar__control custom-toggler' aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">

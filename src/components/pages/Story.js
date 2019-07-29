@@ -10,8 +10,6 @@ class Story extends Component {
     super(props)
 
     this.state = {
-      titles: [],
-      images: [],
       story: 0,
       currentImage: 0
     }
@@ -23,6 +21,33 @@ class Story extends Component {
 
   componentDidMount() {
     window.scrollTo(0, 0) // was a bug where page would load at bottom
+    this.setState({
+      story: this.props.state.story
+    })
+  }
+
+  previousStory = () => {
+    if(this.state.story === 0) {
+      this.setState({
+        story: this.props.state.images.length - 1
+      });
+    } else {
+      this.setState({
+        story: this.state.story - 1
+      })
+    }
+  }
+
+  nextStory = () => {
+    if(this.state.story + 1 === this.props.state.images.length) {
+      this.setState({
+        story: 0
+      });
+    } else {
+      this.setState({
+        story: this.state.story + 1
+      })
+    }
   }
 
   nextPicture = () => {
@@ -56,33 +81,37 @@ class Story extends Component {
   }
 
   render() {
+    const story = this.state.story || this.props.state.story;
+
     return (
       <div className='story-page'>
         <Navigation />
         <div className='story-page_buttons'>
           <Link to='/stories'>
             <p className='story-page_buttons_button story-page_buttons_button--back'>
-              <FontAwesomeIcon className='story-page_buttons_button_icon' icon={faArrowAltCircleLeft}></FontAwesomeIcon>
+              {/* <FontAwesomeIcon className='story-page_buttons_button_icon' icon={faArrowAltCircleLeft}></FontAwesomeIcon> */}
               Back</p>
           </Link>
-          <p className='story-page_buttons_button story-page_buttons_button--previous'>
+          <p className='story-page_buttons_button story-page_buttons_button--previous'
+             onClick={this.previousStory}>
              <FontAwesomeIcon className='story-page_buttons_button_icon' icon={faHandPointLeft}></FontAwesomeIcon>
              Previous Story</p>
-          <p className='story-page_buttons_button story-page_buttons_button--next'>
-             Next Story
+          <p className='story-page_buttons_button story-page_buttons_button--next'
+             onClick={this.nextStory}
+          >Next Story
              <FontAwesomeIcon className='story-page_buttons_button_icon' icon={faHandPointRight}></FontAwesomeIcon>
              </p>
         </div>
-        <h1>{this.state.titles[this.state.story]}</h1>
+        <h1>{this.props.state.titles[story]}</h1>
         <div className='story-page_main-image'>
           <img alt=''
-                src={`${this.homeURL}${this.props.state.images[this.props.state.story][this.state.currentImage]}`} 
+                src={`${this.homeURL}${this.props.state.images[story][this.state.currentImage]}`} 
           ></img>
           <FontAwesomeIcon onClick={this.previousPicture} className='story-page_main-image_arrow story-page_main-image_arrow--left' icon={faChevronLeft}></FontAwesomeIcon>
           <FontAwesomeIcon onClick={this.nextPicture} className='story-page_main-image_arrow story-page_main-image_arrow--right' icon={faChevronRight}></FontAwesomeIcon>
         </div>
         <div className='story-page_images'>
-          { this.props.state.images[this.props.state.story].map( (imageURL, i) =>
+          { this.props.state.images[story].map( (imageURL, i) =>
             <div className='story-page_images_image' key={i} >
               <img onClick={this.displayImage} src={`${this.homeURL}${imageURL}`} value={i} alt=''></img>
             </div>            
