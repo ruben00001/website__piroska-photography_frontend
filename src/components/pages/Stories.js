@@ -57,7 +57,8 @@ class StoriesX extends Component {
                                         pathname: `/stories/story`,
                                         state: { story: i,
                                                  images: this.state.stories.map(story => story.imageURLs),
-                                                 titles: this.state.stories.map(story => story.title) 
+                                                 titles: this.state.stories.map(story => story.title),
+                                                 mainImage: this.state.stories.map(story => story.mainImageURL)
                                         }  
                                         }}>
                                         <div className={`stories-page_story_img-container stories-page_story_img-container--${i}`}
