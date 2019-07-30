@@ -1,13 +1,13 @@
 .story-page {
   position: relative;
   // border: 1px solid black;
-  max-width: 2000px;
+  max-width: 1600px;
   margin: auto;
   padding-top: 150px;
   margin-bottom: 300px;
   overflow: auto;
 
-  @media (max-width: 2000px) {
+  @media (max-width: 1600px) {
     max-width: 90%;
   }
 
@@ -41,7 +41,9 @@
       margin-top: 200px;
 
       img {
+        align-self: center;
         width: 75%;
+
         cursor: zoom-in;
       }
 
@@ -53,6 +55,8 @@
       }
     }
   }
+
+  /* NEXT STORY */
 
   &_next-story {
     margin-top: 300px;
@@ -104,13 +108,14 @@
       width: 400px;
       height: 300px;
       padding-left: 130px;
-      // border: $border;
       overflow: hidden;
+      display: flex;
+      align-items: center;
 
       img {
         width: 100%;
         object-fit: contain;
-        opacity: .5;
+        // opacity: .5;
         cursor: pointer;
         transition: opacity 1s;
       }

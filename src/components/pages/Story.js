@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faTimesCircle, faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faTimes, faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import Navigation from '../layout/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
 
@@ -17,6 +17,7 @@ class Story extends Component {
       zoomedImageURL: null,
       zoomedImageKey: null,
       imageContainerStyles: [],
+      nextStoryStyle: {opacity: 0.5}
     }
 
   }
@@ -54,7 +55,7 @@ class Story extends Component {
   }
 
 
-  story = 0; // declaration saves writing
+  story = 0; // declaration saves writing. Set to be this.state.story above
 
   nextPicture = () => {
     if(this.state.zoomedImageKey + 1 === this.props.state.images[this.story].length) {
@@ -95,7 +96,7 @@ class Story extends Component {
     images.forEach( (image, i) => {
       if (i===0) style = { width: '100%' }
       else if (i % 2 != 0) {
-        widthLeft = this.rdmNum(40, 60)
+        widthLeft = this.rdmNum(35, 65)
         style = {
           float: 'left',
           width: `${widthLeft}%`
@@ -114,35 +115,14 @@ class Story extends Component {
     })
   }
 
-  // setNextStory = () => {
-  //   console.log(this.state.story, this.props.state.images.length);
-    
-  //   if(this.state.story + 1 === this.props.state.images.length) {
-  //     this.setState({
-  //       nextStory: 0
-  //     });
-  //   } else {
-  //     this.setState({
-  //       nextStory: this.state.story + 1
-  //     })
-  //   }
-  // }
 
   goToNextStory = () => {
-    console.log(this.state.story);
     this.props.state.images[this.state.story + 1] ? this.setState({ story: this.state.story + 1}) : this.setState({ story: 0})
-    
-    // if(this.state.story + 1 === this.props.state.images.length) {
-    //   this.setState({
-    //     story: 0
-    //   }, () => {console.log(this.state.story)});
-    // } else {
-    //   this.setState({
-    //     story: this.state.story + 1
-    //   }, () => {console.log(this.state.story)})
-    // }
     window.scrollTo(0, 0)
-    // this.setNextStory()
+  }
+
+  nextStoryStyle = () => {
+    this.state.nextStoryStyle.opacity === 0.5 ? this.setState({ nextStoryStyle: {opacity: 1} }) : this.setState({ nextStoryStyle: {opacity: 0.5} })
   }
 
 
@@ -178,6 +158,8 @@ class Story extends Component {
                 {`${this.props.state.titles[story + 1] || this.props.state.titles[0]}`}
               </p>
               <p className='story-page_next-story_info_view'
+                onMouseEnter={this.nextStoryStyle}
+                onMouseLeave={this.nextStoryStyle}
                 onClick={this.goToNextStory}
                 >View collection
                 <FontAwesomeIcon className='story-page_next-story_info_view_icon' icon={faArrowRight}></FontAwesomeIcon>
@@ -185,7 +167,11 @@ class Story extends Component {
             </div>
             <div className='story-page_next-story_image'>
               <img alt=''
-                src={`${this.homeURL}${this.props.state.mainImage[story + 1] || this.props.state.mainImage[0]}`}
+                src={`${this.homeURL}${this.props.state.mainImage[story + 1] || this.props.state.mainImage[0]}`} 
+                style={this.state.nextStoryStyle}
+                // style={this.nextStoryStyle()}
+                onMouseEnter={this.nextStoryStyle}
+                onMouseLeave={this.nextStoryStyle}
                 onClick={this.goToNextStory}
                 >
                 </img>
@@ -198,7 +184,7 @@ class Story extends Component {
                 <img src={this.state.zoomedImageURL} alt=''></img>
                 <FontAwesomeIcon onClick={this.previousPicture} className='gallery-page_zoom-image_arrow gallery-page_zoom-image_arrow--left' icon={faChevronLeft}></FontAwesomeIcon>
                 <FontAwesomeIcon onClick={this.nextPicture} className='gallery-page_zoom-image_arrow gallery-page_zoom-image_arrow--right' icon={faChevronRight}></FontAwesomeIcon>
-                <FontAwesomeIcon onClick={this.exitZoom} className='gallery-page_zoom-image_x' icon={faTimesCircle}></FontAwesomeIcon>
+                <FontAwesomeIcon onClick={this.exitZoom} className='gallery-page_zoom-image_x' icon={faTimes}></FontAwesomeIcon>
               </div>
             </div>
           }

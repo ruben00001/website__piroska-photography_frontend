@@ -152,7 +152,7 @@
   /* ZOOMED IMAGE */
 
   &_zoom-image {
-    z-index: 150; /* higher than index button */
+    z-index: 1000000; /* higher than index button */
     position: fixed;
     top: 0;
     left: -11.1px; /* to counter a bug where right position was -22.2 for some reason */
@@ -165,18 +165,18 @@
 
     &_image {
       position: relative;
-      width: 90vw;
-      height: 90vh;
+      width: 100vw;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: white;
+      background: #0B171F;
       border-radius: 4px;
       // border: 3px solid red;
 
       img {
         max-width: 80%;
-        max-height: 90%;
+        max-height: 98%;
 
         @media ( max-width: 500px ) {
           max-width: 100%;
@@ -190,6 +190,7 @@
       top: 50%;
       font-size: 30px;
       cursor: pointer;
+      color: white;
 
       &--left {
         left: 5%;
@@ -210,6 +211,7 @@
       right: 20px;
       font-size: 30px;
       cursor: pointer;
+      color: white;
 
       @media ( max-width: 959px ) {
         font-size: 25px;
