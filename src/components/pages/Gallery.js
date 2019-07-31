@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimesCircle, faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import Navbar from '../layout/Navbar';
+import { faTimesCircle, faChevronRight, faChevronLeft, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import Navigation from '../layout/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { Accordion, Card, Button} from 'react-bootstrap/';
 
 class Gallery extends Component {
     constructor(props) {
@@ -30,7 +32,7 @@ class Gallery extends Component {
               images: response.data.map( image => {
                 return (
                   { url: image.image.url,
-                    tags: image.tags.map(tag => tag.title),
+                    tags: image.tags.map(tag => tag.name),
                     key: image.id
                   }
                 )
@@ -48,7 +50,7 @@ class Gallery extends Component {
             this.setState({
               tags: response.data.map(tag => {
                 return (
-                  <p onClick={this.filterImages} className='gallery-page_tag' key={tag.id} value={tag.name}>{tag.name}</p>
+                  <p onClick={this.filterImages} className='gallery-page_category' key={tag.id} value={tag.name}>{tag.name}</p>
                 )
               })
             });
@@ -122,21 +124,31 @@ class Gallery extends Component {
     addHeight = (e) => {
       this.setState({
         imagesHeight: this.state.imagesHeight + e.currentTarget.offsetHeight
-      }, _ => {console.log(this.state.imagesHeight)   })
+      })
+    }
+
+    test = () => {
+      console.log(this.state.imagesHeight);      
     }
 
     render() {
       return (
         <div className='gallery-page'>
-          <Navbar navClass='navbar navbar--gallery' iconClass='navbar_index-button_icon navbar_index-button_icon--stories' navTextClass='navbar_index-button_text navbar_index-button_text--stories' />
+          <Navigation />
+          <Accordion defaultActiveKey="0">  
+            <Accordion.Toggle onClick={this.test} as={Button} variant="link" eventKey="1" className='gallery-page_categories'>
+              Categories
+              <FontAwesomeIcon className='gallery-page_categories_icon' icon={faCaretDown}></FontAwesomeIcon>
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="1">
+              <div className='gallery-page_category_container'>
+                <p onClick={this.showAllImages} className='gallery-page_category'>All</p>
+                { this.state.tags }
+              </div>
+            </Accordion.Collapse>
+          </Accordion>
           <div className='gallery-page_container'>
-            {/* <div className='gallery-page_menu'>
-              <h3>Themes</h3>
-              <p onClick={this.showAllImages} className='gallery-page_tag'>All</p>
-              { this.state.tags }
-            </div>
-            <div className='gallery-page_menu gallery-page_menu--fake'></div> */}
-            <div style={ this.state ? {height: this.state.imagesHeight / 4 + 100} : null} className='gallery-page_images'>
+            <div style={ this.state ? {height: this.state.imagesHeight / 4 + 200} : null} className='gallery-page_images'>
                 { this.state.filteredImages.map( image =>
                   <div className='gallery-page_images_image' key={image.key}>
                     <img src={`${this.homeURL}${image.url}`} value={image.key} alt=''
