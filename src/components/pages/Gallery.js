@@ -16,7 +16,8 @@ class Gallery extends Component {
             numberImages: 0,
             zoom: false,
             zoomedImageURL: null,
-            zoomedImageKey: null
+            zoomedImageKey: null,
+            imagesHeight: 0
         }
     }
 
@@ -118,23 +119,32 @@ class Gallery extends Component {
       }
     }
 
+    addHeight = (e) => {
+      this.setState({
+        imagesHeight: this.state.imagesHeight + e.currentTarget.offsetHeight
+      }, _ => {console.log(this.state.imagesHeight)   })
+    }
+
     render() {
       return (
         <div className='gallery-page'>
           <Navbar navClass='navbar navbar--gallery' iconClass='navbar_index-button_icon navbar_index-button_icon--stories' navTextClass='navbar_index-button_text navbar_index-button_text--stories' />
           <div className='gallery-page_container'>
-            <div className='gallery-page_menu'>
+            {/* <div className='gallery-page_menu'>
               <h3>Themes</h3>
               <p onClick={this.showAllImages} className='gallery-page_tag'>All</p>
               { this.state.tags }
             </div>
-            <div className='gallery-page_menu gallery-page_menu--fake'></div>
-            <div className='gallery-page_images'>
-              <div>
-                { this.state.filteredImages.map( image => 
-                  <img onClick={this.zoomOnImage} className='gallery-page_images_image' src={`${this.homeURL}${image.url}`} key={image.key} value={image.key} alt=''></img>
+            <div className='gallery-page_menu gallery-page_menu--fake'></div> */}
+            <div style={ this.state ? {height: this.state.imagesHeight / 4 + 100} : null} className='gallery-page_images'>
+                { this.state.filteredImages.map( image =>
+                  <div className='gallery-page_images_image' key={image.key}>
+                    <img src={`${this.homeURL}${image.url}`} value={image.key} alt=''
+                      onClick={this.zoomOnImage}
+                      onLoad={this.addHeight}
+                    ></img>
+                  </div>
                 )}
-              </div>
             </div>
           </div>
           { this.state.zoom && 
