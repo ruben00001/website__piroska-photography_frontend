@@ -19,7 +19,8 @@ class Gallery extends Component {
             zoom: false,
             zoomedImageURL: null,
             zoomedImageKey: null,
-            imagesHeight: 0
+            imagesTotalHeight: 0,
+            imagesHeights: []
         }
     }
 
@@ -57,10 +58,31 @@ class Gallery extends Component {
           });
     }
 
-    filterImages = (e) => { 
+    addHeight = (e) => {
       this.setState({
-        filteredImages: this.state.images.filter( image => image.tags.includes(e.currentTarget.getAttribute('value')))
-      });   
+        imagesTotalHeight: this.state.imagesTotalHeight + e.currentTarget.offsetHeight,
+        imagesHeights: [...this.state.imagesHeights, e.currentTarget.offsetHeight]
+      })
+    }
+
+    filterImages = (e) => { 
+      let filteredImagesHeight = 0;
+      
+      let filteredImages = this.state.images.filter((image, i) => {                   
+                              if(image.tags.includes(e.currentTarget.getAttribute('value'))) {
+                                  filteredImagesHeight += this.state.imagesHeights[i]
+                                  return image.tags.includes(e.currentTarget.getAttribute('value'))
+                              }                              
+                            })
+      console.log(filteredImagesHeight);
+      
+      this.setState({
+        imagesTotalHeight: filteredImagesHeight,
+        filteredImages: filteredImages
+      })
+      // this.setState({
+      //   filteredImages: this.state.images.filter( image => image.tags.includes(e.currentTarget.getAttribute('value')))
+      // });   
       window.scroll({
         top: 0,
         left: 0,
@@ -80,11 +102,13 @@ class Gallery extends Component {
     }
 
     zoomOnImage = (e) => {
+      console.log(e.currentTarget);
+      
       this.setState({
         zoomedImageURL: e.currentTarget.src,
         zoom: true,
-        zoomedImageKey: Number(e.currentTarget.getAttribute('value') - 1)
-      });
+        zoomedImageKey: Number(e.currentTarget.getAttribute('value'))
+      }, () => console.log(this.state.zoomedImageKey)      );
     }
 
     exitZoom = () => {
@@ -121,14 +145,9 @@ class Gallery extends Component {
       }
     }
 
-    addHeight = (e) => {
-      this.setState({
-        imagesHeight: this.state.imagesHeight + e.currentTarget.offsetHeight
-      })
-    }
 
     test = () => {
-      console.log(this.state.imagesHeight);      
+      // console.log(this.state.images);      
     }
 
     render() {
@@ -148,10 +167,12 @@ class Gallery extends Component {
             </Accordion.Collapse>
           </Accordion>
           <div className='gallery-page_container'>
-            <div style={ this.state ? {height: this.state.imagesHeight / 4 + 200} : null} className='gallery-page_images'>
-                { this.state.filteredImages.map( image =>
-                  <div className='gallery-page_images_image' key={image.key}>
-                    <img src={`${this.homeURL}${image.url}`} value={image.key} alt=''
+            <div className='gallery-page_images'
+                 style={ this.state ? {height: `${this.state.imagesTotalHeight / 4 + 200}px`} : null}
+            >
+                { this.state.filteredImages.map( (image, i) =>
+                  <div className='gallery-page_images_image' key={i}>
+                    <img src={`${this.homeURL}${image.url}`} value={i} alt=''
                       onClick={this.zoomOnImage}
                       onLoad={this.addHeight}
                     ></img>
