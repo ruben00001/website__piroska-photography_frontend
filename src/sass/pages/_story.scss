@@ -10,6 +10,10 @@
   @media (max-width: 1600px) {
     max-width: 90%;
   }
+  @media (max-width: 600px) {
+    margin-bottom: 130px;
+  }
+  
 
   h1 {
     // border: 1px solid black;
@@ -18,39 +22,56 @@
     padding-top: 100px;
 
     @media (max-width: 1440px) {
-      margin-top: -50px;
+      margin-top: -50px; //a bug?
     }
-
     @media (max-width: 1279px) {
       margin-top: -85px;
     }
-
     @media (max-width: 1023px) {
       font-size: 40px;
       margin-top: -100px;
+    }
+    @media (max-width: 800px) {
+      padding-top: 80px;
+    }
+    @media (max-width: 600px) {
+      font-size: 35px;
+      margin-left: 13%;
     }
   }
 
   /* IMAGE LIST */
 
   &_images {
-    margin-top: 50px;
     overflow: auto;
 
     &_image {
       margin-top: 200px;
 
-      img {
-        align-self: center;
-        width: 75%;
+      @media (max-width: 800px) {
+        margin-top: 80px;
+        display: flex;
+        justify-content: center;
+      }
 
+      img {
+        width: 75%;
         cursor: zoom-in;
+
+        @media (max-width: 800px) {
+          width: 85%;
+        }
       }
 
       &--0 {
         img {
           width: 60%;
           margin-left: 15%;
+
+          @media (max-width: 800px) {
+            width: 85%;
+            margin-left: 0;
+          }
         }
       }
     }
@@ -63,10 +84,21 @@
     display: flex;
     justify-content: center;
 
+    @media (max-width: 1025px) {
+      margin-top: 260px;
+    }
+    @media (max-width: 800px) {
+      margin-top: 200px;
+    }
+    @media (max-width: 600px) {
+      margin-top: 170px;
+    }
+    @media (max-width: 321px) {
+      margin-top: 130px;
+    }
+
     &_container {
       display: flex;
-      // height: 300px;
-      // border: $border;
     }
 
     &_info {
@@ -76,12 +108,36 @@
       justify-content: center;
       padding-left: 100px;
 
+      @media (max-width: 800px) {
+        width: 300px;
+        padding-left: 60px;
+      }
+      @media (max-width: 600px) {
+        width: 200px;
+        padding-left: 30px;
+      }
+      @media (max-width: 376px) {
+        width: 170px;
+        padding-left: 20px;
+      }
+      @media (max-width: 321px) {
+        width: 150px;
+        padding-left: 20px;
+      }
+
       &_next {
         font-family: $secondary-font;
         font-weight: 600;
         letter-spacing: 1.2px;
         font-size: 14px;
         margin-bottom: 0;
+
+        @media (max-width: 800px) {
+          font-size: 12px;
+        }
+        @media (max-width: 376px) {
+          font-size: 11px;
+        }
       }
 
       &_name {
@@ -89,6 +145,16 @@
         font-weight: 600;
         padding-left: 3px;
         margin-bottom: 0;
+
+        @media (max-width: 800px) {
+          font-size: 34px;
+        }
+        @media (max-width: 600px) {
+          font-size: 28px;
+        }
+        @media (max-width: 376px) {
+          font-size: 20px;
+        }
       }
 
       &_view {
@@ -97,9 +163,22 @@
         font-size: 16px;
         cursor: pointer;
 
+        @media (max-width: 600px) {
+          margin-top: 8px;
+          font-size: 14px;
+        }
+        @media (max-width: 376px) {
+          margin-top: 7px;
+          font-size: 13px;
+        }
+
         &_icon {
           font-size: 14px;
           margin-left: 10px;
+
+          @media (max-width: 376px) {
+            font-size: 12px;
+          }
         }
       }
     }
@@ -112,10 +191,29 @@
       display: flex;
       align-items: center;
 
+      @media (max-width: 800px) {
+        width: 260px;
+        height: 200px;
+        padding-left: 70px;
+      }
+      @media (max-width: 600px) {
+        width: 150px;
+        height: 180px;
+        padding-left: 30px;
+      }
+      @media (max-width: 376px) {
+        width: 130px;
+        height: 160px;
+        padding-left: 30px;
+      }
+      @media (max-width: 321px) {
+        width: 110px;
+        padding-left: 18px;
+      }
+
       img {
         width: 100%;
         object-fit: contain;
-        // opacity: .5;
         cursor: pointer;
         transition: opacity 1s;
       }

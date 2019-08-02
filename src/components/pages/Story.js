@@ -21,7 +21,6 @@ class Story extends Component {
     }
 
   }
-
   
   homeURL = strapiAPI;
 
@@ -30,6 +29,42 @@ class Story extends Component {
     this.setImageContainerStyles(this.props.state.images[this.props.state.story]);
     this.setState({
       story: this.props.state.story
+    })
+  }
+
+  setImageContainerStyles = (images) => {
+    let style = {};
+    let styles = [];
+    let widthLeft = 0;
+    if (window.innerWidth < 600) {
+      images.forEach( _ => {
+        style = {
+          width: '100%'
+        }
+        styles.push(style);
+      });
+    } else {
+      images.forEach( (image, i) => {
+        if (i===0) style = { width: '100%' }
+        else if (i % 2 != 0) {
+          widthLeft = this.rdmNum(35, 65)
+          style = {
+            float: 'left',
+            width: `${widthLeft}%`
+          }
+        } else {
+          style = {
+            float: 'right',
+            width: `${100 - widthLeft}%`,
+            textAlign: 'right'
+          }
+        }
+        styles.push(style);
+      });
+    }
+
+    this.setState({
+      imageContainerStyles: styles
     })
   }
 
@@ -53,7 +88,6 @@ class Story extends Component {
       zoom: false
     })
   }
-
 
   story = 0; // declaration saves writing. Set to be this.state.story above
 
@@ -89,33 +123,6 @@ class Story extends Component {
     return x + Math.random() * (y - x);
   }
 
-  setImageContainerStyles = (images) => {
-    let style = {};
-    let styles = [];
-    let widthLeft = 0;
-    images.forEach( (image, i) => {
-      if (i===0) style = { width: '100%' }
-      else if (i % 2 != 0) {
-        widthLeft = this.rdmNum(35, 65)
-        style = {
-          float: 'left',
-          width: `${widthLeft}%`
-        }
-      } else {
-        style = {
-          float: 'right',
-          width: `${100 - widthLeft}%`,
-          textAlign: 'right'
-        }
-      }
-      styles.push(style);
-    });
-    this.setState({
-      imageContainerStyles: styles
-    })
-  }
-
-
   goToNextStory = () => {
     this.props.state.images[this.state.story + 1] ? this.setState({ story: this.state.story + 1}) : this.setState({ story: 0})
     window.scrollTo(0, 0)
@@ -125,12 +132,6 @@ class Story extends Component {
     this.state.nextStoryStyle.opacity === 0.5 ? this.setState({ nextStoryStyle: {opacity: 1} }) : this.setState({ nextStoryStyle: {opacity: 0.5} })
   }
 
-
-  test = () => {
-    console.log('====================================');
-    console.log(this.state.imageContainerStyles);
-    console.log('====================================');
-  }
 
   render() {
     const story = this.state.story;
@@ -169,7 +170,6 @@ class Story extends Component {
               <img alt=''
                 src={`${this.homeURL}${this.props.state.mainImage[story + 1] || this.props.state.mainImage[0]}`} 
                 style={this.state.nextStoryStyle}
-                // style={this.nextStoryStyle()}
                 onMouseEnter={this.nextStoryStyle}
                 onMouseLeave={this.nextStoryStyle}
                 onClick={this.goToNextStory}
