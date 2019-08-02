@@ -37,8 +37,8 @@ class Home extends Component {
 
       const title2Style = {
         backgroundImage: this.state.photography === 'white' ? 
-        `linear-gradient(to right, transparent 20.8%, white 20.8%, white 100%)` : 
-        `linear-gradient(to right, transparent 20.8%, #3f3f3f 20.8%, #3f3f3f 100%)`
+        `linear-gradient(to right, #3f3f3f 20.9%, white 20.9%, white 100%)` : 
+        `linear-gradient(to right, #3f3f3f 20.9%, #3f3f3f 20.9%, #3f3f3f 100%)`
       }
 
       return (
@@ -51,8 +51,8 @@ class Home extends Component {
                   style={title1Style}>
                     Piroska Markus</h1>
               <h1 className='home-banner_title home-banner_title--2'>Piroska Markus</h1>
-              <h1 className='home-banner_title home-banner_title--photo'>Photography</h1>
-              <h1 className='home-banner_title home-banner_title--photo home-banner_title--photo--2'
+              {/* <h1 className='home-banner_title home-banner_title--photo'>Photography</h1> */}
+              <h1 className='home-banner_title home-banner_title--photo'
                   style={title2Style}>
                     Photography</h1>
             </div>

@@ -44,11 +44,10 @@
     -webkit-background-clip: text;
     font-family: 'Cormorant', serif;
 
-    @media ( max-width:  1024px ) {
+    @media ( max-width:  1025px ) {
       top: -44px;
       left: -116px;
       font-size: 70px;
-      background-size: 60vw 100px;
     }
 
     @media ( max-width:  500px ) {
@@ -64,10 +63,10 @@
     }
 
     &--2 {
-      background-image: linear-gradient(to bottom, $main-color 22.5%, transparent 22.5%, transparent 100%);
+      background-image: linear-gradient(to bottom, $main-color 22.7%, transparent 22.7%, transparent 100%);
 
-      @media ( max-width:  1024px ) {
-        background-image: linear-gradient(to bottom, $main-color 22.5%, transparent 22.5%, transparent 100%);
+      @media ( max-width:  1025px ) {
+        background-image: linear-gradient(to bottom, $main-color 14.7%, transparent 14.7%, transparent 100%);
       }
     }
 
@@ -82,21 +81,21 @@
         top: 150px;
       }
 
-      &--2 {
-        background-image: linear-gradient(to right, transparent 20.8%, white 20.8%, white 100%);
+      // &--2 {
+      //   background-image: linear-gradient(to right, transparent 20.8%, white 20.8%, white 100%);
 
-        @media ( max-width:  1024px ) {
-          background-image: linear-gradient(to right, transparent 18.9%, white 18.9%, white 100%);
-        }
+      //   @media ( max-width:  1024px ) {
+      //     background-image: linear-gradient(to right, transparent 18.9%, white 18.9%, white 100%);
+      //   }
 
-        @media ( max-width:  960px ) {
-          background-image: linear-gradient(to right, transparent 20.1%, white 20.1%, white 100%);
-        }
+      //   @media ( max-width:  960px ) {
+      //     background-image: linear-gradient(to right, transparent 20.1%, white 20.1%, white 100%);
+      //   }
 
-        @media ( max-width:  800px ) {
-          background-image: linear-gradient(to right, transparent 24.1%, white 24.1%, white 100%);
-        }
-      }
+      //   @media ( max-width:  800px ) {
+      //     background-image: linear-gradient(to right, transparent 24.1%, white 24.1%, white 100%);
+      //   }
+      // }
     }
   }
 }
