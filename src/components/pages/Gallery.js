@@ -19,13 +19,29 @@ class Gallery extends Component {
             zoomedImageURL: null,
             zoomedImageKey: null,
             imagesTotalHeight: 0,
-            imagesHeights: []
+            imagesHeights: [],
+            imageContainerVars: {columns: 0, extraspace: 0}
         }
     }
 
     homeURL = strapiAPI;
     
     componentDidMount() {
+      if(window.innerWidth > 800) {
+        this.setState({
+          imageContainerVars: {columns: 4, extraspace: 200}
+        })
+      }
+      if(window.innerWidth > 500 && window.innerWidth <= 800) {
+        this.setState({
+          imageContainerVars: {columns: 3, extraspace: 130}
+        })
+      }
+      if(window.innerWidth <= 500) {
+        this.setState({
+          imageContainerVars: {columns: 2, extraspace: 130}
+        })
+      }
         axios.get(`${this.homeURL}/galleries`)
           .then(response => {
             this.setState({
@@ -154,9 +170,9 @@ class Gallery extends Component {
         <div className='gallery-page'>
           <Navigation />
           <Accordion defaultActiveKey="0">  
-            <Accordion.Toggle onClick={this.test} as={Button} variant="link" eventKey="1" className='gallery-page_categories'>
+            <Accordion.Toggle onClick={this.test} as={Button} variant="link" eventKey="1" className='gallery-page_title'>
               Categories
-              <FontAwesomeIcon className='gallery-page_categories_icon' icon={faCaretDown}></FontAwesomeIcon>
+              <FontAwesomeIcon className='gallery-page_title_icon' icon={faCaretDown}></FontAwesomeIcon>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="1">
               <div className='gallery-page_category_container'>
@@ -167,7 +183,9 @@ class Gallery extends Component {
           </Accordion>
           <div className='gallery-page_container'>
             <div className='gallery-page_images'
-                 style={ this.state ? {height: `${this.state.imagesTotalHeight / 4 + 200}px`} : null}
+                 style={ !this.state ? null : 
+                       {height: `${this.state.imagesTotalHeight / this.state.imageContainerVars.columns + this.state.imageContainerVars.extraspace}px`}
+                }
             >
                 { this.state.filteredImages.map( (image, i) =>
                   <div className='gallery-page_images_image' key={i}>
