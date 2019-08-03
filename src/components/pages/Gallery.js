@@ -20,7 +20,8 @@ class Gallery extends Component {
             zoomedImageKey: null,
             imagesTotalHeight: 0,
             imagesHeights: [],
-            imageContainerVars: {columns: 0, extraspace: 0}
+            imageContainerVars: {columns: 0, extraspace: 0},
+            filter: 0
         }
     }
 
@@ -88,22 +89,19 @@ class Gallery extends Component {
                                   filteredImagesHeight += this.state.imagesHeights[i]
                                   return image.tags.includes(e.currentTarget.getAttribute('value'))
                               }                              
-                            })
-      console.log(filteredImagesHeight);
-      
+                            });
+
       this.setState({
         imagesTotalHeight: filteredImagesHeight,
         filteredImages: filteredImages
-      })
-      // this.setState({
-      //   filteredImages: this.state.images.filter( image => image.tags.includes(e.currentTarget.getAttribute('value')))
-      // });   
+      });
+ 
       window.scroll({
         top: 0,
         left: 0,
         behavior: 'smooth',
-      }); 
-    }
+      });
+    };
 
     showAllImages = () => {
       this.setState({
@@ -114,7 +112,7 @@ class Gallery extends Component {
         left: 0,
         behavior: 'smooth',
       }); 
-    }
+    };
 
     zoomOnImage = (e) => {
       console.log(e.currentTarget);
@@ -162,7 +160,7 @@ class Gallery extends Component {
 
 
     test = () => {
-      // console.log(this.state.images);      
+      // console.log(this.category.current);      
     }
 
     render() {

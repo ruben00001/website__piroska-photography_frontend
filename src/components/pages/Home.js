@@ -28,17 +28,32 @@ class Home extends Component {
     }
 
     render() {
-
-      const title1Style = {
+      let title1Style = {};
+      console.log(window.innerWidth > 1024);
+      
+      window.innerWidth > 1024 ? 
+      title1Style = {
         backgroundImage: this.state.piroska === 'white' ? 
         `linear-gradient(to right, #3f3f3f 21%, white 21%, white 100%)` : 
         `linear-gradient(to right, #3f3f3f 21%, #3f3f3f 21%, #3f3f3f 100%)`
+      } :
+      title1Style = {
+        backgroundImage: this.state.piroska === 'white' ? 
+        `linear-gradient(to right, #3f3f3f 14%, white 14%, white 100%)` : 
+        `linear-gradient(to right, #3f3f3f 14%, #3f3f3f 14%, #3f3f3f 100%)`
       }
 
-      const title2Style = {
+      let title2Style = {};
+      window.innerWidth > 1024 ? 
+      title2Style = {
         backgroundImage: this.state.photography === 'white' ? 
         `linear-gradient(to right, #3f3f3f 20.9%, white 20.9%, white 100%)` : 
         `linear-gradient(to right, #3f3f3f 20.9%, #3f3f3f 20.9%, #3f3f3f 100%)`
+      } :
+      title2Style = {
+        backgroundImage: this.state.photography === 'white' ? 
+        `linear-gradient(to right, #3f3f3f 14.51%, white 14.51%, white 100%)` : 
+        `linear-gradient(to right, #3f3f3f 14.51%, #3f3f3f 14.51%, #3f3f3f 100%)`
       }
 
       return (
