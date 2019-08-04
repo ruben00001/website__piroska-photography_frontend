@@ -1,1 +1,1 @@
-export const strapiAPI = 'http://localhost:1337'
+export const strapiAPI = 'https://amma-strapi.herokuapp.com'
