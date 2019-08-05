@@ -10,11 +10,10 @@ class Home extends Component {
       this.state = {
         image: null,
         piroska: 'white',
-        photography: 'white'
+        photography: 'white',
+        imageLoaded: false
       }
     }
-
-    homeURL = strapiAPI;
 
     componentDidMount() {
       Axios.get(`${this.homeURL}/homes`)
@@ -27,32 +26,53 @@ class Home extends Component {
         })
     }
 
+    homeURL = strapiAPI;
+
+    onImageLoad = () => {
+      this.setState({
+        imageLoaded: true
+      })
+    }
+
     render() {
-      let titleStyle = {};
+      let title1Style = {};
+      let title2Style = {};
 
       let gradient = 0;
       if( window.innerWidth > 1024) gradient = 20.9;
       if( window.innerWidth <= 1024) gradient = 14.13;
-      // if( window.innerWidth < 1024) gradient = 14.51;
 
-      titleStyle = {
+      title1Style = {
         backgroundImage: this.state.piroska === 'white' ? 
         `linear-gradient(to right, #3f3f3f ${gradient}%, white ${gradient}%, white 100%)` : 
         `linear-gradient(to right, #3f3f3f ${gradient}%, #3f3f3f ${gradient}%, #3f3f3f 100%)`
       }
+      title2Style = {
+        backgroundImage: this.state.photography === 'white' ? 
+        `linear-gradient(to right, #3f3f3f ${gradient}%, white ${gradient}%, white 100%)` : 
+        `linear-gradient(to right, #3f3f3f ${gradient}%, #3f3f3f ${gradient}%, #3f3f3f 100%)`
+      }
+
+      let loadingStyle = {};
+      if( this.state.imageLoaded === true ) loadingStyle = { backgroundColor: 'transparent' }
 
       return (
         <div className='home'>
-          <Navigation />
+
+          <div style={loadingStyle} className='loading-screen'></div>
+          
+          { this.state.imageLoaded && 
+            <Navigation />
+          }
           <div className='home_main-container'>
             <div className='home_image'>
-              <img src={`${this.state.image}`} alt=''></img>
+              <img onLoad={this.onImageLoad} src={`${this.state.image}`} alt=''></img>
               <h1 className='home_title' 
-                style={titleStyle}>
+                style={title1Style}>
                   Piroska Markus</h1>
               <h1 className='home_title home_title--2'>Piroska Markus</h1>
               <h1 className='home_title home_title--photo'
-                style={titleStyle}>
+                style={title2Style}>
                   Photography</h1>
             </div>
           </div>

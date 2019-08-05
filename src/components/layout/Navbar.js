@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import onClickOutside from "react-onclickoutside";
+// import onClickOutside from "react-onclickoutside";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
@@ -47,5 +47,5 @@ class Navigation extends Component {
   }
 }
 
-export default onClickOutside(Navigation);
-// export default Navbar
+// export default onClickOutside(Navigation);
+export default Navigation

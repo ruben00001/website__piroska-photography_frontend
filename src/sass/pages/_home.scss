@@ -124,4 +124,9 @@
   }
 }
 
-
+.loading-screen {
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  transition: background-color 1s ease-out;
+}
