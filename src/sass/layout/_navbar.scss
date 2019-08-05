@@ -12,8 +12,9 @@
   text-align: center;
 }
 
-.nav-link {
+.navbar-light .navbar-nav .nav-link {
   font-size: 30px;
+  color: $main-color;
 }
 
 .nav-link:last-of-type {
