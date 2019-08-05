@@ -29,7 +29,6 @@ class Home extends Component {
 
     render() {
       let title1Style = {};
-      console.log(window.innerWidth > 1024);
       
       window.innerWidth > 1024 ? 
       title1Style = {
@@ -61,12 +60,11 @@ class Home extends Component {
           <Navigation />
           <div className='home-banner'>
             <div className='home-banner_image'>
-              <img src={`${this.homeURL}${this.state.image}`} alt=''></img>
+              <img src={`${this.state.image}`} alt=''></img>
               <h1 className='home-banner_title' 
                   style={title1Style}>
                     Piroska Markus</h1>
               <h1 className='home-banner_title home-banner_title--2'>Piroska Markus</h1>
-              {/* <h1 className='home-banner_title home-banner_title--photo'>Photography</h1> */}
               <h1 className='home-banner_title home-banner_title--photo'
                   style={title2Style}>
                     Photography</h1>
