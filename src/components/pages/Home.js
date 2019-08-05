@@ -53,17 +53,14 @@ class Home extends Component {
         `linear-gradient(to right, #3f3f3f ${gradient}%, #3f3f3f ${gradient}%, #3f3f3f 100%)`
       }
 
-      let loadingStyle = {};
-      if( this.state.imageLoaded === true ) loadingStyle = { backgroundColor: 'transparent' }
+
 
       return (
         <div className='home'>
 
-          <div style={loadingStyle} className='loading-screen'></div>
-          
-          { this.state.imageLoaded && 
+
             <Navigation />
-          }
+          
           <div className='home_main-container'>
             <div className='home_image'>
               <img onLoad={this.onImageLoad} src={`${this.state.image}`} alt=''></img>
