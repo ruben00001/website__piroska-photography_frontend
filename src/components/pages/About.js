@@ -31,7 +31,7 @@ class About extends Component {
         <Navigation />
         <div className='about_container'>
           <div className='about_image'>
-            <img src={`${this.homeURL}${this.state.picture}`} alt=''></img>
+            <img src={`${this.state.picture}`} alt=''></img>
           </div>
           <div className='about_info'>
             <p className='about_info_text'>{this.state.description}</p>  

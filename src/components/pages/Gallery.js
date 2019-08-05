@@ -133,12 +133,12 @@ class Gallery extends Component {
     nextPicture = () => {
       if(this.state.zoomedImageKey + 1 === this.state.filteredImages.length) {
         this.setState({
-          zoomedImageURL: `${this.homeURL}${this.state.filteredImages[0].url}`,
+          zoomedImageURL: `${this.state.filteredImages[0].url}`,
           zoomedImageKey: 0
         });
       } else {
         this.setState({
-          zoomedImageURL: `${this.homeURL}${this.state.filteredImages[this.state.zoomedImageKey + 1].url}`,
+          zoomedImageURL: `${this.state.filteredImages[this.state.zoomedImageKey + 1].url}`,
           zoomedImageKey: this.state.zoomedImageKey + 1
         })
       }
@@ -147,12 +147,12 @@ class Gallery extends Component {
     previousPicture = () => {
       if(this.state.zoomedImageKey === 0) {
         this.setState({
-          zoomedImageURL: `${this.homeURL}${this.state.filteredImages[this.state.filteredImages.length - 1].url}`,
+          zoomedImageURL: `${this.state.filteredImages[this.state.filteredImages.length - 1].url}`,
           zoomedImageKey: this.state.filteredImages.length - 1
         });
       } else {
         this.setState({
-          zoomedImageURL: `${this.homeURL}${this.state.filteredImages[this.state.zoomedImageKey - 1].url}`,
+          zoomedImageURL: `${this.state.filteredImages[this.state.zoomedImageKey - 1].url}`,
           zoomedImageKey: this.state.zoomedImageKey - 1
         });
       }
@@ -187,7 +187,7 @@ class Gallery extends Component {
             >
                 { this.state.filteredImages.map( (image, i) =>
                   <div className='gallery-page_images_image' key={i}>
-                    <img src={`${this.homeURL}${image.url}`} value={i} alt=''
+                    <img src={`${image.url}`} value={i} alt=''
                       onClick={this.zoomOnImage}
                       onLoad={this.addHeight}
                     ></img>

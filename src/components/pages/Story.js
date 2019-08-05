@@ -94,12 +94,12 @@ class Story extends Component {
   nextPicture = () => {
     if(this.state.zoomedImageKey + 1 === this.props.state.images[this.story].length) {
       this.setState({
-        zoomedImageURL: `${this.homeURL}${this.props.state.images[this.story][0]}`,
+        zoomedImageURL: `${this.props.state.images[this.story][0]}`,
         zoomedImageKey: 0
       });
     } else {
       this.setState({
-        zoomedImageURL: `${this.homeURL}${this.props.state.images[this.story][this.state.zoomedImageKey + 1]}`,
+        zoomedImageURL: `${this.props.state.images[this.story][this.state.zoomedImageKey + 1]}`,
         zoomedImageKey: this.state.zoomedImageKey + 1
       })
     }
@@ -108,12 +108,12 @@ class Story extends Component {
   previousPicture = () => {
     if(this.state.zoomedImageKey === 0) {
       this.setState({
-        zoomedImageURL: `${this.homeURL}${this.props.state.images[this.story][this.props.state.images[this.story].length - 1]}`,
+        zoomedImageURL: `${this.props.state.images[this.story][this.props.state.images[this.story].length - 1]}`,
         zoomedImageKey: this.props.state.images[this.story].length - 1
       });
     } else {
       this.setState({
-        zoomedImageURL: `${this.homeURL}${this.props.state.images[this.story][this.state.zoomedImageKey - 1]}`,
+        zoomedImageURL: `${this.props.state.images[this.story][this.state.zoomedImageKey - 1]}`,
         zoomedImageKey: this.state.zoomedImageKey - 1
       });
     }
@@ -145,7 +145,7 @@ class Story extends Component {
             <div className={`story-page_images_image story-page_images_image--${i}`} key={i} 
                  style={this.state.imageContainerStyles[i]}
             >
-              <img src={`${this.homeURL}${imageURL}`} value={i} alt=''
+              <img src={`${imageURL}`} value={i} alt=''
                    onClick={this.zoomOnImage}
               ></img>
             </div>            
@@ -168,7 +168,7 @@ class Story extends Component {
             </div>
             <div className='story-page_next-story_image'>
               <img alt=''
-                src={`${this.homeURL}${this.props.state.mainImage[story + 1] || this.props.state.mainImage[0]}`} 
+                src={`${this.props.state.mainImage[story + 1] || this.props.state.mainImage[0]}`} 
                 style={this.state.nextStoryStyle}
                 onMouseEnter={this.nextStoryStyle}
                 onMouseLeave={this.nextStoryStyle}

@@ -64,7 +64,7 @@ class StoriesX extends Component {
                                         <div className={`stories-page_story_img-container stories-page_story_img-container--${i}`}
                                              style={story.style}      
                                         >
-                                            <img className={`stories-page_story_image stories-page_story_image--${i}`} src={`${this.homeURL}${story.mainImageURL}`} value={story.key} alt=''
+                                            <img className={`stories-page_story_image stories-page_story_image--${i}`} src={`${story.mainImageURL}`} value={story.key} alt=''
                                                 onClick={this.showStory} 
                                             >
                                             </img>
