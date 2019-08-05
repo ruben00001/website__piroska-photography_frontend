@@ -28,11 +28,6 @@
   border-color: rgb(63,63,63);
 } 
 
-@media (max-width: 1200px) {
-  .navbar {
-    background: white;
-  }
-}
 
 @media (max-width: 768px) { //on collapse
   .navbar {
@@ -48,5 +43,9 @@
   .nav-link {
     font-size: 30px;
     padding-top: 20px;
+  }
+
+  .navbar {
+    background: transparent;
   }
 }

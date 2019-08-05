@@ -1,33 +1,57 @@
-.home-container {
+.home {
   max-width: 100vw;
   max-height: 100vh;
   overflow: hidden;
-}
 
-.home-banner {
-  width: 100%;
-  height: 100vh;
+  // @media ( max-width: 500px ) {
+  //   background: #0B171F;
+  // }
+
+  &_main-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // align-content: center;
+    @media ( max-width: 500px ) {
+      align-items: flex-start;
+      // margin-top: 80px;
+    }
+  }
 
   &_image {
     position: relative;
-    width: 60vw;
-    height: 60vh;
-    max-width: 1200px;
-    margin-top: 20vh;
-    margin-left: 25%;
-    // border: 1px solid black;
-
+    width: 60%;
+    height: 60%;
+    transform: translateY(3vh);
+    transform: translateX(20%);
+    
+    @media (max-width: 1920px) {
+      transform: translateX(12%);
+    }
+    @media ( max-width:  1024px ) {
+      transform: translateX(5%);
+      width: 57%;
+      height: 57%;
+    }
     @media ( max-width: 500px ) {
-      width: 100vw;
-      height: 100vh;
-      margin-top: 0;
-      margin-left: 0;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      transform: translate(0, 0);
     }
 
     img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      max-width: 100%;
+      max-height: 100%;
+
+      @media ( max-width: 500px ) {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
   }
 
@@ -38,35 +62,51 @@
     font-size: 100px;
     font-weight: 400;
     color: transparent;
-    background-image: linear-gradient(to right, $main-color 21%, white 21%, white 100%);
+    // background-image: linear-gradient(to right, $main-color 21%, white 21%, white 100%);
     background-size: 800px 300px;
     background-clip: text;
     -webkit-background-clip: text;
     font-family: 'Cormorant', serif;
 
-    @media ( max-width:  1025px ) {
-      top: -44px;
-      left: -116px;
-      font-size: 70px;
+    @media (max-width: 1680px) {
+      font-size: 80px;
+      top: -58px;
     }
-
-    @media ( max-width:  500px ) {
-      top: 110px;
-      left: 20px;
+    @media (max-width: 1366px) {
+      font-size: 60px;
+      top: -42px;
+    }
+    @media ( max-width:  1024px ) {
+      top: -33px;
+      left: -113px;
       font-size: 50px;
+    }
+    @media ( max-width:  800px ) {
+      top: -33px;
+      font-size: 43px;
+    }
+    @media ( max-width:  500px ) {
+      top: 450px;
+      left: 20px;
+      font-size: 40px;
       color: white;
     }
 
     @media ( max-width:  359px ) {
-      font-size: 40px;
-      top: 100px;
+      top: 340px;
     }
 
     &--2 {
       background-image: linear-gradient(to bottom, $main-color 22.7%, transparent 22.7%, transparent 100%);
 
-      @media ( max-width:  1025px ) {
-        background-image: linear-gradient(to bottom, $main-color 14.7%, transparent 14.7%, transparent 100%);
+      @media (max-width: 1680px) {
+        background-image: linear-gradient(to bottom, $main-color 19.3%, transparent 19.3%, transparent 100%);
+      }
+      @media (max-width: 1366px) {
+        background-image: linear-gradient(to bottom, $main-color 14%, transparent 14%, transparent 100%);
+      }
+      @media ( max-width:  1024px ) {
+        background-image: linear-gradient(to bottom, $main-color 11%, transparent 11%, transparent 100%);
       }
     }
 
@@ -74,28 +114,14 @@
       top: 8%;
 
       @media ( max-width:  500px ) {
-        top: 170px;
+        top: 500px;
       } 
       
       @media ( max-width:  359px ) {
-        top: 150px;
+        top: 380px;
       }
-
-      // &--2 {
-      //   background-image: linear-gradient(to right, transparent 20.8%, white 20.8%, white 100%);
-
-      //   @media ( max-width:  1024px ) {
-      //     background-image: linear-gradient(to right, transparent 18.9%, white 18.9%, white 100%);
-      //   }
-
-      //   @media ( max-width:  960px ) {
-      //     background-image: linear-gradient(to right, transparent 20.1%, white 20.1%, white 100%);
-      //   }
-
-      //   @media ( max-width:  800px ) {
-      //     background-image: linear-gradient(to right, transparent 24.1%, white 24.1%, white 100%);
-      //   }
-      // }
     }
   }
 }
+
+

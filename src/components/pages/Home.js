@@ -28,49 +28,36 @@ class Home extends Component {
     }
 
     render() {
-      let title1Style = {};
-      
-      window.innerWidth > 1024 ? 
-      title1Style = {
-        backgroundImage: this.state.piroska === 'white' ? 
-        `linear-gradient(to right, #3f3f3f 21%, white 21%, white 100%)` : 
-        `linear-gradient(to right, #3f3f3f 21%, #3f3f3f 21%, #3f3f3f 100%)`
-      } :
-      title1Style = {
-        backgroundImage: this.state.piroska === 'white' ? 
-        `linear-gradient(to right, #3f3f3f 14%, white 14%, white 100%)` : 
-        `linear-gradient(to right, #3f3f3f 14%, #3f3f3f 14%, #3f3f3f 100%)`
-      }
+      let titleStyle = {};
 
-      let title2Style = {};
-      window.innerWidth > 1024 ? 
-      title2Style = {
-        backgroundImage: this.state.photography === 'white' ? 
-        `linear-gradient(to right, #3f3f3f 20.9%, white 20.9%, white 100%)` : 
-        `linear-gradient(to right, #3f3f3f 20.9%, #3f3f3f 20.9%, #3f3f3f 100%)`
-      } :
-      title2Style = {
-        backgroundImage: this.state.photography === 'white' ? 
-        `linear-gradient(to right, #3f3f3f 14.51%, white 14.51%, white 100%)` : 
-        `linear-gradient(to right, #3f3f3f 14.51%, #3f3f3f 14.51%, #3f3f3f 100%)`
+      let gradient = 0;
+      if( window.innerWidth > 1024) gradient = 20.9;
+      if( window.innerWidth <= 1024) gradient = 14.13;
+      // if( window.innerWidth < 1024) gradient = 14.51;
+
+      titleStyle = {
+        backgroundImage: this.state.piroska === 'white' ? 
+        `linear-gradient(to right, #3f3f3f ${gradient}%, white ${gradient}%, white 100%)` : 
+        `linear-gradient(to right, #3f3f3f ${gradient}%, #3f3f3f ${gradient}%, #3f3f3f 100%)`
       }
 
       return (
-        <div className='home-container'>
+        <div className='home'>
           <Navigation />
-          <div className='home-banner'>
-            <div className='home-banner_image'>
+          <div className='home_main-container'>
+            <div className='home_image'>
               <img src={`${this.state.image}`} alt=''></img>
-              <h1 className='home-banner_title' 
-                  style={title1Style}>
-                    Piroska Markus</h1>
-              <h1 className='home-banner_title home-banner_title--2'>Piroska Markus</h1>
-              <h1 className='home-banner_title home-banner_title--photo'
-                  style={title2Style}>
-                    Photography</h1>
+              <h1 className='home_title' 
+                style={titleStyle}>
+                  Piroska Markus</h1>
+              <h1 className='home_title home_title--2'>Piroska Markus</h1>
+              <h1 className='home_title home_title--photo'
+                style={titleStyle}>
+                  Photography</h1>
             </div>
           </div>
         </div>
+
       )
     }
   }

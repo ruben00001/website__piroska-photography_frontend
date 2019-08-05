@@ -16,13 +16,7 @@ class Navigation extends Component {
   changeMenu = () => {
     this.setState({
       menu: !this.state.menu
-    })
-  }
-
-  handleClickOutside = () => {
-    this.setState({
-      menu: false
-    })
+    });
   }
 
   navStyle = {
@@ -31,9 +25,15 @@ class Navigation extends Component {
   }
 
   render() {
+    let navbarStyle = {};
+    if(this.state.menu) {
+      navbarStyle = { background: 'white' };
+    }
     return (
-      <Navbar className='navbar fixed-top' bg="none" expand=''>
-        <Navbar.Toggle className='ml-auto navbar__control custom-toggler' aria-controls="basic-navbar-nav" />
+      <Navbar style={navbarStyle} className='navbar fixed-top' bg="none" expand=''>
+        <Navbar.Toggle className='ml-auto navbar__control custom-toggler' aria-controls="basic-navbar-nav" 
+         onClick={this.changeMenu} 
+        />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Link href="/">Home</Nav.Link>
