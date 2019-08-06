@@ -13,7 +13,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    // align-content: center;
+
     @media ( max-width: 500px ) {
       align-items: flex-start;
       // margin-top: 80px;
@@ -24,17 +24,17 @@
     position: relative;
     width: 60%;
     height: 60%;
-    transform: translateY(3vh);
-    transform: translateX(20%);
+    // transform: translateY(3vh);
+    // transform: translateX(20%);
     
-    @media (max-width: 1920px) {
-      transform: translateX(12%);
-    }
-    @media ( max-width:  1024px ) {
-      transform: translateX(5%);
-      width: 57%;
-      height: 57%;
-    }
+    // @media (max-width: 1920px) {
+    //   transform: translateX(12%);
+    // }
+    // @media ( max-width:  1024px ) {
+    //   transform: translateX(5%);
+    //   width: 57%;
+    //   height: 57%;
+    // }
     @media ( max-width: 500px ) {
       width: 100%;
       height: 100%;
@@ -124,9 +124,59 @@
   }
 }
 
-.loading-screen {
+.progress-container {
+  background-color: white;
+  border: $border;
   width: 100vw;
   height: 100vh;
+}
+
+.progress {
+  width: 30vw;
+  height: 40px;
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+}
+
+.progress-bar {
+  background-color: $main-color;
+}
+
+.loading-screen {
   background-color: white;
-  transition: background-color 1s ease-out;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+
+  }
+}
+
+.script-bf-box {
+  width: 50px;
+  height: 150px;
+  background: black;
+  margin: 5px;
+  will-change: transform;
+}
+
+.script-bf-box:hover {
+  background: hotpink;
+}
+
+.widget-container {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: black;
+  background: #f0f0f0;
 }
