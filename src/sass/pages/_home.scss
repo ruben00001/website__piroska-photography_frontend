@@ -125,25 +125,3 @@
   }
 }
 
-
-.loading-screen {
-  position: absolute;
-  top: 0;
-  left: 0;
-  // background-color: $main-color;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  h3 {
-    color: white;
-  }
-}
-
-.countup {
-  color: white;
-  font-family: $main-font;
-  font-size: 50px;
-}

@@ -6,6 +6,9 @@ import Navigation from '../layout/Navbar'
 import Story from './Story';
 import { Icons } from '../../data/Icons';
 import { strapiAPI } from '../../enviroment/strapi-api';
+import {Spring, config} from 'react-spring/renderprops';
+import { SquareLoader } from 'react-spinners';
+import CountUp from 'react-countup';
 
 
 class StoriesX extends Component {
@@ -19,7 +22,9 @@ class StoriesX extends Component {
             floats: [],
             storyPaddingTop: false,
             containerStyle: [],
-            windowWidth: window.innerWidth
+            windowWidth: window.innerWidth,
+            numImagesLoaded: 0,
+            imagesLoaded: false
         }
 
         this.setFloatAndPaddingTop = this.setFloatAndPaddingTop.bind(this);
@@ -31,7 +36,6 @@ class StoriesX extends Component {
         this.determineFloat();
         Axios.get(`${this.homeURL}/stories`)
             .then(response => {
-
                 this.setState({
                     stories: response.data.map( (story, i) => {
                         return (
@@ -64,7 +68,7 @@ class StoriesX extends Component {
                                         <div className={`stories-page_story_img-container stories-page_story_img-container--${i}`}
                                              style={story.style}      
                                         >
-                                            <img className={`stories-page_story_image stories-page_story_image--${i}`} src={`${story.mainImageURL}`} value={story.key} alt=''
+                                            <img onLoad={this.imagesOnLoad} className={`stories-page_story_image stories-page_story_image--${i}`} src={`${story.mainImageURL}`} value={story.key} alt=''
                                                 onClick={this.showStory} 
                                             >
                                             </img>
@@ -79,14 +83,7 @@ class StoriesX extends Component {
                     )
                 })
             });
-             
-            // .then(_ => {
-            //     console.log('====================================');
-            //     console.log(window.innerWidth);
-            //     console.log('====================================');
-            // })
     }
-
 
     determineFloat = () => {
         let floats = [];
@@ -221,11 +218,23 @@ class StoriesX extends Component {
     }
 
 
-
     test = () => {
         console.log(this.state.windowWidth);
     }
 
+    imagesOnLoad = () => {
+        this.setState({
+            numImagesLoaded: this.state.numImagesLoaded + 1
+        }, _ => {
+            if(this.state.numImagesLoaded === this.state.stories.length) {
+                setTimeout(() => {
+                    this.setState({
+                        imagesLoaded: true
+                    })
+                }, 1000);
+            }
+        })
+    }
 
 
     render() {
@@ -233,6 +242,22 @@ class StoriesX extends Component {
             <React.Fragment>
                 <Route exact path="/stories" render={() => 
                     <div className='stories-page'>
+                        <Spring
+                            from={{ backgroundColor: 'white', opacity: 1 }}
+                            to={{ opacity: !this.state.imagesLoaded ? 1 : 0 }}
+                            config={ config.mollases }
+                            >
+                            {props => 
+                                <div style={props} className='loading-screen'>
+                                    <CountUp className='counter counter--stories' 
+                                        end={100}
+                                        duration={10} 
+                                        useEasing={false}
+                                        onEnd={({ start }) => start()}
+                                    />
+                                </div>  
+                            }
+                        </Spring>
                         <Navigation />
                         <div className='stories-page_title'>
                             <h1 onClick={this.test}>Stories</h1>

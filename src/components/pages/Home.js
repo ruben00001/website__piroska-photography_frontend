@@ -3,10 +3,8 @@ import Axios from 'axios';
 import Navigation from '../layout/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import {Spring, config} from 'react-spring/renderprops';
-// import ProgressBar from 'react-bootstrap/ProgressBar';
-// import LoadingScreen from './Loading';
 import CountUp from 'react-countup';
-import Counter from './Counter';
+
 
 class Home extends Component {
     constructor(props) {
@@ -20,7 +18,7 @@ class Home extends Component {
         showPage: false,
         changeBackground: false,
         scalePage: false,
-        timerDuration: 30
+        timerDuration: 20
       }
     }
 
@@ -40,7 +38,7 @@ class Home extends Component {
     onImageLoad = () => {
       this.setState({
         imageLoaded: true,
-        timerDuration: 1
+        timerDuration: 5
       })
       setTimeout(_ => {
         this.setState({
@@ -56,7 +54,7 @@ class Home extends Component {
         this.setState({
           scalePage: true,
         })
-      }, 600)
+      }, 550)
     }
 
     render() {
@@ -76,24 +74,29 @@ class Home extends Component {
         backgroundImage: this.state.photography === 'white' ? 
         `linear-gradient(to right, #3f3f3f ${gradient}%, white ${gradient}%, white 100%)` : 
         `linear-gradient(to right, #3f3f3f ${gradient}%, #3f3f3f ${gradient}%, #3f3f3f 100%)`
-      }        
+      }
+      
+
 
       return (
  
                   
           <div className='home'>
             <Spring
-              from={{ backgroundColor: 'black' }}
-              to={{ backgroundColor: !this.state.changeBackground ? 'black' : '#3f3f3f' }}
+              from={{ backgroundColor: '#050505' }}
+              to={{ backgroundColor: !this.state.changeBackground ? '#050505' : '#222222' }}
               config={{ duration: 100 }}
               >
               {props => 
                 <div style={props} className='loading-screen'>
-                  <CountUp className='countup' 
-                    end={100}
-                    duration={this.state.timerDuration} 
-                    useEasing={false}
-                  />
+                  { !this.state.changeBackground && 
+                    <CountUp className='counter counter--home' 
+                      end={100}
+                      duration={this.state.timerDuration} 
+                      useEasing={false}
+                      onEnd={({ start }) => start()}
+                    />
+                  }
                 </div>  
               }
             </Spring>
@@ -102,8 +105,8 @@ class Home extends Component {
               <Navigation />
             }        
             <Spring
-              from={{ opacity: 0, transform: 'scale(0.8)' }}
-              to={{ opacity: !this.state.showPage ? 0 : 1, transform: !this.state.imageLoaded ? 'scale(0.8)' : 'scale(1)'  }}
+              from={{ opacity: 0, transform: 'scale(0.85)' }}
+              to={{ opacity: !this.state.showPage ? 0 : 1, transform: !this.state.scalePage ? 'scale(0.85)' : 'scale(1)'  }}
               config={ config.slow }
               >
               {props => 

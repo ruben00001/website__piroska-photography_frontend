@@ -1,0 +1,23 @@
+.loading-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.counter {
+  font-family: $main-font;
+  font-size: 50px;
+
+  &--home {
+    color: white;
+  }
+
+  &--stories {
+    color: $main-color;
+  }
+}
