@@ -65,7 +65,7 @@ class StoriesX extends Component {
             imageDimensions: [...this.state.imageDimensions, imageDimension]
         }, _ => {
             if(this.state.numImagesLoaded === this.state.stories.length) {
-                this.imgWidthMargin()
+                this.imgWidthMargin();
                 setTimeout(() => {
                     this.setState({
                         imagesLoaded: true
@@ -229,9 +229,9 @@ class StoriesX extends Component {
             <React.Fragment>
                 <Route exact path="/stories" render={() => 
                     <div className='stories-page'>
-                        {/* <Spring
-                            from={{ backgroundColor: 'white', opacity: 1 }}
-                            to={{ opacity: !this.state.imagesLoaded ? 1 : 0 }}
+                        <Spring
+                            from={{ backgroundColor: 'white', opacity: 1, zIndex: 0 }}
+                            to={{ opacity: !this.state.imagesLoaded ? 1 : 0, zIndex: !this.state.imagesLoaded ? 0 : -1 }}
                             config={ config.mollases }
                             >
                             {props => 
@@ -244,14 +244,15 @@ class StoriesX extends Component {
                                     />
                                 </div>  
                             }
-                        </Spring> */}
-                        <Navigation />
+                        </Spring>
+                        { this.state.imagesLoaded && 
+                          <Navigation />
+                        }
                         <div className='stories-page_title'>
                             <h1 onClick={this.test}>Stories</h1>
                             <p>of humans and the world told through my camera</p>
                         </div>
                         <div onClick={this.test} className='stories-page_story_container'>
-                            {/* {this.state.images} */}
                             { this.state.stories.map( (story, i) => 
                                 <div className={`stories-page_story stories-page_story--${i}`} key={i} 
                                      style={ this.state.containerStyles[i] ? this.state.containerStyles[i] : null} 
@@ -271,8 +272,8 @@ class StoriesX extends Component {
                                                 onClick={this.showStory} 
                                             >
                                             </img>
-                                            <div className={`stories-page_story_title stories-page_story_title--${i}`}>
-                                                <img src={require(`../../img/${this.Icons[this.randomIcon()]}`)} alt=''></img>
+                                            <div className={`stories-page_story_title`}>
+                                                {/* <img src={require(`../../img/${this.Icons[this.randomIcon()]}`)} alt=''></img> */}
                                                 <div></div> {/* makes a line don't delete */}
                                                 <h3>{story.title}</h3>
                                             </div>                                            

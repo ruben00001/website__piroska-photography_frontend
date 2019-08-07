@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle, faChevronRight, faChevronLeft, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import Navigation from '../layout/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
-import Dropdown from 'react-bootstrap/Dropdown';
 import { Accordion, Card, Button} from 'react-bootstrap/';
 
 class Gallery extends Component {
@@ -166,48 +165,50 @@ class Gallery extends Component {
     render() {
       return (
         <div className='gallery-page'>
-          <Navigation />
-          <Accordion defaultActiveKey="0">  
-            <Accordion.Toggle onClick={this.test} as={Button} variant="link" eventKey="1" className='gallery-page_title'>
-              Categories
-              <FontAwesomeIcon className='gallery-page_title_icon' icon={faCaretDown}></FontAwesomeIcon>
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="1">
-              <div className='gallery-page_category_container'>
-                <p onClick={this.showAllImages} className='gallery-page_category'>All</p>
-                { this.state.tags }
-              </div>
-            </Accordion.Collapse>
-          </Accordion>
           <div className='gallery-page_container'>
-            <div className='gallery-page_images'
-                 style={ !this.state ? null : 
-                       {height: `${this.state.imagesTotalHeight / this.state.imageContainerVars.columns + this.state.imageContainerVars.extraspace}px`}
-                }
-            >
-                { this.state.filteredImages.map( (image, i) =>
-                  <div className='gallery-page_images_image' key={i}>
-                    <img src={`${image.url}`} value={i} alt=''
-                      onClick={this.zoomOnImage}
-                      onLoad={this.addHeight}
-                    ></img>
-                  </div>
-                )}
-            </div>
-          </div>
-          { this.state.zoom && 
-            <div className='gallery-page_zoom-image'>
-              <div className='gallery-page_zoom-image_image'>
-                <img src={this.state.zoomedImageURL} alt=''></img>
-                <FontAwesomeIcon onClick={this.previousPicture} className='gallery-page_zoom-image_arrow gallery-page_zoom-image_arrow--left' icon={faChevronLeft}></FontAwesomeIcon>
-                <FontAwesomeIcon onClick={this.nextPicture} className='gallery-page_zoom-image_arrow gallery-page_zoom-image_arrow--right' icon={faChevronRight}></FontAwesomeIcon>
-                <FontAwesomeIcon onClick={this.exitZoom} className='gallery-page_zoom-image_x' icon={faTimesCircle}></FontAwesomeIcon>
+            <Navigation />
+            <Accordion defaultActiveKey="0">  
+              <Accordion.Toggle onClick={this.test} as={Button} variant="link" eventKey="1" className='gallery-page_title'>
+                Categories
+                <FontAwesomeIcon className='gallery-page_title_icon' icon={faCaretDown}></FontAwesomeIcon>
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey="1">
+                <div className='gallery-page_category_container'>
+                  <p onClick={this.showAllImages} className='gallery-page_category'>All</p>
+                  { this.state.tags }
+                </div>
+              </Accordion.Collapse>
+            </Accordion>
+            <div className='gallery-page_main-container'>
+              <div className='gallery-page_images'
+                  style={ !this.state ? null : 
+                        {height: `${this.state.imagesTotalHeight / this.state.imageContainerVars.columns + this.state.imageContainerVars.extraspace}px`}
+                  }
+              >
+                  { this.state.filteredImages.map( (image, i) =>
+                    <div className='gallery-page_images_image' key={i}>
+                      <img src={`${image.url}`} value={i} alt=''
+                        onClick={this.zoomOnImage}
+                        onLoad={this.addHeight}
+                      ></img>
+                    </div>
+                  )}
               </div>
             </div>
-          }
+            { this.state.zoom && 
+              <div className='gallery-page_zoom-image'>
+                <div className='gallery-page_zoom-image_image'>
+                  <img src={this.state.zoomedImageURL} alt=''></img>
+                  <FontAwesomeIcon onClick={this.previousPicture} className='gallery-page_zoom-image_arrow gallery-page_zoom-image_arrow--left' icon={faChevronLeft}></FontAwesomeIcon>
+                  <FontAwesomeIcon onClick={this.nextPicture} className='gallery-page_zoom-image_arrow gallery-page_zoom-image_arrow--right' icon={faChevronRight}></FontAwesomeIcon>
+                  <FontAwesomeIcon onClick={this.exitZoom} className='gallery-page_zoom-image_x' icon={faTimesCircle}></FontAwesomeIcon>
+                </div>
+              </div>
+            }
+          </div>
         </div>
-        )
-    }
+    )
+  }
 }
 
 export default Gallery;

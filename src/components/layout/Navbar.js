@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import onClickOutside from "react-onclickoutside";
+import onClickOutside from "react-onclickoutside";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
@@ -9,13 +9,13 @@ class Navigation extends Component {
     super(props)
 
     this.state = {
-      menu: false,
+      menuOpen: false,
     }
   }
 
   changeMenu = () => {
     this.setState({
-      menu: !this.state.menu
+      menuOpen: !this.state.menuOpen
     });
   }
 
@@ -24,13 +24,23 @@ class Navigation extends Component {
     color: this.props.color
   }
 
+  handleClickOutside = evt => {
+    this.setState({
+      menuOpen: false
+    })    
+  }
+
   render() {
     let navbarStyle = {};
     if(this.state.menu) {
       navbarStyle = { background: 'white' };
     }
     return (
-      <Navbar style={navbarStyle} className='navbar fixed-top' bg="none" expand=''>
+      <Navbar className='navbar fixed-top' bg="none" expand=''
+        style={navbarStyle} 
+        expanded={this.state.menuOpen}
+        onToggle={this.changeMenu}
+      >
         <Navbar.Toggle className='ml-auto navbar__control custom-toggler' aria-controls="basic-navbar-nav" 
          onClick={this.changeMenu} 
         />
@@ -47,5 +57,5 @@ class Navigation extends Component {
   }
 }
 
-// export default onClickOutside(Navigation);
-export default Navigation
+export default onClickOutside(Navigation);
+// export default Navigation

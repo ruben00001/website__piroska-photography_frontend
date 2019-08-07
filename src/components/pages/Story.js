@@ -45,8 +45,7 @@ class Story extends Component {
       });
     } else {
       images.forEach( (image, i) => {
-        if (i===0) style = { width: '100%' }
-        else if (i % 2 != 0) {
+        if (i % 2 === 0) {
           widthLeft = this.rdmNum(35, 65)
           style = {
             float: 'left',
@@ -138,6 +137,7 @@ class Story extends Component {
 
     return (
       <div className='story-page'>
+        <div className='story-page_main-container'>
         <Navigation />
         <h1 onClick={this.test}>{this.props.state.titles[story]}</h1>
         <div className='story-page_images'>
@@ -188,6 +188,7 @@ class Story extends Component {
               </div>
             </div>
           }
+        </div>
       </div>
     )
   }

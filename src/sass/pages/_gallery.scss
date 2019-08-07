@@ -1,13 +1,21 @@
 .gallery-page {
   z-index: -1;
-  margin-top: 100px;
-  margin-bottom: 300px;
-
-  @media ( max-width: 801px ) {
-    margin-top: 80px;
-  }
+  padding-bottom: 300px;
+  background-color: #FAF9F8;
+  min-width: 100vw;
+  min-height: 100vh;
+  max-width: 100vw;
+  overflow: hidden;
 
   &_container {
+    margin-top: 100px;
+
+    @media ( max-width: 801px ) {
+      margin-top: 80px;
+    }
+  }
+
+  &_main-container {
     margin: auto;
     max-width: 100vw;
   }

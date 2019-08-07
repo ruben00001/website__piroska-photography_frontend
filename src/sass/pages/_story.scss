@@ -1,23 +1,28 @@
 .story-page {
-  position: relative;
-  // border: 1px solid black;
-  max-width: 1600px;
-  margin: auto;
-  padding-top: 150px;
-  margin-bottom: 300px;
-  overflow: auto;
+  background-color: #FAF9F8;
 
-  @media (max-width: 1600px) {
-    max-width: 90%;
-  }
-  @media (max-width: 600px) {
-    margin-bottom: 130px;
+  &_main-container {
+    position: relative;
+    // border: 1px solid black;
+    max-width: 1600px;
+    margin: auto;
+    padding-top: 150px;
+    padding-bottom: 300px;
+    overflow: auto;
+  
+    @media (max-width: 1600px) {
+      max-width: 90%;
+    }
+    @media (max-width: 600px) {
+      margin-bottom: 130px;
+    }
   }
   
 
   h1 {
     // border: 1px solid black;
     font-size: 60px;
+    font-weight: bold;
     margin-left: 22%;
     padding-top: 100px;
 
