@@ -1,20 +1,61 @@
 import React from 'react'
-import { useSpring, animated } from 'react-spring'
-import range from 'lodash-es/range'
+import { Keyframes, animated } from 'react-spring/renderprops'
 
 
-const items = range(4)
-const interp = i => r => `translate3d(0, ${15 * Math.sin(r + (i * 2 * Math.PI) / 1.6)}px, 0)`
+const Container = Keyframes.Spring(async next => {
+  while (true) {
+    await next({
+      from: { radians: 0, color: '#247BA0' },
+      to: { radians: 2 * Math.PI },
+    })
+  }
+})
 
-export default function LoadingWidget() {
-  const { radians } = useSpring({
-    to: async next => {
-      while (1) await next({ radians: 2 * Math.PI })
-    },
-    from: { radians: 0 },
-    config: { duration: 3500 },
-    reset: true
-  })
-  return items.map(i => <animated.div key={i} className="script-bf-box" style={{ transform: radians.interpolate(interp(i)) }} />)
+export default class LoadingWidget extends React.PureComponent {
+  state = { items: ['item1', 'item2', 'item3'] }
+
+  render() {
+    const Content = ({ radians, color }) =>
+      this.state.items.map((_, i) => (
+        <animated.svg
+          key={i}
+          style={{
+            width: 50,
+            height: 50,
+            willChange: 'transform',
+            transform: radians.interpolate(
+              r =>
+                `translate3d(0, ${50 *
+                  Math.sin(r + (i * 2 * Math.PI) / 5)}px, 0)`
+            ),
+          }}
+          viewBox="0 0 400 400">
+          <animated.g fill={color} fillRule="evenodd">
+            <path id="path-1" d="M20,380 L380,380 L380,380 L200,20 L20,380 Z" />
+          </animated.g>
+        </animated.svg>
+      ))
+    const { items } = this.state
+
+    return (
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          background: 'palevioletred',
+        }}>
+        <Container
+          reset
+          native
+          keys={items}
+          //impl={TimingAnimation}
+          config={{ duration: 2000 /*, easing: Easing.linear*/ }}>
+          {Content}
+        </Container>
+      </div>
+    )
+  }
 }
-
