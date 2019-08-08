@@ -272,7 +272,6 @@ class StoriesX extends Component {
                                             >
                                             </img>
                                             <div className={`stories-page_story_title`}>
-                                                {/* <img src={require(`../../img/${this.Icons[this.randomIcon()]}`)} alt=''></img> */}
                                                 <div></div> {/* makes a line don't delete */}
                                                 <h3>{story.title}</h3>
                                             </div>                                            

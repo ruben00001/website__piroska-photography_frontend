@@ -4,23 +4,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle, faChevronRight, faChevronLeft, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import Navigation from '../layout/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
-import { Accordion, Card, Button} from 'react-bootstrap/';
+import { Accordion, Button} from 'react-bootstrap/';
+import {Spring, config} from 'react-spring/renderprops';
+import CountUp from 'react-countup';
 
 class Gallery extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            images: null,
-            tags: null,
-            filteredImages: [],
-            zoom: false,
-            zoomedImageURL: null,
-            zoomedImageKey: null,
-            imagesTotalHeight: 0,
-            imagesHeights: [],
-            imageContainerVars: {columns: 0, extraspace: 0},
-            filter: 0
+          initialLoad: true,
+          images: null,
+          tags: null,
+          filteredImages: [],
+          zoom: false,
+          zoomedImageURL: null,
+          zoomedImageKey: null,
+          imagesTotalHeight: 0,
+          imgContainerHeight: 0,
+          imagesHeights: [],
+          imageContainerVars: {columns: 0, extraspace: 0},
+          filter: 0,
+          numImages: 0,
+          numImagesLoaded: 0,
+          imagesLoaded: false
         }
     }
 
@@ -29,7 +36,7 @@ class Gallery extends Component {
     componentDidMount() {
       if(window.innerWidth > 800) {
         this.setState({
-          imageContainerVars: {columns: 4, extraspace: 200}
+          imageContainerVars: {columns: 4, extraspace: 140}
         })
       }
       if(window.innerWidth > 500 && window.innerWidth <= 800) {
@@ -58,7 +65,7 @@ class Gallery extends Component {
           .then( _ => {
             this.setState({
               filteredImages: this.state.images,
-              numberImages: this.state.images.length
+              numImages: this.state.images.length
             });
           });
         axios.get(`${this.homeURL}/tags`)
@@ -66,32 +73,55 @@ class Gallery extends Component {
             this.setState({
               tags: response.data.map(tag => {
                 return (
-                  <p onClick={this.filterImages} className='gallery-page_category' key={tag.id} value={tag.name}>{tag.name}</p>
+                  {
+                    name: tag.name,
+                    id: tag.id
+                  }
                 )
               })
             });
-          });
+          })
     }
 
-    addHeight = (e) => {
+    imagesOnLoad = (e) => {
       this.setState({
         imagesTotalHeight: this.state.imagesTotalHeight + e.currentTarget.offsetHeight,
-        imagesHeights: [...this.state.imagesHeights, e.currentTarget.offsetHeight]
+        imagesHeights: [...this.state.imagesHeights, e.currentTarget.offsetHeight],
+        numImagesLoaded: this.state.numImagesLoaded + 1
+      }, _ => {
+        if(this.state.numImagesLoaded === this.state.numImages) {
+          this.setState({
+            imgContainerHeight: this.state.imagesTotalHeight / this.state.imageContainerVars.columns + this.state.imageContainerVars.extraspace,
+            initialLoad: false
+          })
+          setTimeout(() => {
+            this.setState({
+                imagesLoaded: true
+            })
+        }, 1000);
+        }
       })
     }
 
+
     filterImages = (e) => { 
       let filteredImagesHeight = 0;
+      let imagesContainerHeight = 0;
       
       let filteredImages = this.state.images.filter((image, i) => {                   
                               if(image.tags.includes(e.currentTarget.getAttribute('value'))) {
                                   filteredImagesHeight += this.state.imagesHeights[i]
+                                  console.log(this.state.imagesHeights[i]);
+                                  
                                   return image.tags.includes(e.currentTarget.getAttribute('value'))
                               }                              
                             });
 
+      imagesContainerHeight = (filteredImagesHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace;
+      console.log(imagesContainerHeight);
+      
       this.setState({
-        imagesTotalHeight: filteredImagesHeight,
+        imgContainerHeight: imagesContainerHeight,
         filteredImages: filteredImages
       });
  
@@ -103,14 +133,13 @@ class Gallery extends Component {
     };
 
     showAllImages = () => {
+      let imagesContainerHeight = (this.state.imagesTotalHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace;
+      console.log(this.state.imagesTotalHeight, imagesContainerHeight);
+      
       this.setState({
-        filteredImages: this.state.images
+        filteredImages: this.state.images,
+        imgContainerHeight: imagesContainerHeight
       });
-      window.scroll({
-        top: 0,
-        left: 0,
-        behavior: 'smooth',
-      }); 
     };
 
     zoomOnImage = (e) => {
@@ -159,14 +188,32 @@ class Gallery extends Component {
 
 
     test = () => {
-      // console.log(this.category.current);      
+      console.log(this.state.imagesHeights);      
     }
 
     render() {
       return (
         <div className='gallery-page'>
-          <div className='gallery-page_container'>
+          <Spring
+            from={{ backgroundColor: 'white', opacity: 1, zIndex: 1 }}
+            to={{ opacity: !this.state.imagesLoaded ? 1 : 0, zIndex: !this.state.imagesLoaded ? 1 : -1 }}
+            config={ config.mollases }
+            >
+            {props => 
+                <div style={props} className='loading-screen'>
+                    <CountUp className='counter counter--stories' 
+                        end={100}
+                        duration={14} 
+                        useEasing={false}
+                        onEnd={({ start }) => start()}
+                    />
+                </div>  
+            }
+          </Spring>
+          { this.state.imagesLoaded && 
             <Navigation />
+          }
+          <div className='gallery-page_container'>
             <Accordion defaultActiveKey="0">  
               <Accordion.Toggle onClick={this.test} as={Button} variant="link" eventKey="1" className='gallery-page_title'>
                 Categories
@@ -175,21 +222,23 @@ class Gallery extends Component {
               <Accordion.Collapse eventKey="1">
                 <div className='gallery-page_category_container'>
                   <p onClick={this.showAllImages} className='gallery-page_category'>All</p>
-                  { this.state.tags }
+                  { this.state.tags && this.state.tags.map( tag =>
+                    <p onClick={this.filterImages} className='gallery-page_category' key={tag.id} value={tag.name}>{tag.name}</p>
+                  )}
                 </div>
               </Accordion.Collapse>
             </Accordion>
-            <div className='gallery-page_main-container'>
+            <div className='gallery-page_images-container'>
               <div className='gallery-page_images'
                   style={ !this.state ? null : 
-                        {height: `${this.state.imagesTotalHeight / this.state.imageContainerVars.columns + this.state.imageContainerVars.extraspace}px`}
+                        {height: `${this.state.imgContainerHeight}px`}
                   }
               >
                   { this.state.filteredImages.map( (image, i) =>
                     <div className='gallery-page_images_image' key={i}>
                       <img src={`${image.url}`} value={i} alt=''
                         onClick={this.zoomOnImage}
-                        onLoad={this.addHeight}
+                        onLoad={this.state.initialLoad ? this.imagesOnLoad : null}
                       ></img>
                     </div>
                   )}
