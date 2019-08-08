@@ -111,7 +111,6 @@ class Gallery extends Component {
       let filteredImages = this.state.images.filter((image, i) => {                   
                               if(image.tags.includes(e.currentTarget.getAttribute('value'))) {
                                   filteredImagesHeight += this.state.imagesHeights[i]
-                                  console.log(this.state.imagesHeights[i]);
                                   
                                   return image.tags.includes(e.currentTarget.getAttribute('value'))
                               }                              
@@ -193,7 +192,9 @@ class Gallery extends Component {
 
     render() {
       return (
-        <div className='gallery-page'>
+        <div className='gallery-page'
+          // style={overfl}
+        >
           <Spring
             from={{ backgroundColor: 'white', opacity: 1, zIndex: 1 }}
             to={{ opacity: !this.state.imagesLoaded ? 1 : 0, zIndex: !this.state.imagesLoaded ? 1 : -1 }}
@@ -245,12 +246,12 @@ class Gallery extends Component {
               </div>
             </div>
             { this.state.zoom && 
-              <div className='gallery-page_zoom-image'>
-                <div className='gallery-page_zoom-image_image'>
+              <div className='gallery-page_zoom'>
+                <div className='gallery-page_zoom_image'>
                   <img src={this.state.zoomedImageURL} alt=''></img>
-                  <FontAwesomeIcon onClick={this.previousPicture} className='gallery-page_zoom-image_arrow gallery-page_zoom-image_arrow--left' icon={faChevronLeft}></FontAwesomeIcon>
-                  <FontAwesomeIcon onClick={this.nextPicture} className='gallery-page_zoom-image_arrow gallery-page_zoom-image_arrow--right' icon={faChevronRight}></FontAwesomeIcon>
-                  <FontAwesomeIcon onClick={this.exitZoom} className='gallery-page_zoom-image_x' icon={faTimesCircle}></FontAwesomeIcon>
+                  <FontAwesomeIcon onClick={this.previousPicture} className='gallery-page_zoom_arrow gallery-page_zoom_arrow--left' icon={faChevronLeft}></FontAwesomeIcon>
+                  <FontAwesomeIcon onClick={this.nextPicture} className='gallery-page_zoom_arrow gallery-page_zoom_arrow--right' icon={faChevronRight}></FontAwesomeIcon>
+                  <FontAwesomeIcon onClick={this.exitZoom} className='gallery-page_zoom_x' icon={faTimesCircle}></FontAwesomeIcon>
                 </div>
               </div>
             }

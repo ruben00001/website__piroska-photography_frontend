@@ -78,9 +78,7 @@ class Home extends Component {
       
 
 
-      return (
- 
-                  
+      return (   
           <div className='home'>
             <Spring
               from={{ backgroundColor: '#050505' }}

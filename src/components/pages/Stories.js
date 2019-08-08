@@ -26,7 +26,8 @@ class StoriesX extends Component {
             imagesLoaded: false,
             containerStyles: [],
             imageDimensions: [],
-            imageStyles: []
+            imageStyles: [],
+            counterDuration: 20
         }
 
         this.setFloatAndPaddingTop = this.setFloatAndPaddingTop.bind(this);
@@ -65,11 +66,14 @@ class StoriesX extends Component {
         }, _ => {
             if(this.state.numImagesLoaded === this.state.stories.length) {
                 this.imgWidthMargin();
+                this.setState({
+                    counterDuration: 5
+                })
                 setTimeout(() => {
                     this.setState({
                         imagesLoaded: true
                     })
-                }, 1000);
+                }, 350);
             }
         })
     }
@@ -237,7 +241,7 @@ class StoriesX extends Component {
                                 <div style={props} className='loading-screen'>
                                     <CountUp className='counter counter--stories' 
                                         end={100}
-                                        duration={10} 
+                                        duration={this.state.counterDuration} 
                                         useEasing={false}
                                         onEnd={({ start }) => start()}
                                     />

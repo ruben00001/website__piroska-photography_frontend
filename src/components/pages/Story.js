@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faTimes, faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import Navigation from '../layout/Navbar';
