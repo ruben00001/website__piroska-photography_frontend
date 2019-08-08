@@ -103,7 +103,6 @@
     z-index: 1000000; /* higher than index button */
     position: fixed;
     top: 0;
-    left: -11.1px; /* to counter a bug where right position was -22.2 for some reason */
     width: 100vw;
     height: 100vh;
     background: rgba(5, 5, 5, .8);
