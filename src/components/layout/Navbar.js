@@ -9,7 +9,7 @@ class Navigation extends Component {
     super(props)
 
     this.state = {
-      menuOpen: false,
+      menuOpen: false
     }
   }
 
@@ -19,20 +19,15 @@ class Navigation extends Component {
     });
   }
 
-  navStyle = {
-    background: this.props.background,
-    color: this.props.color
-  }
-
   handleClickOutside = evt => {
     this.setState({
       menuOpen: false
-    })    
+    });  
   }
 
   render() {
     let navbarStyle = {};
-    if(this.state.menu) {
+    if(this.state.menuOpen) {
       navbarStyle = { background: 'white' };
     }
     return (

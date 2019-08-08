@@ -7,7 +7,6 @@ import Story from './Story';
 import { Icons } from '../../data/Icons';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import {Spring, config} from 'react-spring/renderprops';
-import { SquareLoader } from 'react-spinners';
 import CountUp from 'react-countup';
 
 
@@ -36,7 +35,7 @@ class StoriesX extends Component {
     homeURL = strapiAPI;
 
     componentDidMount() {
-        Axios.get(`${this.homeURL}/stories`)
+        Axios.get(`${this.homeURL}/essays`)
             .then(response => {
                 this.setState({
                     stories: response.data.map( (story, i) => {
@@ -44,7 +43,7 @@ class StoriesX extends Component {
                             { 
                                 title: story.title,
                                 mainImageURL: story.mainimage.url,  
-                                imageURLs: story.images.map(image => image.url),
+                                imageURLs: story.image.map(image => image.url),
                                 key: story.id
                             }
                         )
@@ -230,8 +229,8 @@ class StoriesX extends Component {
                 <Route exact path="/stories" render={() => 
                     <div className='stories-page'>
                         <Spring
-                            from={{ backgroundColor: 'white', opacity: 1, zIndex: 0 }}
-                            to={{ opacity: !this.state.imagesLoaded ? 1 : 0, zIndex: !this.state.imagesLoaded ? 0 : -1 }}
+                            from={{ backgroundColor: 'white', opacity: 1, zIndex: 1 }}
+                            to={{ opacity: !this.state.imagesLoaded ? 1 : 0, zIndex: !this.state.imagesLoaded ? 1 : -1 }}
                             config={ config.mollases }
                             >
                             {props => 

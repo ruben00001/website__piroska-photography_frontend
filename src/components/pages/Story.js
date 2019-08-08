@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faTimes, faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import Navigation from '../layout/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
+import {Spring, config} from 'react-spring/renderprops';
+import CountUp from 'react-countup';
 
 class Story extends Component {
   constructor(props) {
@@ -17,7 +19,10 @@ class Story extends Component {
       zoomedImageURL: null,
       zoomedImageKey: null,
       imageContainerStyles: [],
-      nextStoryStyle: {opacity: 0.5}
+      nextStoryStyle: {opacity: 0.5},
+      numImages: 0,
+      numImagesLoaded: 0,
+      imagesLoaded: false
     }
 
   }
@@ -28,7 +33,8 @@ class Story extends Component {
     window.scrollTo(0, 0) // a bug where page loads to bottom
     this.setImageContainerStyles(this.props.state.images[this.props.state.story]);
     this.setState({
-      story: this.props.state.story
+      story: this.props.state.story,
+      numImages: this.props.state.images[this.props.state.story].length
     })
   }
 
@@ -131,12 +137,41 @@ class Story extends Component {
     this.state.nextStoryStyle.opacity === 0.5 ? this.setState({ nextStoryStyle: {opacity: 1} }) : this.setState({ nextStoryStyle: {opacity: 0.5} })
   }
 
+  imagesOnLoad = () => {
+    this.setState({
+        numImagesLoaded: this.state.numImagesLoaded + 1,
+    }, _ => {
+        if(this.state.numImagesLoaded === this.state.numImages) {
+            setTimeout(() => {
+                this.setState({
+                    imagesLoaded: true
+                })
+            }, 1000);
+        }
+    })
+  }
 
   render() {
     const story = this.state.story;
 
     return (
       <div className='story-page'>
+        <Spring
+          from={{ backgroundColor: 'white', opacity: 1, zIndex: 1 }}
+          to={{ opacity: !this.state.imagesLoaded ? 1 : 0, zIndex: !this.state.imagesLoaded ? 1 : -1 }}
+          config={ config.mollases }
+          >
+          {props => 
+              <div style={props} className='loading-screen'>
+                  <CountUp className='counter counter--stories' 
+                      end={100}
+                      duration={10} 
+                      useEasing={false}
+                      onEnd={({ start }) => start()}
+                  />
+              </div>  
+          }
+        </Spring>
         <div className='story-page_main-container'>
         <Navigation />
         <h1 onClick={this.test}>{this.props.state.titles[story]}</h1>
@@ -146,7 +181,8 @@ class Story extends Component {
                  style={this.state.imageContainerStyles[i]}
             >
               <img src={`${imageURL}`} value={i} alt=''
-                   onClick={this.zoomOnImage}
+                onLoad={this.imagesOnLoad}
+                onClick={this.zoomOnImage}
               ></img>
             </div>            
           ) }
