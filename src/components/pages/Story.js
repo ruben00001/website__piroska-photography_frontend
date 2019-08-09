@@ -73,10 +73,18 @@ class Story extends Component {
     })
   }
 
-  displayImage = (e) => {
-      this.setState({
-        currentImage: Number(e.currentTarget.getAttribute('value'))
-      })
+  imagesOnLoad = () => {
+    this.setState({
+        numImagesLoaded: this.state.numImagesLoaded + 1,
+    }, _ => {
+        if(this.state.numImagesLoaded === this.state.numImages) {
+            setTimeout(() => {
+                this.setState({
+                    imagesLoaded: true
+                })
+            }, 1000);
+        }
+    })
   }
 
   zoomOnImage = (e) => {
@@ -135,20 +143,6 @@ class Story extends Component {
 
   nextStoryStyle = () => {
     this.state.nextStoryStyle.opacity === 0.5 ? this.setState({ nextStoryStyle: {opacity: 1} }) : this.setState({ nextStoryStyle: {opacity: 0.5} })
-  }
-
-  imagesOnLoad = () => {
-    this.setState({
-        numImagesLoaded: this.state.numImagesLoaded + 1,
-    }, _ => {
-        if(this.state.numImagesLoaded === this.state.numImages) {
-            setTimeout(() => {
-                this.setState({
-                    imagesLoaded: true
-                })
-            }, 1000);
-        }
-    })
   }
 
   render() {
@@ -217,15 +211,15 @@ class Story extends Component {
           </div>
         </div>
         { this.state.zoom && 
-            <div className='gallery-page_zoom-image'>
-              <div className='gallery-page_zoom-image_image'>
-                <img src={this.state.zoomedImageURL} alt=''></img>
-                <FontAwesomeIcon onClick={this.previousPicture} className='gallery-page_zoom-image_arrow gallery-page_zoom-image_arrow--left' icon={faChevronLeft}></FontAwesomeIcon>
-                <FontAwesomeIcon onClick={this.nextPicture} className='gallery-page_zoom-image_arrow gallery-page_zoom-image_arrow--right' icon={faChevronRight}></FontAwesomeIcon>
-                <FontAwesomeIcon onClick={this.exitZoom} className='gallery-page_zoom-image_x' icon={faTimes}></FontAwesomeIcon>
+              <div className='gallery-page_zoom'>
+                <div className='gallery-page_zoom_image'>
+                  <img src={this.state.zoomedImageURL} alt=''></img>
+                  <FontAwesomeIcon onClick={this.previousPicture} className='gallery-page_zoom_arrow gallery-page_zoom_arrow--left' icon={faChevronLeft}></FontAwesomeIcon>
+                  <FontAwesomeIcon onClick={this.nextPicture} className='gallery-page_zoom_arrow gallery-page_zoom_arrow--right' icon={faChevronRight}></FontAwesomeIcon>
+                  <FontAwesomeIcon onClick={this.exitZoom} className='gallery-page_zoom_x' icon={faTimes}></FontAwesomeIcon>
+                </div>
               </div>
-            </div>
-          }
+            }
         </div>
       </div>
     )

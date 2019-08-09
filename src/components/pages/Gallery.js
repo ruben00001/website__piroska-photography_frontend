@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimesCircle, faChevronRight, faChevronLeft, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faChevronRight, faChevronLeft, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import Navigation from '../layout/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import { Accordion, Button} from 'react-bootstrap/';
@@ -251,7 +251,7 @@ class Gallery extends Component {
                   <img src={this.state.zoomedImageURL} alt=''></img>
                   <FontAwesomeIcon onClick={this.previousPicture} className='gallery-page_zoom_arrow gallery-page_zoom_arrow--left' icon={faChevronLeft}></FontAwesomeIcon>
                   <FontAwesomeIcon onClick={this.nextPicture} className='gallery-page_zoom_arrow gallery-page_zoom_arrow--right' icon={faChevronRight}></FontAwesomeIcon>
-                  <FontAwesomeIcon onClick={this.exitZoom} className='gallery-page_zoom_x' icon={faTimesCircle}></FontAwesomeIcon>
+                  <FontAwesomeIcon onClick={this.exitZoom} className='gallery-page_zoom_x' icon={faTimes}></FontAwesomeIcon>
                 </div>
               </div>
             }
