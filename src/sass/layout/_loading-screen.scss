@@ -21,3 +21,15 @@
     color: $main-color;
   }
 }
+
+.counter-container {
+  // display: flex;
+  // justify-content: center;
+  // border: 1px solid white;
+  text-align: center;
+
+  p {
+    margin-top: 10px;
+    color: white;
+  }
+}

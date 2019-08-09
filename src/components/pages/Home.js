@@ -18,7 +18,8 @@ class Home extends Component {
         showPage: false,
         changeBackground: false,
         scalePage: false,
-        timerDuration: 20
+        timerDuration: 20,
+        showLoadingText: 0,
       }
     }
 
@@ -87,13 +88,31 @@ class Home extends Component {
               >
               {props => 
                 <div style={props} className='loading-screen'>
-                  { !this.state.changeBackground && 
-                    <CountUp className='counter counter--home' 
-                      end={100}
-                      duration={this.state.timerDuration} 
-                      useEasing={false}
-                      onEnd={({ start }) => start()}
-                    />
+                  { !this.state.changeBackground &&
+                    <div className='counter-container'> 
+                      <CountUp className='counter counter--home' 
+                        end={100}
+                        duration={this.state.timerDuration} 
+                        useEasing={false}
+                        onEnd={({ start }) => {
+                          start(); 
+                          this.setState({ showLoadingText: 1 }, () => setTimeout(() => {
+                                                                  this.setState({
+                                                                    showLoadingText: 0
+                                                                  })
+                                                                }, 800))
+                        }}
+                      />
+                      <Spring
+                        from={{ opacity: 0 }}
+                        to={{ opacity: this.state.showLoadingText }}
+                      >
+                        {propsB =>
+                          <p style={propsB}>Loading</p>
+                        }
+                        
+                      </Spring>
+                    </div>
                   }
                 </div>  
               }
