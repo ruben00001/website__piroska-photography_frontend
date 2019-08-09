@@ -1,11 +1,10 @@
 import React from 'react';
 import './main.scss';
 import {BrowserRouter, Route} from 'react-router-dom';
-import Home from './components/pages/Home';
-import Gallery from './components/pages/Gallery';
-import Stories from './components/pages/Stories';
-import About from './components/pages/About';
-
+import Home from './jsx/pages/Home';
+import Gallery from './jsx/pages/Gallery';
+import Stories from './jsx/pages/Stories';
+import About from './jsx/pages/About';
 
 
 function App() {

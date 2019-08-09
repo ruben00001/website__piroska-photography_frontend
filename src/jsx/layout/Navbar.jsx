@@ -53,4 +53,3 @@ class Navigation extends Component {
 }
 
 export default onClickOutside(Navigation);
-// export default Navigation

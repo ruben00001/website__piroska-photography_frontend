@@ -132,8 +132,8 @@ class Home extends Component {
                     <img onLoad={this.onImageLoad} src={`${this.state.image}`} alt=''></img>
                     <h1 className='home_title' 
                       style={title1Style}>
-                        Piroska Markus</h1>
-                    <h1 className='home_title home_title--2'>Piroska Markus</h1>
+                        Piros</h1>
+                    <h1 className='home_title home_title--2'>Piros</h1>
                     <h1 className='home_title home_title--photo'
                       style={title2Style}>
                         Photography</h1>

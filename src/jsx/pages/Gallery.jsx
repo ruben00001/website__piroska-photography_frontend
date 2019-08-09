@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faChevronRight, faChevronLeft, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import Navigation from '../layout/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import { Accordion, Button} from 'react-bootstrap/';
 import {Spring, config} from 'react-spring/renderprops';
 import CountUp from 'react-countup';
+import { withRouter } from "react-router-dom";
+import Zoom from '../components/Zoom';
 
 class Gallery extends Component {
     constructor(props) {
@@ -142,8 +144,6 @@ class Gallery extends Component {
     };
 
     zoomOnImage = (e) => {
-      console.log(e.currentTarget);
-      
       this.setState({
         zoomedImageURL: e.currentTarget.src,
         zoom: true,
@@ -246,14 +246,12 @@ class Gallery extends Component {
               </div>
             </div>
             { this.state.zoom && 
-              <div className='gallery-page_zoom'>
-                <div className='gallery-page_zoom_image'>
-                  <img src={this.state.zoomedImageURL} alt=''></img>
-                  <FontAwesomeIcon onClick={this.previousPicture} className='gallery-page_zoom_arrow gallery-page_zoom_arrow--left' icon={faChevronLeft}></FontAwesomeIcon>
-                  <FontAwesomeIcon onClick={this.nextPicture} className='gallery-page_zoom_arrow gallery-page_zoom_arrow--right' icon={faChevronRight}></FontAwesomeIcon>
-                  <FontAwesomeIcon onClick={this.exitZoom} className='gallery-page_zoom_x' icon={faTimes}></FontAwesomeIcon>
-                </div>
-              </div>
+              <Zoom 
+                zoomedImageURL = {this.state.zoomedImageURL}
+                previousPicture = {this.previousPicture}
+                nextPicture = {this.nextPicture}
+                exitZoom = {this.exitZoom}
+              />
             }
           </div>
         </div>
@@ -261,4 +259,4 @@ class Gallery extends Component {
   }
 }
 
-export default Gallery;
+export default withRouter(Gallery);

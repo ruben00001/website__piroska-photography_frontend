@@ -6,6 +6,7 @@ import Navigation from '../layout/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import {Spring, config} from 'react-spring/renderprops';
 import CountUp from 'react-countup';
+import Zoom from '../components/Zoom';
 
 class Story extends Component {
   constructor(props) {
@@ -211,15 +212,13 @@ class Story extends Component {
           </div>
         </div>
         { this.state.zoom && 
-              <div className='gallery-page_zoom'>
-                <div className='gallery-page_zoom_image'>
-                  <img src={this.state.zoomedImageURL} alt=''></img>
-                  <FontAwesomeIcon onClick={this.previousPicture} className='gallery-page_zoom_arrow gallery-page_zoom_arrow--left' icon={faChevronLeft}></FontAwesomeIcon>
-                  <FontAwesomeIcon onClick={this.nextPicture} className='gallery-page_zoom_arrow gallery-page_zoom_arrow--right' icon={faChevronRight}></FontAwesomeIcon>
-                  <FontAwesomeIcon onClick={this.exitZoom} className='gallery-page_zoom_x' icon={faTimes}></FontAwesomeIcon>
-                </div>
-              </div>
-            }
+          <Zoom 
+            zoomedImageURL = {this.state.zoomedImageURL}
+            previousPicture = {this.previousPicture}
+            nextPicture = {this.nextPicture}
+            exitZoom = {this.exitZoom}
+          />
+        }
         </div>
       </div>
     )
