@@ -1,7 +1,9 @@
 @import "./sass/base/base";
 
-@import "./sass/layout/navbar";
+@import "./sass/components/zoom";
 @import "./sass/components/loading-screen";
+
+@import "./sass/layout/navbar";
 
 @import "./sass/pages/home";
 @import "./sass/pages/stories";

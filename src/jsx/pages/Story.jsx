@@ -23,7 +23,8 @@ class Story extends Component {
       nextStoryStyle: {opacity: 0.5},
       numImages: 0,
       numImagesLoaded: 0,
-      imagesLoaded: false
+      imagesLoaded: false,
+      pgnationPercent: 0
     }
 
   }
@@ -217,6 +218,9 @@ class Story extends Component {
             previousPicture = {this.previousPicture}
             nextPicture = {this.nextPicture}
             exitZoom = {this.exitZoom}
+            pictureNum= {this.state.zoomedImageKey + 1}
+            pgnationBG = {(100 / this.state.numImages) * (this.state.zoomedImageKey + 1)}
+            numImages = {this.state.numImages}
           />
         }
         </div>

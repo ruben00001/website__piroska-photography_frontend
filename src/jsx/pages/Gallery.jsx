@@ -119,11 +119,11 @@ class Gallery extends Component {
                             });
 
       imagesContainerHeight = (filteredImagesHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace;
-      console.log(imagesContainerHeight);
       
       this.setState({
         imgContainerHeight: imagesContainerHeight,
-        filteredImages: filteredImages
+        filteredImages: filteredImages,
+        numImages: filteredImages.length
       });
  
       window.scroll({
@@ -135,11 +135,11 @@ class Gallery extends Component {
 
     showAllImages = () => {
       let imagesContainerHeight = (this.state.imagesTotalHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace;
-      console.log(this.state.imagesTotalHeight, imagesContainerHeight);
-      
+
       this.setState({
         filteredImages: this.state.images,
-        imgContainerHeight: imagesContainerHeight
+        imgContainerHeight: imagesContainerHeight,
+        numImages: this.state.images.length
       });
     };
 
@@ -251,6 +251,9 @@ class Gallery extends Component {
                 previousPicture = {this.previousPicture}
                 nextPicture = {this.nextPicture}
                 exitZoom = {this.exitZoom}
+                pictureNum= {this.state.zoomedImageKey + 1}
+                pgnationBG = {(100 / this.state.numImages) * (this.state.zoomedImageKey + 1)}
+                numImages = {this.state.numImages}
               />
             }
           </div>
