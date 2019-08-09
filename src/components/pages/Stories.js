@@ -45,11 +45,19 @@ class StoriesX extends Component {
                                 title: story.title,
                                 mainImageURL: story.mainimage.url,  
                                 imageURLs: story.image.map(image => image.url),
+                                order: story.order,
                                 key: story.id
                             }
                         )
                     }),
                 });
+            })
+            .then(_ => {
+                this.setState({
+                    stories: this.state.stories.sort((a, b) => {
+                        return a.order - b.order
+                    })
+                })
             })
             .then(_ => {
                 this.determineFloat();
@@ -223,7 +231,7 @@ class StoriesX extends Component {
 
 
     test = () => {
-        console.log(this.state.imageDimensions);
+        console.log(this.state.stories);
     }
 
 
