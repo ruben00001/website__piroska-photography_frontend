@@ -2,6 +2,7 @@
   max-width: 100vw;
   max-height: 100vh;
   overflow: hidden;
+  position: relative;
 
   &_main-container {
     width: 100vw;
@@ -121,3 +122,21 @@
   }
 }
 
+.leave-page--home {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  background-color: #3f3f3f;
+  // border: 3px solid red;
+
+  &--2 {
+    z-index: 2;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
