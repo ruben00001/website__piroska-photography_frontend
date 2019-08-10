@@ -28,7 +28,7 @@ class About extends Component {
   render() {
     return ( 
       <div className='about'>
-        <Navigation />
+        {/* <Navigation /> */}
         <div className='about_container'>
           <div className='about_image'>
             <img src={`${this.state.picture}`} alt=''></img>

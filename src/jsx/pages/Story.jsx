@@ -169,9 +169,9 @@ class Story extends Component {
           }
         </Spring>
         <div className='story-page_main-container'>
-        { this.state.imagesLoaded && 
+        {/* { this.state.imagesLoaded && 
           <Navigation />
-        }
+        } */}
         <h1 onClick={this.test}>{this.props.state.titles[story]}</h1>
         <div className='story-page_images'>
           { this.props.state.images[story].map( (imageURL, i) =>

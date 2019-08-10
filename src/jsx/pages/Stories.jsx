@@ -256,9 +256,9 @@ class StoriesX extends Component {
                                 </div>  
                             }
                         </Spring>
-                        { this.state.imagesLoaded && 
+                        {/* { this.state.imagesLoaded && 
                           <Navigation />
-                        }
+                        } */}
                         <div className='stories-page_title'>
                             <h1 onClick={this.test}>Stories</h1>
                             <p>of humans and the world told through my camera</p>

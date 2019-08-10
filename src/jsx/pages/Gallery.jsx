@@ -211,9 +211,9 @@ class Gallery extends Component {
                 </div>  
             }
           </Spring>
-          { this.state.imagesLoaded && 
+          {/* { this.state.imagesLoaded && 
             <Navigation />
-          }
+          } */}
           <div className='gallery-page_container'>
             <Accordion defaultActiveKey="0">  
               <Accordion.Toggle onClick={this.test} as={Button} variant="link" eventKey="1" className='gallery-page_title'>

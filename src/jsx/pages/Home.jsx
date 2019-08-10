@@ -5,11 +5,14 @@ import { strapiAPI } from '../../enviroment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
 import { withRouter } from 'react-router';
 import CountUp from 'react-countup';
+import Navbar2 from '../layout/Navbar2'
 
 
 class Home extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+
+    this.page = React.createRef();
 
     this.state = {
       image: null,
@@ -22,7 +25,9 @@ class Home extends Component {
       timerDuration: 20,
       showLoadingText: 0,
       leaveAnimation: false,
-      changeLeaveColor: false
+      changeLeaveColor: false,
+      menuOpen: false,
+      openNav: false
     }
   }
 
@@ -61,7 +66,20 @@ class Home extends Component {
     }, 550)
   }
 
-  test = () => {
+  changeMenu = () => {
+    this.setState({
+      menuOpen: !this.state.menuOpen
+    });
+  }
+
+  toggleNav = () => {
+    this.setState({
+      openNav: !this.state.openNav
+    });
+  }
+
+  goPage = (e) => {
+    let route = `/${e.currentTarget.getAttribute('value')}`;
     this.setState({
       leaveAnimation: true
     }, _ => {
@@ -69,11 +87,16 @@ class Home extends Component {
         this.setState({
           changeLeaveColor: true
         })
-      }, 600);
+      }, 1000);
       setTimeout(() => {
-        this.props.history.push('/stories')
-      }, 1700);
-    })    
+        this.props.history.push(route)
+      }, 2200);
+    })
+  }
+
+
+  test = () => {
+
   }
 
 
@@ -97,11 +120,10 @@ class Home extends Component {
         `linear-gradient(to right, #3f3f3f ${gradient}%, #3f3f3f ${gradient}%, #3f3f3f 100%)`
     }
 
-
-
     return (
       <div className='home'>
-        <Spring
+        <Navbar2 />
+        {/* <Spring
           from={{ backgroundColor: '#050505' }}
           to={{ backgroundColor: !this.state.changeBackground ? '#050505' : '#222222' }}
           config={{ duration: 100 }}
@@ -136,37 +158,21 @@ class Home extends Component {
               }
             </div>
           }
-        </Spring>
-
-        {this.state.leaveAnimation && 
-          <Spring
-            from={{ transform: 'translate(100%, 0)' }}
-            to={{ transform: this.state.leaveAnimation ? 'translate(0%, 0)' : 'translate(100%, 0)' }}
-            config={ config.slow }
-          >
-            {props =>
-              <div style={props} className='leave-page--home'></div>
-            }
-          </Spring>
-        }
-        {this.state.changeLeaveColor && 
-          <Spring
-            from={{ transform: 'translate(100%, 0)' }}
-            to={{ transform: this.state.changeLeaveColor ? 'translate(0%, 0)' : 'translate(100%, 0)' }}
-            config={ config.slow }
-          >
-            {props =>
-              <div style={props} className='leave-page--home leave-page--home--2'>
-                <div className='counter counter--stories'>
-                  0
-                </div>
-              </div>
-            }
-          </Spring>
-        }
-        {this.state.showPage &&
-          <Navigation />
-        }
+        </Spring> */}
+        {/* <Navigation /> */}
+        
+        {/* {this.state.showPage &&
+          <Navigation
+            // toggleNav={ this.toggleNav }
+            // openNav={ this.state.openNav }
+          // menuOpen={ this.state.menuOpen }
+          // changeMenu={ this.changeMenu }
+          // goHome={ this.goPage }
+          // goStories={ this.goPage }
+          // goGallery={ this.goPage }
+          // goAbout={ this.goPage }
+          />
+        } */}
         <Spring
           from={{ opacity: 0, transform: 'scale(0.85)' }}
           to={{ opacity: !this.state.showPage ? 0 : 1, transform: !this.state.scalePage ? 'scale(0.85)' : 'scale(1)' }}
@@ -188,6 +194,32 @@ class Home extends Component {
             </div>
           }
         </Spring>
+        {this.state.leaveAnimation &&
+          <Spring
+            from={{ transform: 'translate(100%, 0)' }}
+            to={{ transform: this.state.leaveAnimation ? 'translate(0%, 0)' : 'translate(100%, 0)' }}
+            config={config.slow}
+          >
+            {props =>
+              <div style={props} className='leave-page--home'></div>
+            }
+          </Spring>
+        }
+        {this.state.changeLeaveColor &&
+          <Spring
+            from={{ transform: 'translate(100%, 0)' }}
+            to={{ transform: this.state.changeLeaveColor ? 'translate(0%, 0)' : 'translate(100%, 0)' }}
+            config={{ mass: 1, tension: 280, friction: 50 }}
+          >
+            {props =>
+              <div style={props} className='leave-page--home leave-page--home--2'>
+                <div className='counter counter--stories'>
+                  0
+                </div>
+              </div>
+            }
+          </Spring>
+        }
       </div>
     )
   }
