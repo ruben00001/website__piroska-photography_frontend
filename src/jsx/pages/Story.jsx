@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import Navigation from '../layout/Navbar';
+// import Navigation from '../layout/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import {Spring, config} from 'react-spring/renderprops';
 import CountUp from 'react-countup';

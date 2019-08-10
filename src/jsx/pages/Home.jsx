@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import Navigation from '../layout/Navbar';
+import Navigation from '../layout/navbar/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
 import { withRouter } from 'react-router';
 import CountUp from 'react-countup';
-import Navbar2 from '../layout/Navbar2'
+import Navbar2 from '../layout/navbar/Navbar2'
 
 
 class Home extends Component {
@@ -122,7 +122,6 @@ class Home extends Component {
 
     return (
       <div className='home'>
-        <Navbar2 />
         {/* <Spring
           from={{ backgroundColor: '#050505' }}
           to={{ backgroundColor: !this.state.changeBackground ? '#050505' : '#222222' }}
@@ -159,19 +158,10 @@ class Home extends Component {
             </div>
           }
         </Spring> */}
-        {/* <Navigation /> */}
-        
+
+        <Navbar2 />
         {/* {this.state.showPage &&
-          <Navigation
-            // toggleNav={ this.toggleNav }
-            // openNav={ this.state.openNav }
-          // menuOpen={ this.state.menuOpen }
-          // changeMenu={ this.changeMenu }
-          // goHome={ this.goPage }
-          // goStories={ this.goPage }
-          // goGallery={ this.goPage }
-          // goAbout={ this.goPage }
-          />
+          <Navbar2 />
         } */}
         <Spring
           from={{ opacity: 0, transform: 'scale(0.85)' }}

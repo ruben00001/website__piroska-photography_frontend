@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import Navigation from '../layout/Navbar';
+// import Navigation from '../layout/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import { Accordion, Button} from 'react-bootstrap/';
 import {Spring, config} from 'react-spring/renderprops';

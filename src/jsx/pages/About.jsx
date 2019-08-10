@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Navigation from '../layout/Navbar';
+// import Navigation from '../layout/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
 
 class About extends Component {

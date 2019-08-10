@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, NavLink } from 'react-router-dom';
 import { withRouter } from "react-router";
 import Axios from 'axios';
-import Navigation from '../layout/Navbar'
+// import Navigation from '../layout/Navbar'
 import Story from './Story';
 import { Icons } from '../../data/Icons';
 import { strapiAPI } from '../../enviroment/strapi-api';
