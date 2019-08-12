@@ -4,63 +4,6 @@ import { useSpring, config, animated, interpolate } from "react-spring";
 // import Navbar from 'react-bootstrap/Navbar';
 // import Nav from 'react-bootstrap/Nav';
 
-function Navigation () {
-
-  const [toggle, setToggle] = React.useState(false);
-
-  const p1 = useSpring({
-    s: toggle ? -3.75 : 0,
-    config: config.stiff
-  });
-
-  const p2 = useSpring({
-    y: toggle ? 45 : 0,
-    config: config.stiff
-  });
-
-
-  return (
-    <div onClick={() => setToggle(prev => !prev)} className='navbar'>
-      <div className='navbar_toggler'
-        
-      >
-        <animated.div className='navbar_toggler_line navbar_toggler_line--1'
-          style={{
-            transform: interpolate([p1.s, p2.y], (s, y) => {
-              return `translateY(0, ${s}px) rotate(${y}deg)`
-            })
-          }}
-        />
-      </div>
-    </div>
-
-  );
-  // return (
-  //   <div className='navbar'>
-  //     <div onClick={props.toggleNav} className='navbar_toggler'>
-  //       <Spring
-  //         from={{ transform: 'translateY(0px)' }}
-  //         to={{ transform: !props.openNav ? 'translateY(3.75px)' : 'rotate(0deg)' }}
-  //         config={config.slow}
-  //       >
-  //         {props =>
-  //           <div style={props} className='navbar_toggler_line navbar_toggler_line--1'></div>
-  //         }
-  //       </Spring>
-  //       {/* <Spring
-  //         from={{ transform: 'translateY(0px)' }}
-  //         to={{ transform: !props.openNav ? 'translateY(-3.75px)' : 'rotate(0deg)' }}
-  //         config={config.slow}
-  //       >
-  //         {props =>
-  //           <div style={props} className='navbar_toggler_line navbar_toggler_line--2'></div>
-  //         }
-  //       </Spring> */}
-  //     </div>
-  //   </div>
-
-  // );
-}
 // const Navigation = (props) => {
 //   let navbarStyle = {};
 //   if (props.menuOpen) {
@@ -88,7 +31,8 @@ function Navigation () {
 //   );
 // }
 
-export default Navigation;
+
+// export default Navigation;
 
 
 // class Navigation extends Component {

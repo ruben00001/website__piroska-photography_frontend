@@ -32,6 +32,27 @@
     height: 100vh;
     background-color: black;
   }
+
+  &_logo {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    color: white;
+    font-size: 25px;
+    font-variant: small-caps;
+  }
+
+  &_links-container {
+    margin-left: 30vw;
+    margin-top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &_link {
+    color: white;
+    cursor: pointer;
+    font-size: 80px;
+  }
 }
 
 

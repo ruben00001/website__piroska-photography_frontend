@@ -4,7 +4,6 @@ import Navigation from '../layout/navbar/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
 import { withRouter } from 'react-router';
-import CountUp from 'react-countup';
 import Navbar2 from '../layout/navbar/Navbar2';
 import { global } from '../../data/globals';
 import LoadingWidget from '../components/Loading-widget';
@@ -55,17 +54,17 @@ class Home extends Component {
       this.setState({
         changeBackground: true
       })
-    }, 100)
+    }, 1100)
     setTimeout(_ => {
       this.setState({
         showPage: true
       })
-    }, 350)
+    }, 1350)
     setTimeout(_ => {
       this.setState({
         scalePage: true,
       })
-    }, 550)
+    }, 1550)
   }
 
   changeMenu = () => {
@@ -80,7 +79,7 @@ class Home extends Component {
     });
   }
 
-  goPage = (e) => {
+  goPage = (e) => {    
     let route = `/${e.currentTarget.getAttribute('value')}`;
     this.setState({
       leaveAnimation: true
@@ -104,13 +103,12 @@ class Home extends Component {
 
 
   render() {
-
     return (
       <div className='home'>
-        <Spring
+        {/* <Spring
           from={{ backgroundColor: 'white' }}
-          to={{ backgroundColor: !this.state.changeBackground ? 'white' : '#222222' }}
-          config={{ duration: 100 }}
+          to={{ backgroundColor: !this.state.changeBackground ? 'white' : `${global.mainColor}` }}
+          config={ config.gentle }
         >
           {props =>
             <div style={props} className='loading-screen'>
@@ -119,11 +117,13 @@ class Home extends Component {
               }
             </div>
           }
-        </Spring>
+        </Spring> */}
 
         {/* <Navbar2 /> */}
         {this.state.showPage &&
-          <Navbar2 />
+          <Navbar2 
+            goPage={ this.goPage }
+          />
         }
         <Spring
           from={{ opacity: 0, transform: 'scale(0.85)' }}
