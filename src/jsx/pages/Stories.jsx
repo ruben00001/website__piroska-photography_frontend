@@ -4,7 +4,6 @@ import { withRouter } from "react-router";
 import Axios from 'axios';
 // import Navigation from '../layout/Navbar'
 import Story from './Story';
-import { Icons } from '../../data/Icons';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import {Spring, config} from 'react-spring/renderprops';
 import CountUp from 'react-countup';
@@ -216,11 +215,7 @@ class StoriesX extends Component {
         })
     }
 
-    Icons = Icons
 
-    randomIcon = () => {
-        return Math.floor(Math.random() * Icons.length)
-    }
 
 
     showStory = (e) => {

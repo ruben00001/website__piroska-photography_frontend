@@ -5,7 +5,9 @@ import { strapiAPI } from '../../enviroment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
 import { withRouter } from 'react-router';
 import CountUp from 'react-countup';
-import Navbar2 from '../layout/navbar/Navbar2'
+import Navbar2 from '../layout/navbar/Navbar2';
+import { global } from '../../data/globals';
+import LoadingWidget from '../components/Loading-widget';
 
 
 class Home extends Component {
@@ -31,7 +33,7 @@ class Home extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount() {    
     Axios.get(`${this.homeURL}/homes`)
       .then(response => {
         this.setState({
@@ -102,67 +104,27 @@ class Home extends Component {
 
 
   render() {
-    let title1Style = {};
-    let title2Style = {};
-
-    let gradient = 0;
-    if (window.innerWidth > 1024) gradient = 20.9;
-    if (window.innerWidth <= 1024) gradient = 14.13;
-
-    title1Style = {
-      backgroundImage: this.state.piroska === 'white' ?
-        `linear-gradient(to right, #3f3f3f ${gradient}%, white ${gradient}%, white 100%)` :
-        `linear-gradient(to right, #3f3f3f ${gradient}%, #3f3f3f ${gradient}%, #3f3f3f 100%)`
-    }
-    title2Style = {
-      backgroundImage: this.state.photography === 'white' ?
-        `linear-gradient(to right, #3f3f3f ${gradient}%, white ${gradient}%, white 100%)` :
-        `linear-gradient(to right, #3f3f3f ${gradient}%, #3f3f3f ${gradient}%, #3f3f3f 100%)`
-    }
 
     return (
       <div className='home'>
-        {/* <Spring
-          from={{ backgroundColor: '#050505' }}
-          to={{ backgroundColor: !this.state.changeBackground ? '#050505' : '#222222' }}
+        <Spring
+          from={{ backgroundColor: 'white' }}
+          to={{ backgroundColor: !this.state.changeBackground ? 'white' : '#222222' }}
           config={{ duration: 100 }}
         >
           {props =>
             <div style={props} className='loading-screen'>
               {!this.state.changeBackground &&
-                <div className='counter-container'>
-                  <CountUp className='counter counter--home'
-                    end={100}
-                    duration={this.state.timerDuration}
-                    useEasing={false}
-                    onEnd={({ start }) => {
-                      start();
-                      this.setState({ showLoadingText: 1 }, () => setTimeout(() => {
-                        this.setState({
-                          showLoadingText: 0
-                        })
-                      }, 800))
-                    }}
-                  />
-                  <Spring
-                    from={{ opacity: 0 }}
-                    to={{ opacity: this.state.showLoadingText }}
-                  >
-                    {propsB =>
-                      <p style={propsB}>Loading</p>
-                    }
-
-                  </Spring>
-                </div>
+                <LoadingWidget />
               }
             </div>
           }
-        </Spring> */}
+        </Spring>
 
-        <Navbar2 />
-        {/* {this.state.showPage &&
+        {/* <Navbar2 /> */}
+        {this.state.showPage &&
           <Navbar2 />
-        } */}
+        }
         <Spring
           from={{ opacity: 0, transform: 'scale(0.85)' }}
           to={{ opacity: !this.state.showPage ? 0 : 1, transform: !this.state.scalePage ? 'scale(0.85)' : 'scale(1)' }}
@@ -172,14 +134,9 @@ class Home extends Component {
             <div style={props} className='home_main-container'>
               <div className='home_image'>
                 <img onLoad={this.onImageLoad} src={`${this.state.image}`} alt=''></img>
-                <h1 className='home_title'
-                  style={title1Style}
-                >
-                  Piros</h1>
-                <h1 onClick={this.test} className='home_title home_title--2'>Piros</h1>
-                <h1 className='home_title home_title--photo'
-                  style={title2Style}>
-                  Photography</h1>
+                <h1 className='home_title home_title--main'>Piros <br /> Photography</h1>
+                <h2 className='home_title home_title--catalogue'>CATALOGUE N&deg;001 </h2>
+                <h2 className='home_title home_title--locations'>london &nbsp; budapest &nbsp; the world</h2>
               </div>
             </div>
           }
@@ -240,3 +197,28 @@ export default withRouter(Home);
 //       Photography</h1>
 // </div>
 // </div>
+
+{/* <div className='counter-container'>
+<CountUp className='counter counter--home'
+  end={100}
+  duration={this.state.timerDuration}
+  useEasing={false}
+  onEnd={({ start }) => {
+    start();
+    this.setState({ showLoadingText: 1 }, () => setTimeout(() => {
+      this.setState({
+        showLoadingText: 0
+      })
+    }, 800))
+  }}
+/>
+<Spring
+  from={{ opacity: 0 }}
+  to={{ opacity: this.state.showLoadingText }}
+>
+  {propsB =>
+    <p style={propsB}>Loading</p>
+  }
+
+</Spring>
+</div> */}

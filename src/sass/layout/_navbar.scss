@@ -8,10 +8,10 @@
   justify-content: center;
   align-items: center;
   z-index: 1;
-  cursor: pointer;
 
   &_toggler {
     z-index: 2;
+    cursor: pointer;
 
     &_line {
       width: 26px;
