@@ -5,8 +5,9 @@ import { strapiAPI } from '../../enviroment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
 import { withRouter } from 'react-router';
 import Navbar2 from '../layout/navbar/Navbar2';
-import { global } from '../../data/globals';
+import { Global } from '../../data/globals';
 import LoadingWidget from '../components/Loading-widget';
+import LoadingScreen from '../components/Loading-screen';
 
 
 class Home extends Component {
@@ -105,9 +106,12 @@ class Home extends Component {
   render() {
     return (
       <div className='home'>
+        <LoadingScreen 
+          changeBackground = {!this.state.changeBackground}
+        />
         {/* <Spring
           from={{ backgroundColor: 'white' }}
-          to={{ backgroundColor: !this.state.changeBackground ? 'white' : `${global.mainColor}` }}
+          to={{ backgroundColor: !this.state.changeBackground ? 'white' : `${Global.mainColor}` }}
           config={ config.gentle }
         >
           {props =>
@@ -148,11 +152,13 @@ class Home extends Component {
             config={config.slow}
           >
             {props =>
-              <div style={props} className='leave-page--home'></div>
+              <div style={props} className='leave-page--home'>
+                <p>013&deg;012</p>    
+              </div>
             }
           </Spring>
         }
-        {this.state.changeLeaveColor &&
+        {/* {this.state.changeLeaveColor &&
           <Spring
             from={{ transform: 'translate(100%, 0)' }}
             to={{ transform: this.state.changeLeaveColor ? 'translate(0%, 0)' : 'translate(100%, 0)' }}
@@ -166,7 +172,7 @@ class Home extends Component {
               </div>
             }
           </Spring>
-        }
+        } */}
       </div>
     )
   }
