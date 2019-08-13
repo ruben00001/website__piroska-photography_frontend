@@ -138,18 +138,18 @@ class StoriesX extends Component {
                         }
                         <div className='stories-page_title'>
                             <Spring
-                                from={{ transform: 'translateY(200px)' }}
-                                to={{ transform: this.state.titlesIn ? 'translateY(0px)' : 'translateY(100px)' }}
+                                from={{ transform: 'translateY(300px)' }}
+                                to={{ transform: this.state.titlesIn ? 'translateY(0px)' : 'translateY(300px)' }}
                                 config={config.slow}
                             >
                                 {props =>
-                                    <div style={props} className='stories-page_title_main'>
-                                        <h1 onClick={this.test}>Stories</h1>
+                                    <div className='stories-page_title_main'>
+                                        <h1 style={props} onClick={this.test}>Stories</h1>
                                     </div>
                                 }
                             </Spring>
                             <Spring
-                                from={{ transform: 'translateY(200px)' }}
+                                from={{ transform: 'translateY(100px)' }}
                                 to={{ transform: this.state.titlesIn ? 'translateY(0px)' : 'translateY(100px)' }}
                                 config={config.slow}
                             >
@@ -173,8 +173,8 @@ class StoriesX extends Component {
                                         }
                                     }}>
                                         <Spring
-                                            from={{ transform: 'translateY(600px)' }}
-                                            to={{ transform: this.state.titlesIn ? 'translateY(0%)' : 'translateY(600px)' }}
+                                            from={{ transform: 'translateY(800px)' }}
+                                            to={{ transform: this.state.titlesIn ? 'translateY(0%)' : 'translateY(800px)' }}
                                             config={config.slow}
                                         >
                                             {props =>

@@ -16,17 +16,17 @@
 
       h1 {
         font-size: 240px;
-        border: $border;
+        // border: $border;
         height: 260px;
       }
     }
 
     &_sub {
       overflow: hidden;
-      
+
       h2 {
         font-size: 50px;
-        border: $border;
+        // border: $border;
         height: 70px;
       }
     }    
@@ -40,6 +40,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-end;
+    overflow: hidden; // for animation
 
 
     // @media ( max-width: 2100px ) {
