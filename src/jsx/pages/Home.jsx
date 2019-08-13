@@ -117,18 +117,14 @@ class Home extends Component {
           <div className='x' >
             <Spring
               from={{ transform: 'translateY(100px)' }}
-              to={{
-                transform: !this.state.loadingWidgetOut ? 'translateY(0px)' : 'translateY(-100px)'  }}
-              // to={{ transform: 'translateY(0px)' }}
-              config={config.slow}
+              to={{ transform: !this.state.loadingWidgetOut ? 'translateY(0px)' : 'translateY(-100px)' }}
+              config={ config.slow }
             >
               {props =>
                 <div style={props}>
-                  {!this.state.changeBackground &&
                     <LoadingWidget 
                       stopLoader={this.state.stopLoader}
                     />
-                  }
                 </div>
               }
             </Spring>

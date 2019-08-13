@@ -27,7 +27,9 @@ class StoriesX extends Component {
             containerStyles: [],
             imageDimensions: [],
             imageStyles: [],
-            counterDuration: 20
+            counterDuration: 20,
+            loadingWidgetOut: false,
+            stopLoader: false
         }
 
         this.setFloatAndPaddingTop = this.setFloatAndPaddingTop.bind(this);
@@ -82,8 +84,44 @@ class StoriesX extends Component {
                         imagesLoaded: true
                     })
                 }, 350);
+                setTimeout(_ => {
+                    this.setState({
+                        stopLoader: true
+                    })
+                }, 900)
+                setTimeout(_ => {
+                    this.setState({
+                        loadingWidgetOut: true
+                    })
+                }, 1300)
             }
         })
+    }
+
+    onImageLoad = () => {
+        this.setState({
+            imageLoaded: true,
+        })
+        setTimeout(_ => {
+            this.setState({
+                stopLoader: true
+            })
+        }, 900)
+        setTimeout(_ => {
+            this.setState({
+                loadingWidgetOut: true
+            })
+        }, 1300)
+        setTimeout(_ => {
+            this.setState({
+                showPage: true
+            })
+        }, 1850)
+        setTimeout(_ => {
+            this.setState({
+                scalePage: true,
+            })
+        }, 2050)
     }
 
     determineFloat = () => {
@@ -120,7 +158,6 @@ class StoriesX extends Component {
 
             if (this.state.windowWidth > 800) {
                 if (this.state.floats[i] === 1) {
-
                     if (!this.state.storyPaddingTop && Math.random() < 1 / 2) {
                         paddingTop += 70;
                         this.setState({
@@ -129,7 +166,6 @@ class StoriesX extends Component {
                     } else {
                         paddingTop = 60;
                     }
-
                     style = {
                         float: 'left',
                         width: '50%',
@@ -137,17 +173,14 @@ class StoriesX extends Component {
                     };
 
                 } else if (this.state.floats[i] === 2) {
-
                     if (!this.state.storyPaddingTop) {
                         paddingTop += 70;
                     } else {
                         paddingTop = 60;
                     }
-
                     this.setState({
                         storyPaddingTop: false
                     })
-
                     style = {
                         float: 'right',
                         width: '50%',
@@ -155,13 +188,12 @@ class StoriesX extends Component {
                     }
 
                 } else {
-
                     style = {
                         width: '100%',
                         paddingTop: paddingTop
                     }
-
                 }
+
             } else {
                 style = {
                     width: '100%',
@@ -180,12 +212,12 @@ class StoriesX extends Component {
         let styles = [];
         this.state.stories.forEach((story, i) => {
             let width = 0;
-            let multiplier = 1;
+            let multiplier = 1.5;
             let dimension = this.state.imageDimensions[i];
 
             if (this.state.windowWidth > 600 && this.state.windowWidth <= 800) multiplier = 1.5;
             else if (this.state.windowWidth <= 600) multiplier = 2.5;
-            else if (this.state.floats[i]) multiplier = 2;
+            else if (this.state.floats[i]) multiplier = 3;
 
             const calcStyle = (a, b) => {
                 width = dimension * multiplier * this.rdmNum(a, b);
@@ -236,7 +268,26 @@ class StoriesX extends Component {
             <React.Fragment>
                 <Route exact path="/stories" render={() =>
                     <div className='stories-page'>
-                        <Spring
+                        {/* <div className='loading-screen'>
+                            <div className='x' >
+                                <Spring
+                                    from={{ opacity: 0 }}
+                                    to={{ opacity: !this.state.loadingWidgetOut ? 1 : 0 }}
+                                    config={config.slow}
+                                >
+                                    {props =>
+                                        <div style={props}>
+                                            {!this.state.changeBackground &&
+                                                <LoadingWidget
+                                                    stopLoader={this.state.stopLoader}
+                                                />
+                                            }
+                                        </div>
+                                    }
+                                </Spring>
+                            </div>
+                        </div> */}
+                        {/* <Spring
                             from={{ backgroundColor: 'white', opacity: 1, zIndex: 1 }}
                             to={{ opacity: !this.state.imagesLoaded ? 1 : 0, zIndex: !this.state.imagesLoaded ? 1 : -1 }}
                             config={ config.mollases }
@@ -246,18 +297,21 @@ class StoriesX extends Component {
                                     <LoadingWidget />
                                 </div>  
                             }
-                        </Spring>
+                        </Spring> */}
                         {this.state.imagesLoaded &&
                             <Navbar2 />
                         }
+                        <div className='logo'>
+                            <p>Piros <br /> Photography.</p>
+                        </div>
                         <div className='stories-page_title'>
                             <h1 onClick={this.test}>Stories</h1>
-                            <p>of humans and the world told through my camera</p>
+                            <h2>Humans and the world told through my camera</h2>
                         </div>
                         <div onClick={this.test} className='stories-page_story_container'>
                             {this.state.stories.map((story, i) =>
                                 <div className={`stories-page_story stories-page_story--${i}`} key={i}
-                                    style={this.state.containerStyles[i] ? this.state.containerStyles[i] : null}
+                                // style={this.state.containerStyles[i] ? this.state.containerStyles[i] : null}
                                 >
                                     <NavLink to={{
                                         pathname: `/stories/story`,
@@ -269,16 +323,15 @@ class StoriesX extends Component {
                                         }
                                     }}>
                                         <div className={'stories-page_story_img-container'}
-                                            style={this.state.imageStyles[i] ? this.state.imageStyles[i] : null}
+                                        // style={this.state.imageStyles[i] ? this.state.imageStyles[i] : null}
                                         >
+                                            <div className={`stories-page_story_title`}>
+                                                <h3>{story.title}</h3>
+                                            </div>
                                             <img onLoad={this.imagesOnLoad} className={`stories-page_story_image stories-page_story_image--${i}`} src={`${story.mainImageURL}`} value={story.key} alt=''
                                                 onClick={this.showStory}
                                             >
                                             </img>
-                                            <div className={`stories-page_story_title`}>
-                                                <div></div> {/* makes a line don't delete */}
-                                                <h3>{story.title}</h3>
-                                            </div>
                                         </div>
                                     </NavLink>
                                 </div>

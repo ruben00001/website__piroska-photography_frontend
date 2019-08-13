@@ -10,7 +10,7 @@ class Navbar2 extends Component {
 
     this.state = {
       openNav: false,
-      leavePage: false
+      leavePage: false,
     }
   }
 
@@ -37,7 +37,7 @@ class Navbar2 extends Component {
         <Toggler onClick={this.openNav} />
         <Spring
           from={{ transform: 'translate(0, -100vh)' }}
-          to={{ transform: !this.state.openNav ? 'translate(0, -100vh)' : 'translate(0, 0)' }}
+          to={{ transform: !this.state.openNav ? 'translate(0, -100vh)' : 'translate(0, 0)'}}
           config={config.slow}
         >
           {props =>
