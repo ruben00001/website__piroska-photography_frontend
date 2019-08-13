@@ -12,8 +12,10 @@ class LoadingWidget extends Component {
   }
 
   componentDidMount() {
-    this.changeNum1();
-    this.changeNum2();
+    setTimeout(() => {
+      this.changeNum1();
+      this.changeNum2();
+    }, 1300);
   }
 
   rdmNum = (x, y) => {
@@ -21,23 +23,27 @@ class LoadingWidget extends Component {
   }
 
   changeNum1 = () => {
-    let interval = this.rdmNum(300, 1400);
-    this.setState({
-      num1: Math.floor(this.rdmNum(1, 9))
-    });
-    setTimeout(() => {
-      this.changeNum1()
-    }, interval);
+    if (!this.props.stopLoader) {
+      let interval = this.rdmNum(300, 1400);
+      this.setState({
+        num1: Math.floor(this.rdmNum(1, 9))
+      });
+      setTimeout(() => {
+        this.changeNum1()
+      }, interval);
+    }
   }
 
   changeNum2 = () => {
-    let interval = this.rdmNum(300, 1400);
-    this.setState({
-      num2: Math.floor(this.rdmNum(1, 9))
-    });
-    setTimeout(() => {
-      this.changeNum2()
-    }, interval);
+    if (!this.props.stopLoader) {
+      let interval = this.rdmNum(300, 1400);
+      this.setState({
+        num2: Math.floor(this.rdmNum(1, 9))
+      });
+      setTimeout(() => {
+        this.changeNum2()
+      }, interval);
+    }
   }
 
   render() {

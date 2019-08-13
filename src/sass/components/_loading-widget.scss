@@ -4,5 +4,6 @@
 
   p {
     font-size: 110px;
+    margin-bottom: 0; //a bug where m-bottom was being applied so set explicitly as 0 here - need find where
   }
 }

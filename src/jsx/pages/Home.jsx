@@ -29,11 +29,13 @@ class Home extends Component {
       leaveAnimation: false,
       changeLeaveColor: false,
       menuOpen: false,
-      openNav: false
+      openNav: false,
+      loadingWidgetOut: false,
+      stopLoader: false
     }
   }
 
-  componentDidMount() {    
+  componentDidMount() {
     Axios.get(`${this.homeURL}/homes`)
       .then(response => {
         this.setState({
@@ -49,23 +51,27 @@ class Home extends Component {
   onImageLoad = () => {
     this.setState({
       imageLoaded: true,
-      timerDuration: 5
     })
     setTimeout(_ => {
       this.setState({
-        changeBackground: true
+        stopLoader: true
       })
-    }, 1100)
+    }, 900)
+    setTimeout(_ => {
+      this.setState({
+        loadingWidgetOut: true
+      })
+    }, 1300)
     setTimeout(_ => {
       this.setState({
         showPage: true
       })
-    }, 1350)
+    }, 1850)
     setTimeout(_ => {
       this.setState({
         scalePage: true,
       })
-    }, 1550)
+    }, 2050)
   }
 
   changeMenu = () => {
@@ -80,7 +86,7 @@ class Home extends Component {
     });
   }
 
-  goPage = (e) => {    
+  goPage = (e) => {
     let route = `/${e.currentTarget.getAttribute('value')}`;
     this.setState({
       leaveAnimation: true
@@ -103,31 +109,34 @@ class Home extends Component {
 
 
 
+
   render() {
     return (
       <div className='home'>
-        <LoadingScreen 
-          changeBackground = {!this.state.changeBackground}
-        />
-        {/* <Spring
-          from={{ backgroundColor: 'white' }}
-          to={{ backgroundColor: !this.state.changeBackground ? 'white' : `${Global.mainColor}` }}
-          config={ config.gentle }
-        >
-          {props =>
-            <div style={props} className='loading-screen'>
-              {!this.state.changeBackground &&
-                <LoadingWidget />
+        <div className='loading-screen'>
+          <div className='x' >
+            <Spring
+              from={{ transform: 'translateY(100px)' }}
+              to={{
+                transform: !this.state.loadingWidgetOut ? 'translateY(0px)' : 'translateY(-100px)'  }}
+              // to={{ transform: 'translateY(0px)' }}
+              config={config.slow}
+            >
+              {props =>
+                <div style={props}>
+                  {!this.state.changeBackground &&
+                    <LoadingWidget 
+                      stopLoader={this.state.stopLoader}
+                    />
+                  }
+                </div>
               }
-            </div>
-          }
-        </Spring> */}
-
+            </Spring>
+          </div>
+        </div>
         {/* <Navbar2 /> */}
         {this.state.showPage &&
-          <Navbar2 
-            goPage={ this.goPage }
-          />
+          <Navbar2 />
         }
         <Spring
           from={{ opacity: 0, transform: 'scale(0.85)' }}
@@ -145,34 +154,6 @@ class Home extends Component {
             </div>
           }
         </Spring>
-        {this.state.leaveAnimation &&
-          <Spring
-            from={{ transform: 'translate(100%, 0)' }}
-            to={{ transform: this.state.leaveAnimation ? 'translate(0%, 0)' : 'translate(100%, 0)' }}
-            config={config.slow}
-          >
-            {props =>
-              <div style={props} className='leave-page--home'>
-                <p>013&deg;012</p>    
-              </div>
-            }
-          </Spring>
-        }
-        {/* {this.state.changeLeaveColor &&
-          <Spring
-            from={{ transform: 'translate(100%, 0)' }}
-            to={{ transform: this.state.changeLeaveColor ? 'translate(0%, 0)' : 'translate(100%, 0)' }}
-            config={{ mass: 1, tension: 280, friction: 50 }}
-          >
-            {props =>
-              <div style={props} className='leave-page--home leave-page--home--2'>
-                <div className='counter counter--stories'>
-                  0
-                </div>
-              </div>
-            }
-          </Spring>
-        } */}
       </div>
     )
   }
