@@ -13,8 +13,8 @@ class LoadingWidget extends Component {
 
   componentDidMount() {
     setTimeout(() => {
-      this.changeNum1();
-      this.changeNum2();
+      this.changeNum('num1');
+      this.changeNum('num2');
     }, 1300);
   }
 
@@ -22,34 +22,21 @@ class LoadingWidget extends Component {
     return x + Math.random() * (y - x);
   }
 
-  changeNum1 = () => {
+  changeNum = (stateKey) => {
     if (!this.props.stopLoader) {
       let interval = this.rdmNum(300, 1400);
-      this.setState({
-        num1: Math.floor(this.rdmNum(1, 9))
-      });
+      this.setState({ [stateKey]: Math.floor(this.rdmNum(1, 9)) });
       setTimeout(() => {
-        this.changeNum1()
-      }, interval);
-    }
-  }
-
-  changeNum2 = () => {
-    if (!this.props.stopLoader) {
-      let interval = this.rdmNum(300, 1400);
-      this.setState({
-        num2: Math.floor(this.rdmNum(1, 9))
-      });
-      setTimeout(() => {
-        this.changeNum2()
+        this.changeNum(stateKey)
       }, interval);
     }
   }
 
   render() {
     return (
-      <div onPlaying={this.props.onLoad} className='loading-widget'>
+      <div className='loading-widget'>
         <p>01{this.state.num1}&deg;01{this.state.num2}</p>
+        <h1>{this.props.hello}</h1>
       </div>
     )
   }

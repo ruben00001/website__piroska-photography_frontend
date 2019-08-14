@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import Navigation from '../layout/navbar/Navbar';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
 import { withRouter } from 'react-router';
 import Navbar2 from '../layout/navbar/Navbar2';
-import { Global } from '../../data/globals';
 import LoadingWidget from '../components/Loading-widget';
-import LoadingScreen from '../components/Loading-screen';
 
 
 class Home extends Component {

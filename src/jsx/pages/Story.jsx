@@ -7,6 +7,7 @@ import { strapiAPI } from '../../enviroment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
 import Zoom from '../components/Zoom';
 import LoadingScreen from '../components/Loading-screen';
+import Logo from '../components/Logo';
 
 class Story extends Component {
   constructor(props) {
@@ -164,10 +165,13 @@ class Story extends Component {
           loadingWidgetOut={!this.state.loadingWidgetOut}
           stopLoader={this.state.stopLoader}
         />
-        <div className='story-page_main-container'>
-          {this.state.imagesLoaded &&
+        {this.state.imagesLoaded &&
+          <React.Fragment>
             <Navbar2 />
-          }
+            <Logo />
+          </React.Fragment>
+        }
+        <div className='story-page_main-container'>
           <div className='story-page_title'>
             <Spring
               from={{ transform: 'translateY(120px)' }}

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { withRouter, browserHistory } from 'react-router';
-import { Route, Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import { Route } from 'react-router-dom';
 import Axios from 'axios';
-import Navbar2 from '../layout/navbar/Navbar2'
+import Navbar2 from '../layout/navbar/Navbar2';
 import Story from './Story';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
@@ -18,16 +18,8 @@ class Stories extends Component {
             stories: [],
             currentStory: 0,
             images: [],
-            floats: [],
-            storyPaddingTop: false,
-            containerStyle: [],
-            windowWidth: window.innerWidth,
             numImagesLoaded: 0,
             imagesLoaded: false,
-            containerStyles: [],
-            imageDimensions: [],
-            imageStyles: [],
-            counterDuration: 20,
             loadingWidgetOut: false,
             stopLoader: false,
             titlesIn: false,
@@ -114,7 +106,7 @@ class Stories extends Component {
             this.setState({
                 stopLoader: true
             })
-        }, 900);
+        }, 800);
         setTimeout(_ => {
             this.setState({
                 loadingWidgetOut: true
@@ -260,23 +252,3 @@ class Stories extends Component {
 }
 
 export default withRouter(Stories);
-
-
-{/* <Route path={`/stories/story`}
-                    render={({ location }) => {
-                        const { state } = location;
-                        return (
-                            <Story state={state} />
-                        )
-                    }}
-                /> */}
-
-{/* <NavLink to={{
-                                        pathname: `/stories/story`,
-                                        state: {
-                                            story: i,
-                                            images: this.state.stories.map(story => story.imageURLs),
-                                            titles: this.state.stories.map(story => story.title),
-                                            mainImage: this.state.stories.map(story => story.mainImageURL)
-                                        }
-                                    }}> */}

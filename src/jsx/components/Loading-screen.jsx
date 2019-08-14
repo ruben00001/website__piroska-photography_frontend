@@ -14,8 +14,8 @@ const LoadingScreen = (props) => {
           }}
           config={config.slow}
         >
-          {props =>
-            <div style={props}>
+          {propsA =>
+            <div style={propsA}>
               <LoadingWidget
                 stopLoader={props.stopLoader}
               />
