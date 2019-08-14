@@ -1,30 +1,28 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Navbar2 from '../layout/navbar/Navbar2';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
-import CountUp from 'react-countup';
 import Zoom from '../components/Zoom';
+import LoadingScreen from '../components/Loading-screen';
 
 class Story extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      story: 0,
-      nextStory: 0,
-      currentImage: 0,
       zoom: false,
       zoomedImageURL: null,
       zoomedImageKey: null,
       imageContainerStyles: [],
       nextStoryStyle: { opacity: 0.5 },
-      numImages: 0,
       numImagesLoaded: 0,
       imagesLoaded: false,
-      pgnationPercent: 0,
+      loadingWidgetOut: false,
+      stopLoader: false,
+      titlesIn: false
     }
 
   }
@@ -34,10 +32,6 @@ class Story extends Component {
   componentDidMount() {
     window.scrollTo(0, 0) // a bug where page loads to bottom
     this.setImageContainerStyles(this.props.images);
-    // this.setState({
-    //   story: this.props.state.story,
-    //   numImages: this.props.state.images[this.props.state.story].length
-    // })
   }
 
   setImageContainerStyles = (images) => {
@@ -84,7 +78,22 @@ class Story extends Component {
           this.setState({
             imagesLoaded: true
           })
-        }, 1000);
+        }, 350);
+        setTimeout(_ => {
+          this.setState({
+            stopLoader: true
+          })
+        }, 900);
+        setTimeout(_ => {
+          this.setState({
+            loadingWidgetOut: true
+          })
+        }, 1300);
+        setTimeout(_ => {
+          this.setState({
+            titlesIn: true
+          })
+        }, 2000);
       }
     })
   }
@@ -106,7 +115,7 @@ class Story extends Component {
   // story = 0; // declaration saves writing. Set to be this.state.story above
 
   nextPicture = () => {
-    if (this.state.zoomedImageKey + 1 === this.props.images[this.story].length) {
+    if (this.state.zoomedImageKey + 1 === this.props.images.length) {
       this.setState({
         zoomedImageURL: `${this.props.images[0]}`,
         zoomedImageKey: 0
@@ -153,37 +162,42 @@ class Story extends Component {
 
     return (
       <div className='story-page'>
-        <Spring
-          from={{ backgroundColor: 'white', opacity: 1, zIndex: 1 }}
-          to={{ opacity: !this.state.imagesLoaded ? 1 : 0, zIndex: !this.state.imagesLoaded ? 1 : -1 }}
-          config={config.mollases}
-        >
-          {props =>
-            <div style={props} className='loading-screen'>
-              <CountUp className='counter counter--stories'
-                end={100}
-                duration={10}
-                useEasing={false}
-                onEnd={({ start }) => start()}
-              />
-            </div>
-          }
-        </Spring>
+        <LoadingScreen
+          loadingWidgetOut={!this.state.loadingWidgetOut}
+          stopLoader={this.state.stopLoader}
+        />
         <div className='story-page_main-container'>
-          { this.state.imagesLoaded && 
-          <Navbar2 />
-        }
-          <h1 onClick={this.test}>{this.props.title}</h1>
-
+          {this.state.imagesLoaded &&
+            <Navbar2 />
+          }
+          <div className='story-page_title'>
+            <Spring
+              from={{ transform: 'translateY(120px)' }}
+              to={{ transform: this.state.titlesIn ? 'translateY(0%)' : 'translateY(120px)' }}
+              config={config.slow}
+            >
+              {props =>
+                <h1 style={props}>{this.props.title}</h1>
+              }
+            </Spring>
+          </div>
           <div className='story-page_images'>
             {this.props.images.map((image, i) =>
-              <div className={`story-page_images_image story-page_images_image--${i}`} key={i}
+              <div className={`story-page_images_image`} key={i}
                 style={this.state.imageContainerStyles[i]}
               >
-                <img src={`${image}`} value={i} alt=''
-                  onLoad={this.imagesOnLoad}
-                  onClick={this.zoomOnImage}
-                ></img>
+                <Spring
+                  from={{ transform: 'translateY(800px)' }}
+                  to={{ transform: this.state.titlesIn ? 'translateY(0%)' : 'translateY(800px)' }}
+                  config={config.slow}
+                >
+                  {props =>
+                    <img style={props} src={`${image}`} value={i} alt=''
+                      onLoad={this.imagesOnLoad}
+                      onClick={this.zoomOnImage}
+                    ></img>
+                  }
+                </Spring>
               </div>
             )}
           </div>
@@ -194,23 +208,25 @@ class Story extends Component {
                 <p className='story-page_next-story_info_name'>
                   {`${this.props.nextStoryTitle}`}
                 </p>
-                <p className='story-page_next-story_info_view'
-                  onMouseEnter={this.nextStoryStyle}
-                  onMouseLeave={this.nextStoryStyle}
-                  onClick={this.goToNextStory}
-                >View collection
+                <Link to={`/stories/${this.props.nextStoryTitle}`}>
+                  <p className='story-page_next-story_info_view'
+                    onMouseEnter={this.nextStoryStyle}
+                    onMouseLeave={this.nextStoryStyle}
+                  >View collection
                 <FontAwesomeIcon className='story-page_next-story_info_view_icon' icon={faArrowRight}></FontAwesomeIcon>
-                </p>
+                  </p>
+                </Link>
               </div>
               <div className='story-page_next-story_image'>
-                <img alt=''
-                  src={`${this.props.nextStoryImage}`}
-                  style={this.state.nextStoryStyle}
-                  onMouseEnter={this.nextStoryStyle}
-                  onMouseLeave={this.nextStoryStyle}
-                  onClick={this.goToNextStory}
-                >
-                </img>
+                <Link to={`/stories/${this.props.nextStoryTitle}`}>
+                  <img alt=''
+                    src={`${this.props.nextStoryImage}`}
+                    style={this.state.nextStoryStyle}
+                    onMouseEnter={this.nextStoryStyle}
+                    onMouseLeave={this.nextStoryStyle}
+                  >
+                  </img>
+                </Link>
               </div>
             </div>
           </div>
@@ -221,11 +237,22 @@ class Story extends Component {
               nextPicture={this.nextPicture}
               exitZoom={this.exitZoom}
               pictureNum={this.state.zoomedImageKey + 1}
-              pgnationBG={(100 / this.state.numImages) * (this.state.zoomedImageKey + 1)}
-              numImages={this.state.numImages}
+              pgnationBG={(100 / this.props.images.length) * (this.state.zoomedImageKey + 1)}
+              numImages={this.props.images.length}
             />
           }
         </div>
+        {this.state.leavePage &&
+          <Spring
+            from={{ transform: 'translate(100%, 0)' }}
+            to={{ transform: this.state.leavePage ? 'translate(0%, 0)' : 'translate(100%, 0)' }}
+            config={config.slow}
+          >
+            {props =>
+              <div style={props} className='page-transition'></div>
+            }
+          </Spring>
+        }
       </div>
     )
   }

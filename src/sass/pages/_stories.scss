@@ -54,13 +54,7 @@
   &_story {
     width: 40vw;
     margin-top: 50px;
-
-    &:nth-of-type(even) {
-      // float: left;
-    }
-    &:nth-of-type(odd) {
-      // float: right;
-    }
+    cursor: pointer;
 
     &_image {
       width: 100%;
@@ -95,15 +89,6 @@
       }
     }
   }  
-}
-
-.logo {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  color: $main-color;
-  font-size: 25px;
-  font-variant: small-caps;
 }
 
 .loading-screen--stories {

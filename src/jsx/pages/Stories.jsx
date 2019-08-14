@@ -6,8 +6,8 @@ import Navbar2 from '../layout/navbar/Navbar2'
 import Story from './Story';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
-import CountUp from 'react-countup';
-import LoadingWidget from '../components/Loading-widget';
+import LoadingScreen from '../components/Loading-screen';
+import Logo from '../components/Logo';
 
 
 class Stories extends Component {
@@ -39,6 +39,7 @@ class Stories extends Component {
     homeURL = strapiAPI;
 
     componentDidMount() {
+        window.scrollTo(0, 0); //not working
         Axios.get(`${this.homeURL}/essays`)
             .then(response => {
                 this.setState({
@@ -72,7 +73,8 @@ class Stories extends Component {
                                 title={story.title}
                                 nextStoryImage={this.state.stories[i + 1] ? this.state.stories[i + 1].mainImageURL : this.state.stories[0].mainImageURL}
                                 nextStoryTitle={this.state.stories[i + 1] ? this.state.stories[i + 1].title : this.state.stories[0].title}
-                            />}
+                            />} 
+                        key={i}
                     >
                     </Route>
                 )
@@ -114,27 +116,13 @@ class Stories extends Component {
         })
     }
 
-    routeStory = (e) => {
-        const storyNum = e.currentTarget.getAttribute('value');
+    routeStory = (title) => {        
         this.setState({
             leavePage: true
         });
         setTimeout(() => {
-            //below is a hack to reset state which wasn't resetting when pressing 'back' from story pg
-            this.props.history.push({
-                pathname: `/stories/story`,
-                state: {
-                    story: storyNum,
-                    images: this.state.stories.map(story => story.imageURLs),
-                    titles: this.state.stories.map(story => story.title),
-                    mainImage: this.state.stories.map(story => story.mainImageURL)
-                }
-            });
-            this.setState({
-                leavePage: false
-            })
+            this.props.history.push({ pathname: `/stories/${title}` });
         }, 1000);
-
     }
 
     storyRoutes = [];
@@ -150,7 +138,11 @@ class Stories extends Component {
             <React.Fragment>
                 <Route exact path="/stories" render={() =>
                     <div className='stories-page'>
-                        <div className='loading-screen'>
+                        <LoadingScreen 
+                            loadingWidgetOut={!this.state.loadingWidgetOut}
+                            stopLoader={this.state.stopLoader}
+                        />
+                        {/* <div className='loading-screen'>
                             <div className='x' >
                                 <Spring
                                     from={{ opacity: 0, transform: 'translateY(0px)' }}
@@ -169,13 +161,11 @@ class Stories extends Component {
                                     }
                                 </Spring>
                             </div>
-                        </div>
+                        </div> */}
                         {this.state.imagesLoaded &&
                             <React.Fragment>
                                 <Navbar2 />
-                                <div className='logo'>
-                                    <p onClick={this.test}>Piros <br /> Photography.</p>
-                                </div>
+                                <Logo />
                             </React.Fragment>
                         }
                         <div className='stories-page_title'>
@@ -204,8 +194,9 @@ class Stories extends Component {
                         </div>
                         <div className='stories-page_story_container'>
                             {this.state.stories.map((story, i) =>
-                                <Link to={`/stories/${story.title}`}>
-                                    <div className='stories-page_story' key={i} value={i}>
+                                    <div className='stories-page_story' key={i} value={i}
+                                        onClick={() => {this.routeStory(story.title)}}
+                                    >
                                         <Spring
                                             from={{ transform: 'translateY(800px)' }}
                                             to={{ transform: this.state.titlesIn ? 'translateY(0%)' : 'translateY(800px)' }}
@@ -224,7 +215,6 @@ class Stories extends Component {
                                             }
                                         </Spring>
                                     </div>
-                                </Link>
                             )}
                         </div>
                         {this.state.leavePage &&

@@ -1,12 +1,11 @@
 .story-page {
-  background-color: #FAF9F8;
 
   &_main-container {
     position: relative;
     // border: 1px solid black;
     max-width: 1600px;
     margin: auto;
-    padding-top: 150px;
+    margin-top: 130px;
     padding-bottom: 300px;
     overflow: auto;
   
@@ -17,33 +16,22 @@
       padding-bottom: 130px;
     }
   }
+
+  &_title {
+    // border: $border;
+    height: 70px;
+    overflow: hidden;
+
+    h1 {
+      // border: 1px solid black;
+      font-size: 60px;
+      // margin-left: 10%;
   
-
-  h1 {
-    // border: 1px solid black;
-    font-size: 60px;
-    font-weight: bold;
-    margin-left: 22%;
-    padding-top: 100px;
-
-    @media (max-width: 1440px) {
-      margin-top: -50px; //a bug?
-    }
-    @media (max-width: 1279px) {
-      margin-top: -85px;
-    }
-    @media (max-width: 1023px) {
-      font-size: 40px;
-      margin-top: -100px;
-    }
-    @media (max-width: 800px) {
-      padding-top: 80px;
-    }
-    @media (max-width: 600px) {
-      font-size: 35px;
-      margin-left: 13%;
     }
   }
+  
+
+
 
   /* IMAGE LIST */
 
@@ -52,6 +40,7 @@
 
     &_image {
       margin-top: 200px;
+      overflow: hidden;
 
       @media (max-width: 800px) {
         margin-top: 80px;

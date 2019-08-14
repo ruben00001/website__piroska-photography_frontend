@@ -11,20 +11,8 @@ const Zoom = (props) => {
         <FontAwesomeIcon onClick={props.previousPicture} className='zoom_arrow zoom_arrow--left' icon={faChevronLeft}></FontAwesomeIcon>
         <FontAwesomeIcon onClick={props.nextPicture} className='zoom_arrow zoom_arrow--right' icon={faChevronRight}></FontAwesomeIcon>
         <FontAwesomeIcon onClick={props.exitZoom} className='zoom_x' icon={faTimes}></FontAwesomeIcon>
-        {/* <div className="page-counter">
-          <div className="page-counter__number">01.</div>
-          <Spring
-            from={{}}
-            to={{ background: `linear-gradient(to right, white, white 30%, #3f3f3f 30%, #3f3f3f 100%)` }}
-          >
-            {props => (
-              <div style={props} className="page-counter__line"></div>
-            )}
-          </Spring>
-          <div className="page-counter__number">10.</div>
-        </div> */}
         <div className="page-counter">
-          <div className="page-counter__number">0{props.pictureNum}.</div>
+          <div className="page-counter__number">{props.pictureNum}.</div>
           <Spring
             from={{}}
             to={{ background: `linear-gradient(to right, white, white ${props.pgnationBG}%, #3f3f3f ${props.pgnationBG}%, #3f3f3f 100%)` }}
@@ -33,7 +21,7 @@ const Zoom = (props) => {
               <div style={props} className="page-counter__line"></div>
             )}
           </Spring>
-          <div className="page-counter__number">0{props.numImages}.</div>
+          <div className="page-counter__number">{props.numImages}.</div>
         </div>
       </div>
     </div>
