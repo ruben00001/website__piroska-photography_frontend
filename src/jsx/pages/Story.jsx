@@ -50,12 +50,10 @@ class Story extends Component {
         if (i % 2 === 0) {
           widthLeft = this.rdmNum(35, 65)
           style = {
-            float: 'left',
             width: `${widthLeft}%`
           }
         } else {
           style = {
-            float: 'right',
             width: `${100 - widthLeft}%`,
             textAlign: 'right'
           }

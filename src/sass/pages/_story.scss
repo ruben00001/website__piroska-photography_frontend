@@ -19,14 +19,11 @@
 
   &_title {
     // border: $border;
-    height: 70px;
+    height: 90px;
     overflow: hidden;
 
     h1 {
-      // border: 1px solid black;
       font-size: 60px;
-      // margin-left: 10%;
-  
     }
   }
   
@@ -36,11 +33,13 @@
   /* IMAGE LIST */
 
   &_images {
-    overflow: auto;
+    display: flex;
+    flex-wrap: wrap;
 
     &_image {
       margin-top: 200px;
       overflow: hidden;
+      // border: $border;
 
       @media (max-width: 800px) {
         margin-top: 80px;
@@ -49,23 +48,11 @@
       }
 
       img {
-        width: 75%;
+        width: 90%;
         cursor: zoom-in;
 
         @media (max-width: 800px) {
           width: 85%;
-        }
-      }
-
-      &--0 {
-        img {
-          width: 60%;
-          margin-left: 15%;
-
-          @media (max-width: 800px) {
-            width: 85%;
-            margin-left: 0;
-          }
         }
       }
     }

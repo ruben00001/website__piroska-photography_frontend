@@ -73,7 +73,7 @@ class Stories extends Component {
                                 title={story.title}
                                 nextStoryImage={this.state.stories[i + 1] ? this.state.stories[i + 1].mainImageURL : this.state.stories[0].mainImageURL}
                                 nextStoryTitle={this.state.stories[i + 1] ? this.state.stories[i + 1].title : this.state.stories[0].title}
-                            />} 
+                            />}
                         key={i}
                     >
                     </Route>
@@ -116,7 +116,7 @@ class Stories extends Component {
         })
     }
 
-    routeStory = (title) => {        
+    routeStory = (title) => {
         this.setState({
             leavePage: true
         });
@@ -138,7 +138,7 @@ class Stories extends Component {
             <React.Fragment>
                 <Route exact path="/stories" render={() =>
                     <div className='stories-page'>
-                        <LoadingScreen 
+                        <LoadingScreen
                             loadingWidgetOut={!this.state.loadingWidgetOut}
                             stopLoader={this.state.stopLoader}
                         />
@@ -194,27 +194,27 @@ class Stories extends Component {
                         </div>
                         <div className='stories-page_story_container'>
                             {this.state.stories.map((story, i) =>
-                                    <div className='stories-page_story' key={i} value={i}
-                                        onClick={() => {this.routeStory(story.title)}}
+                                <div className='stories-page_story' key={i} value={i}
+                                    onClick={() => { this.routeStory(story.title) }}
+                                >
+                                    <Spring
+                                        from={{ transform: 'translateY(800px)' }}
+                                        to={{ transform: this.state.titlesIn ? 'translateY(0%)' : 'translateY(800px)' }}
+                                        config={config.slow}
                                     >
-                                        <Spring
-                                            from={{ transform: 'translateY(800px)' }}
-                                            to={{ transform: this.state.titlesIn ? 'translateY(0%)' : 'translateY(800px)' }}
-                                            config={config.slow}
-                                        >
-                                            {props =>
-                                                <div style={props} className='stories-page_story_img-container'>
-                                                    <div className={`stories-page_story_title`}>
-                                                        <h3>{story.title}</h3>
-                                                    </div>
-                                                    <img onLoad={this.imagesOnLoad} className='stories-page_story_image' src={`${story.mainImageURL}`} value={story.key} alt=''
-                                                        onClick={this.showStory}
-                                                    >
-                                                    </img>
+                                        {props =>
+                                            <div style={props} className='stories-page_story_img-container'>
+                                                <div className={`stories-page_story_title`}>
+                                                    <h3>{story.title}</h3>
                                                 </div>
-                                            }
-                                        </Spring>
-                                    </div>
+                                                <img onLoad={this.imagesOnLoad} className='stories-page_story_image' src={`${story.mainImageURL}`} value={story.key} alt=''
+                                                    onClick={this.showStory}
+                                                >
+                                                </img>
+                                            </div>
+                                        }
+                                    </Spring>
+                                </div>
                             )}
                         </div>
                         {this.state.leavePage &&
@@ -231,7 +231,6 @@ class Stories extends Component {
                     </div>
                 } />
                 {this.storyRoutes}
-
             </React.Fragment>
         )
     }
