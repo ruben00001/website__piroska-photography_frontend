@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
+import { withRouter, browserHistory } from 'react-router';
 import { Route, Link } from 'react-router-dom';
 import Axios from 'axios';
 import Navbar2 from '../layout/navbar/Navbar2'
@@ -32,14 +32,24 @@ class Stories extends Component {
             stopLoader: false,
             titlesIn: false,
             leavePage: false,
-            leftPage: false
+            leftPage: false,
         }
     }
 
     homeURL = strapiAPI;
 
     componentDidMount() {
-        window.scrollTo(0, 0); //not working
+        window.onpopstate = (e) => {
+            if (this.state.leftPage) {
+                setTimeout(() => {
+                    window.scrollTo(0, 0);
+                }, 10);
+                this.triggerIntroFromChildRoute()
+                this.setState({
+                    leftPage: false
+                })
+            }
+        }
         Axios.get(`${this.homeURL}/essays`)
             .then(response => {
                 this.setState({
@@ -81,33 +91,49 @@ class Stories extends Component {
             })
     }
 
+
+
+
     imagesOnLoad = () => {
         this.setState({
             numImagesLoaded: this.state.numImagesLoaded + 1,
         }, _ => {
             if (this.state.numImagesLoaded === this.state.stories.length) {
-                setTimeout(() => {
-                    this.setState({
-                        imagesLoaded: true
-                    })
-                }, 350);
-                setTimeout(_ => {
-                    this.setState({
-                        stopLoader: true
-                    })
-                }, 900);
-                setTimeout(_ => {
-                    this.setState({
-                        loadingWidgetOut: true
-                    })
-                }, 1300);
-                setTimeout(_ => {
-                    this.setState({
-                        titlesIn: true
-                    })
-                }, 2000);
+                this.triggerIntroAnimations();
             }
         })
+    }
+
+    triggerIntroAnimations = () => {
+        setTimeout(() => {
+            this.setState({
+                imagesLoaded: true
+            })
+        }, 350);
+        setTimeout(_ => {
+            this.setState({
+                stopLoader: true
+            })
+        }, 900);
+        setTimeout(_ => {
+            this.setState({
+                loadingWidgetOut: true
+            })
+        }, 1300);
+        setTimeout(_ => {
+            this.setState({
+                titlesIn: true
+            })
+        }, 2000);
+    }
+
+    triggerIntroFromChildRoute = () => {
+        if (this.state.leftPage) {
+            this.triggerIntroAnimations();
+            this.setState({
+                leftPage: false
+            })
+        }
     }
 
     showStory = (e) => {
@@ -118,9 +144,17 @@ class Stories extends Component {
 
     routeStory = (title) => {
         this.setState({
-            leavePage: true
+            leavePage: true,
+            leftPage: true
         });
         setTimeout(() => {
+            this.setState({
+                leavePage: false,
+                imagesLoaded: false,
+                stopLoader: false,
+                loadingWidgetOut: false,
+                titlesIn: false
+            })
             this.props.history.push({ pathname: `/stories/${title}` });
         }, 1000);
     }
@@ -142,26 +176,6 @@ class Stories extends Component {
                             loadingWidgetOut={!this.state.loadingWidgetOut}
                             stopLoader={this.state.stopLoader}
                         />
-                        {/* <div className='loading-screen'>
-                            <div className='x' >
-                                <Spring
-                                    from={{ opacity: 0, transform: 'translateY(0px)' }}
-                                    to={{
-                                        opacity: 1,
-                                        transform: !this.state.loadingWidgetOut ? 'translateY(0px)' : 'translateY(-100px)'
-                                    }}
-                                    config={config.slow}
-                                >
-                                    {props =>
-                                        <div style={props}>
-                                            <LoadingWidget
-                                                stopLoader={this.state.stopLoader}
-                                            />
-                                        </div>
-                                    }
-                                </Spring>
-                            </div>
-                        </div> */}
                         {this.state.imagesLoaded &&
                             <React.Fragment>
                                 <Navbar2 />
@@ -170,8 +184,11 @@ class Stories extends Component {
                         }
                         <div className='stories-page_title'>
                             <Spring
-                                from={{ transform: 'translateY(300px)' }}
-                                to={{ transform: this.state.titlesIn ? 'translateY(0px)' : 'translateY(300px)' }}
+                                from={{ transform: 'translateY(300px)', opacity: 0 }}
+                                to={{
+                                    transform: this.state.titlesIn ? 'translateY(0px)' : 'translateY(300px)',
+                                    opacity: this.state.titlesIn ? 1 : 0
+                                }}
                                 config={config.slow}
                             >
                                 {props =>
@@ -181,8 +198,11 @@ class Stories extends Component {
                                 }
                             </Spring>
                             <Spring
-                                from={{ transform: 'translateY(100px)' }}
-                                to={{ transform: this.state.titlesIn ? 'translateY(0px)' : 'translateY(100px)' }}
+                                from={{ transform: 'translateY(100px)', opacity: 0 }}
+                                to={{
+                                    transform: this.state.titlesIn ? 'translateY(0px)' : 'translateY(100px)',
+                                    opacity: this.state.titlesIn ? 1 : 0
+                                }}
                                 config={config.slow}
                             >
                                 {props =>
@@ -198,8 +218,11 @@ class Stories extends Component {
                                     onClick={() => { this.routeStory(story.title) }}
                                 >
                                     <Spring
-                                        from={{ transform: 'translateY(800px)' }}
-                                        to={{ transform: this.state.titlesIn ? 'translateY(0%)' : 'translateY(800px)' }}
+                                        from={{ transform: 'translateY(800px)', opacity: 0 }}
+                                        to={{
+                                            transform: this.state.titlesIn ? 'translateY(0%)' : 'translateY(800px)',
+                                            opacity: this.state.titlesIn ? 1 : 0
+                                        }}
                                         config={config.slow}
                                     >
                                         {props =>

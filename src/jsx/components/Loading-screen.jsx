@@ -1,7 +1,6 @@
 import React from 'react';
 import { Spring, config } from 'react-spring/renderprops';
 import LoadingWidget from './Loading-widget';
-import { Global } from '../../data/globals'
 
 const LoadingScreen = (props) => {
   return (

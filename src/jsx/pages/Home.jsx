@@ -130,7 +130,6 @@ class Home extends Component {
             </Spring>
           </div>
         </div>
-        {/* <Navbar2 /> */}
         {this.state.showPage &&
           <Navbar2 />
         }
@@ -157,51 +156,3 @@ class Home extends Component {
 
 export default withRouter(Home);
 
-
-//   <Spring
-//   from={{ opacity: 1 }}
-//   to={{ opacity: !this.state.imageLoaded ? 1 : 0 }}
-//   config={{ duration: 2000 }}
-// >
-//   {props =>
-//     <ProgressBar style={props} now={this.state.progress}/>
-//   }
-// </Spring>
-
-// <div className='home_main-container'>
-// <div className='home_image'>
-//   <img onLoad={this.onImageLoad} src={`${this.state.image}`} alt=''></img>
-//   <h1 className='home_title' 
-//     style={title1Style}>
-//       Piroska Markus</h1>
-//   <h1 className='home_title home_title--2'>Piroska Markus</h1>
-//   <h1 className='home_title home_title--photo'
-//     style={title2Style}>
-//       Photography</h1>
-// </div>
-// </div>
-
-{/* <div className='counter-container'>
-<CountUp className='counter counter--home'
-  end={100}
-  duration={this.state.timerDuration}
-  useEasing={false}
-  onEnd={({ start }) => {
-    start();
-    this.setState({ showLoadingText: 1 }, () => setTimeout(() => {
-      this.setState({
-        showLoadingText: 0
-      })
-    }, 800))
-  }}
-/>
-<Spring
-  from={{ opacity: 0 }}
-  to={{ opacity: this.state.showLoadingText }}
->
-  {propsB =>
-    <p style={propsB}>Loading</p>
-  }
-
-</Spring>
-</div> */}

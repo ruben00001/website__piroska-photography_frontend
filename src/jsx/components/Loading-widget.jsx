@@ -48,7 +48,7 @@ class LoadingWidget extends Component {
 
   render() {
     return (
-      <div className='loading-widget'>
+      <div onPlaying={this.props.onLoad} className='loading-widget'>
         <p>01{this.state.num1}&deg;01{this.state.num2}</p>
       </div>
     )
