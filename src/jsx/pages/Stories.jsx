@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Route, NavLink } from 'react-router-dom';
-import { withRouter } from "react-router";
+import { withRouter } from 'react-router';
+import { Route, Link } from 'react-router-dom';
 import Axios from 'axios';
 import Navbar2 from '../layout/navbar/Navbar2'
 import Story from './Story';
@@ -10,7 +10,7 @@ import CountUp from 'react-countup';
 import LoadingWidget from '../components/Loading-widget';
 
 
-class StoriesX extends Component {
+class Stories extends Component {
     constructor(props) {
         super(props)
 
@@ -30,7 +30,9 @@ class StoriesX extends Component {
             counterDuration: 20,
             loadingWidgetOut: false,
             stopLoader: false,
-            titlesIn: false
+            titlesIn: false,
+            leavePage: false,
+            leftPage: false
         }
     }
 
@@ -59,6 +61,21 @@ class StoriesX extends Component {
                         return a.order - b.order
                     })
                 })
+            })
+            .then(_ => {
+                this.storyRoutes = this.state.stories.map((story, i) =>
+                    <Route
+                        path={`/stories/${story.title}`}
+                        render={_ =>
+                            <Story
+                                images={story.imageURLs}
+                                title={story.title}
+                                nextStoryImage={this.state.stories[i + 1] ? this.state.stories[i + 1].mainImageURL : this.state.stories[0].mainImageURL}
+                                nextStoryTitle={this.state.stories[i + 1] ? this.state.stories[i + 1].title : this.state.stories[0].title}
+                            />}
+                    >
+                    </Route>
+                )
             })
     }
 
@@ -97,9 +114,34 @@ class StoriesX extends Component {
         })
     }
 
+    routeStory = (e) => {
+        const storyNum = e.currentTarget.getAttribute('value');
+        this.setState({
+            leavePage: true
+        });
+        setTimeout(() => {
+            //below is a hack to reset state which wasn't resetting when pressing 'back' from story pg
+            this.props.history.push({
+                pathname: `/stories/story`,
+                state: {
+                    story: storyNum,
+                    images: this.state.stories.map(story => story.imageURLs),
+                    titles: this.state.stories.map(story => story.title),
+                    mainImage: this.state.stories.map(story => story.mainImageURL)
+                }
+            });
+            this.setState({
+                leavePage: false
+            })
+        }, 1000);
+
+    }
+
+    storyRoutes = [];
+
 
     test = () => {
-        console.log(this.state.stories);
+
     }
 
 
@@ -132,7 +174,7 @@ class StoriesX extends Component {
                             <React.Fragment>
                                 <Navbar2 />
                                 <div className='logo'>
-                                    <p>Piros <br /> Photography.</p>
+                                    <p onClick={this.test}>Piros <br /> Photography.</p>
                                 </div>
                             </React.Fragment>
                         }
@@ -160,18 +202,10 @@ class StoriesX extends Component {
                                 }
                             </Spring>
                         </div>
-                        <div onClick={this.test} className='stories-page_story_container'>
+                        <div className='stories-page_story_container'>
                             {this.state.stories.map((story, i) =>
-                                <div className='stories-page_story' key={i}>
-                                    <NavLink to={{
-                                        pathname: `/stories/story`,
-                                        state: {
-                                            story: i,
-                                            images: this.state.stories.map(story => story.imageURLs),
-                                            titles: this.state.stories.map(story => story.title),
-                                            mainImage: this.state.stories.map(story => story.mainImageURL)
-                                        }
-                                    }}>
+                                <Link to={`/stories/${story.title}`}>
+                                    <div className='stories-page_story' key={i} value={i}>
                                         <Spring
                                             from={{ transform: 'translateY(800px)' }}
                                             to={{ transform: this.state.titlesIn ? 'translateY(0%)' : 'translateY(800px)' }}
@@ -189,26 +223,48 @@ class StoriesX extends Component {
                                                 </div>
                                             }
                                         </Spring>
-                                    </NavLink>
-                                </div>
+                                    </div>
+                                </Link>
                             )}
                         </div>
+                        {this.state.leavePage &&
+                            <Spring
+                                from={{ transform: 'translate(100%, 0)' }}
+                                to={{ transform: this.state.leavePage ? 'translate(0%, 0)' : 'translate(100%, 0)' }}
+                                config={config.slow}
+                            >
+                                {props =>
+                                    <div style={props} className='page-transition'></div>
+                                }
+                            </Spring>
+                        }
                     </div>
                 } />
-                <Route path={`/stories/story`}
-                    render={({ location }) => {
-                        const { state } = location;
-                        return (
-                            <Story state={state} />
-                        )
-                    }
+                {this.storyRoutes}
 
-                    } />
             </React.Fragment>
         )
     }
 }
 
-const Stories = withRouter(StoriesX)
+export default withRouter(Stories);
 
-export default Stories;
+
+{/* <Route path={`/stories/story`}
+                    render={({ location }) => {
+                        const { state } = location;
+                        return (
+                            <Story state={state} />
+                        )
+                    }}
+                /> */}
+
+{/* <NavLink to={{
+                                        pathname: `/stories/story`,
+                                        state: {
+                                            story: i,
+                                            images: this.state.stories.map(story => story.imageURLs),
+                                            titles: this.state.stories.map(story => story.title),
+                                            mainImage: this.state.stories.map(story => story.mainImageURL)
+                                        }
+                                    }}> */}
