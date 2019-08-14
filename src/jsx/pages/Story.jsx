@@ -185,8 +185,11 @@ class Story extends Component {
                 style={this.state.imageContainerStyles[i]}
               >
                 <Spring
-                  from={{ transform: 'translateY(800px)' }}
-                  to={{ transform: this.state.titlesIn ? 'translateY(0%)' : 'translateY(800px)' }}
+                  from={{ transform: 'translateY(800px)', opacity: 0 }}
+                  to={{
+                    transform: this.state.titlesIn ? 'translateY(0%)' : 'translateY(800px)',
+                    opacity: this.state.titlesIn ? 1 : 0
+                  }}
                   config={config.slow}
                 >
                   {props =>
@@ -199,35 +202,45 @@ class Story extends Component {
               </div>
             )}
           </div>
-          <div className='story-page_next-story'>
-            <div className='story-page_next-story_container'>
-              <div className='story-page_next-story_info'>
-                <p className='story-page_next-story_info_next'>NEXT</p>
-                <p className='story-page_next-story_info_name'>
-                  {`${this.props.nextStoryTitle}`}
-                </p>
-                <Link to={`/stories/${this.props.nextStoryTitle}`}>
-                  <p className='story-page_next-story_info_view'
-                    onMouseEnter={this.nextStoryStyle}
-                    onMouseLeave={this.nextStoryStyle}
-                  >View collection
-                <FontAwesomeIcon className='story-page_next-story_info_view_icon' icon={faArrowRight}></FontAwesomeIcon>
-                  </p>
-                </Link>
+          <Spring
+            from={{ opacity: 0 }}
+            to={{
+              opacity: this.state.titlesIn ? 1 : 0
+            }}
+            config={config.slow}
+          >
+            {props =>
+              <div style={props} className='story-page_next-story'>
+                <div className='story-page_next-story_container'>
+                  <div className='story-page_next-story_info'>
+                    <p className='story-page_next-story_info_next'>NEXT</p>
+                    <p className='story-page_next-story_info_name'>
+                      {`${this.props.nextStoryTitle}`}
+                    </p>
+                    <Link to={`/stories/${this.props.nextStoryTitle}`}>
+                      <p className='story-page_next-story_info_view'
+                        onMouseEnter={this.nextStoryStyle}
+                        onMouseLeave={this.nextStoryStyle}
+                      >View collection
+              <FontAwesomeIcon className='story-page_next-story_info_view_icon' icon={faArrowRight}></FontAwesomeIcon>
+                      </p>
+                    </Link>
+                  </div>
+                  <div className='story-page_next-story_image'>
+                    <Link to={`/stories/${this.props.nextStoryTitle}`}>
+                      <img alt=''
+                        src={`${this.props.nextStoryImage}`}
+                        style={this.state.nextStoryStyle}
+                        onMouseEnter={this.nextStoryStyle}
+                        onMouseLeave={this.nextStoryStyle}
+                      >
+                      </img>
+                    </Link>
+                  </div>
+                </div>
               </div>
-              <div className='story-page_next-story_image'>
-                <Link to={`/stories/${this.props.nextStoryTitle}`}>
-                  <img alt=''
-                    src={`${this.props.nextStoryImage}`}
-                    style={this.state.nextStoryStyle}
-                    onMouseEnter={this.nextStoryStyle}
-                    onMouseLeave={this.nextStoryStyle}
-                  >
-                  </img>
-                </Link>
-              </div>
-            </div>
-          </div>
+            }
+          </Spring>
           {this.state.zoom &&
             <Zoom
               zoomedImageURL={this.state.zoomedImageURL}
