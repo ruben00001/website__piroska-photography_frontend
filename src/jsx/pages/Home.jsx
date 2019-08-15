@@ -111,21 +111,19 @@ class Home extends Component {
     return (
       <div className='home'>
         <div className='loading-screen'>
-          <div className='x' >
-            <Spring
-              from={{ transform: 'translateY(100px)' }}
-              to={{ transform: !this.state.loadingWidgetOut ? 'translateY(0px)' : 'translateY(-100px)' }}
-              config={ config.slow }
-            >
-              {props =>
-                <div style={props}>
-                    <LoadingWidget 
-                      stopLoader={this.state.stopLoader}
-                    />
-                </div>
-              }
-            </Spring>
-          </div>
+          <Spring
+            from={{ transform: 'translateY(100px)' }}
+            to={{ transform: !this.state.loadingWidgetOut ? 'translateY(0px)' : 'translateY(-100px)' }}
+            config={config.slow}
+          >
+            {props =>
+              <div style={props}>
+                <LoadingWidget
+                  stopLoader={this.state.stopLoader}
+                />
+              </div>
+            }
+          </Spring>
         </div>
         {this.state.showPage &&
           <Navbar2 />

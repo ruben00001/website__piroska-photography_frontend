@@ -4,8 +4,8 @@ import LoadingWidget from './Loading-widget';
 
 const LoadingScreen = (props) => {
   return (
-    <div className='loading-screen'>
-      <div className='x' >
+
+      <div className='loading-screen' >
         <Spring
           from={{ opacity: 0, transform: 'translateY(0px)' }}
           to={{
@@ -23,7 +23,7 @@ const LoadingScreen = (props) => {
           }
         </Spring>
       </div>
-    </div>
+
   );
 }
 

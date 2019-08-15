@@ -218,9 +218,10 @@ class Gallery extends Component {
           </React.Fragment>
         }
         <Spring
-          from={{ opacity: 0 }}
+          from={{ opacity: 0, visibility: 'hidden' }}
           to={{
-            opacity: this.state.titlesIn ? 1 : 0
+            opacity: this.state.titlesIn ? 1 : 0,
+            visibility: this.state.titlesIn ? 'block' : 'visible',
           }}
           config={config.slow}
         >
