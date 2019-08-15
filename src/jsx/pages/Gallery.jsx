@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { plus} from "@fortawesome/free-solid-svg-icons";
+import { faEye as faEyeSolid } from "@fortawesome/free-solid-svg-icons";
 import { faPlusSquare, faMinusSquare, faEye } from "@fortawesome/free-regular-svg-icons";
 import { strapiAPI } from '../../enviroment/strapi-api';
-import { Accordion, Button } from 'react-bootstrap/';
 import { Spring, config } from 'react-spring/renderprops';
 import { withRouter } from "react-router-dom";
 import Zoom from '../components/Zoom';
@@ -37,7 +36,8 @@ class Gallery extends Component {
       titlesIn: false,
       showFilterOptions: false,
       showDateFilter: false,
-      showCategoryFilter: false
+      showCategoryFilter: false,
+      currentFilterValue: null
     }
   }
 
@@ -133,12 +133,14 @@ class Gallery extends Component {
   filterImages = (e) => {
     let filteredImagesHeight = 0;
     let imagesContainerHeight = 0;
+    let filterValue = e.currentTarget.getAttribute('value')
+
 
     let filteredImages = this.state.images.filter((image, i) => {
-      if (image.tags.includes(e.currentTarget.getAttribute('value'))) {
+      if (image.tags.includes(filterValue)) {
         filteredImagesHeight += this.state.imagesHeights[i]
 
-        return image.tags.includes(e.currentTarget.getAttribute('value'))
+        return image.tags.includes(filterValue)
       }
     });
 
@@ -147,7 +149,8 @@ class Gallery extends Component {
     this.setState({
       imgContainerHeight: imagesContainerHeight,
       filteredImages: filteredImages,
-      numImages: filteredImages.length
+      numImages: filteredImages.length,
+      currentFilterValue: filterValue
     });
   };
 
@@ -234,9 +237,9 @@ class Gallery extends Component {
               <h1 className='gallery-page_title'>Gallery</h1>
               <div className='gallery-page_filter'>
                 <div className='gallery-page_filter_first-line'
-                  onClick={() => { 
+                  onClick={() => {
                     this.setState({ showFilterOptions: !this.state.showFilterOptions });
-                    if(this.state.showFilterOptions) this.showAllImages()
+                    if (this.state.showFilterOptions) this.showAllImages()
                   }}
                 >
                   {this.state.showFilterOptions ?
@@ -294,7 +297,12 @@ class Gallery extends Component {
                                   onClick={this.filterImages}
                                   key={tag.id} value={tag.name}
                                 >
-                                  <FontAwesomeIcon className='gallery-page_filter_second-line_options_2_content_item_icon' icon={faEye}></FontAwesomeIcon>
+                                  {this.state.currentFilterValue === tag.name ?
+                                    <FontAwesomeIcon className='gallery-page_filter_second-line_options_2_content_item_icon' icon={faEyeSolid}></FontAwesomeIcon> :
+                                    <FontAwesomeIcon className='gallery-page_filter_second-line_options_2_content_item_icon' icon={faEye}></FontAwesomeIcon>
+
+                                  }
+
                                   <div>{tag.name}</div>
                                 </div>
                               )}
