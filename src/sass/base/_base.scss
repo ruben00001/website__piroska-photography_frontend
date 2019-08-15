@@ -20,19 +20,16 @@ $border--red: 1px solid red;
   -ms-user-select: none;
   box-sizing: border-box;
   // border: 1px solid black;
-  // font-family: 'Cormorant', serif;
+}
+
+body {
+  font-family: $main-font;
+  color: $main-color;
 }
 
 a:hover, a:link, a:visited {
   color: inherit;
   text-decoration: none;
-}
-
-
-
-body {
-  font-family: $main-font;
-  color: $main-color;
 }
 
 button:focus {

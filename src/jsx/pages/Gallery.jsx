@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { plus} from "@fortawesome/free-solid-svg-icons";
-import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
+import { faPlusSquare, faMinusSquare, faEye } from "@fortawesome/free-regular-svg-icons";
 import { strapiAPI } from '../../enviroment/strapi-api';
 import { Accordion, Button } from 'react-bootstrap/';
 import { Spring, config } from 'react-spring/renderprops';
@@ -35,6 +35,9 @@ class Gallery extends Component {
       loadingWidgetOut: false,
       stopLoader: false,
       titlesIn: false,
+      showFilterOptions: false,
+      showDateFilter: false,
+      showCategoryFilter: false
     }
   }
 
@@ -230,22 +233,74 @@ class Gallery extends Component {
             <div style={props} className='gallery-page_container'>
               <h1 className='gallery-page_title'>Gallery</h1>
               <div className='gallery-page_filter'>
-                <div className='gallery-page_filter_first-line'>
-                  <FontAwesomeIcon className='gallery-page_filter_icon' icon={faPlusSquare}></FontAwesomeIcon>
+                <div className='gallery-page_filter_first-line'
+                  onClick={() => { this.setState({ showFilterOptions: !this.state.showFilterOptions }) }}
+                >
+                  {this.state.showFilterOptions ?
+                    <FontAwesomeIcon className='gallery-page_filter_icon' icon={faMinusSquare}></FontAwesomeIcon> :
+                    <FontAwesomeIcon className='gallery-page_filter_icon' icon={faPlusSquare}></FontAwesomeIcon>
+                  }
                   <h3>filter</h3>
                 </div>
                 <div className='gallery-page_filter_second-line'>
                   <div className='gallery-page_filter_second-line_dashed-line'></div>
-                  <div className='gallery-page_filter_second-line_options'>
-                    <div className='gallery-page_filter_second-line_options_1'>
-                      <FontAwesomeIcon className='gallery-page_filter_icon' icon={faPlusSquare}></FontAwesomeIcon>
-                      <h3>by date</h3>
+                  {this.state.showFilterOptions &&
+                    <div className='gallery-page_filter_second-line_options'>
+                      <div className='gallery-page_filter_second-line_options'>
+                        <div className='gallery-page_filter_second-line_options_title'
+                          onClick={() => { this.setState({ showDateFilter: !this.state.showDateFilter }) }}
+                        >
+                          {this.state.showDateFilter ?
+                            <FontAwesomeIcon className='gallery-page_filter_icon' icon={faMinusSquare}></FontAwesomeIcon> :
+                            <FontAwesomeIcon className='gallery-page_filter_icon' icon={faPlusSquare}></FontAwesomeIcon>
+                          }
+                          <h3>by date</h3>
+                        </div>
+                        <div className='gallery-page_filter_second-line_options_1'>
+                          <div className='gallery-page_filter_second-line_dashed-line'></div>
+                          {this.state.showDateFilter &&
+                            <div className='gallery-page_filter_second-line_options_1_content'>
+                              <div className='gallery-page_filter_second-line_options_1_content_item'>
+                                <FontAwesomeIcon className='gallery-page_filter_second-line_options_1_content_item_icon' icon={faEye}></FontAwesomeIcon>
+                                <div>most recent</div>
+                              </div>
+                              <div className='gallery-page_filter_second-line_options_1_content_item'>
+                                <FontAwesomeIcon className='gallery-page_filter_second-line_options_1_content_item_icon' icon={faEye}></FontAwesomeIcon>
+                                <div>oldest first</div>
+                              </div>
+                            </div>
+                          }
+                        </div>
+                      </div>
+                      <div className='gallery-page_filter_second-line_options'>
+                        <div className='gallery-page_filter_second-line_options_title'
+                          onClick={() => { this.setState({ showCategoryFilter: !this.state.showCategoryFilter }) }}
+                        >
+                          {this.state.showCategoryFilter ?
+                            <FontAwesomeIcon className='gallery-page_filter_icon' icon={faMinusSquare}></FontAwesomeIcon> :
+                            <FontAwesomeIcon className='gallery-page_filter_icon' icon={faPlusSquare}></FontAwesomeIcon>
+                          }
+                          <h3>category</h3>
+                        </div>
+                        <div className='gallery-page_filter_second-line_options_2'>
+                          <div className='gallery-page_filter_second-line_dashed-line'></div>
+                          {this.state.showCategoryFilter &&
+                            <div className='gallery-page_filter_second-line_options_2_content'>
+                              {this.state.tags && this.state.tags.map(tag =>
+                                <div className='gallery-page_filter_second-line_options_2_content_item'
+                                  onClick={this.filterImages}
+                                  key={tag.id} value={tag.name}
+                                >
+                                  <FontAwesomeIcon className='gallery-page_filter_second-line_options_2_content_item_icon' icon={faEye}></FontAwesomeIcon>
+                                  <div>{tag.name}</div>
+                                </div>
+                              )}
+                            </div>
+                          }
+                        </div>
+                      </div>
                     </div>
-                    <div className='gallery-page_filter_second-line_options_2'>
-                      <FontAwesomeIcon className='gallery-page_filter_icon' icon={faPlusSquare}></FontAwesomeIcon>
-                      <h3 className='gallery-page_filter_second-line_options_2'>category</h3>
-                    </div>
-                  </div>
+                  }
                 </div>
               </div>
               {/* <Accordion defaultActiveKey="0">
