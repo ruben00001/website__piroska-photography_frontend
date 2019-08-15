@@ -46,7 +46,7 @@ class Gallery extends Component {
   componentDidMount() {
     if (window.innerWidth > 800) {
       this.setState({
-        imageContainerVars: { columns: 4, extraspace: 140 }
+        imageContainerVars: { columns: 4, extraspace: 240 }
       })
     }
     if (window.innerWidth > 500 && window.innerWidth <= 800) {
@@ -102,7 +102,7 @@ class Gallery extends Component {
     }, _ => {
       if (this.state.numImagesLoaded === this.state.numImages) {
         this.setState({
-          imgContainerHeight: this.state.imagesTotalHeight / this.state.imageContainerVars.columns + this.state.imageContainerVars.extraspace,
+          imgContainerHeight: (this.state.imagesTotalHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace,
           initialLoad: false
         })
         setTimeout(() => {
@@ -234,13 +234,16 @@ class Gallery extends Component {
               <h1 className='gallery-page_title'>Gallery</h1>
               <div className='gallery-page_filter'>
                 <div className='gallery-page_filter_first-line'
-                  onClick={() => { this.setState({ showFilterOptions: !this.state.showFilterOptions }) }}
+                  onClick={() => { 
+                    this.setState({ showFilterOptions: !this.state.showFilterOptions });
+                    if(this.state.showFilterOptions) this.showAllImages()
+                  }}
                 >
                   {this.state.showFilterOptions ?
                     <FontAwesomeIcon className='gallery-page_filter_icon' icon={faMinusSquare}></FontAwesomeIcon> :
                     <FontAwesomeIcon className='gallery-page_filter_icon' icon={faPlusSquare}></FontAwesomeIcon>
                   }
-                  <h3>filter</h3>
+                  <h3>{this.state.showFilterOptions ? 'un' : null}filter</h3>
                 </div>
                 <div className='gallery-page_filter_second-line'>
                   <div className='gallery-page_filter_second-line_dashed-line'></div>
@@ -303,24 +306,13 @@ class Gallery extends Component {
                   }
                 </div>
               </div>
-              {/* <Accordion defaultActiveKey="0">
-                <Accordion.Toggle onClick={this.test} as={Button} variant="link" eventKey="1" className='gallery-page_title'>
-                  Categories
-                  <FontAwesomeIcon className='gallery-page_title_icon' icon={faCaretDown}></FontAwesomeIcon>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey="1">
-                  <div className='gallery-page_category_container'>
-                    <p onClick={this.showAllImages} className='gallery-page_category'>All</p>
-                    {this.state.tags && this.state.tags.map(tag =>
-                      <p onClick={this.filterImages} className='gallery-page_category' key={tag.id} value={tag.name}>{tag.name}</p>
-                    )}
-                  </div>
-                </Accordion.Collapse>
-              </Accordion> */}
               <div className='gallery-page_images-container'>
                 <div className='gallery-page_images'
                   style={!this.state ? null :
-                    { height: `${this.state.imgContainerHeight}px` }
+                    {
+                      height: `${this.state.imgContainerHeight}px`,
+                      marginTop: `${this.state.showFilterOptions ? 50 : 20}px`
+                    }
                   }
                 >
                   {this.state.filteredImages.map((image, i) =>
