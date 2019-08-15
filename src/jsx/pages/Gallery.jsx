@@ -37,7 +37,8 @@ class Gallery extends Component {
       showFilterOptions: false,
       showDateFilter: false,
       showCategoryFilter: false,
-      currentFilterValue: null
+      currentFilterValue: null,
+      filterImagesFadeOut: false
     }
   }
 
@@ -147,11 +148,23 @@ class Gallery extends Component {
     imagesContainerHeight = (filteredImagesHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace;
 
     this.setState({
-      imgContainerHeight: imagesContainerHeight,
-      filteredImages: filteredImages,
-      numImages: filteredImages.length,
-      currentFilterValue: filterValue
-    });
+      filterImagesFadeOut: true
+    })
+
+    setTimeout(() => {
+      this.setState({
+        imgContainerHeight: imagesContainerHeight,
+        filteredImages: filteredImages,
+        numImages: filteredImages.length,
+        currentFilterValue: filterValue
+      });
+    }, 500);
+
+    setTimeout(() => {
+      this.setState({
+        filterImagesFadeOut: false
+      })
+    }, 1400);
   };
 
   showAllImages = () => {
@@ -314,25 +327,38 @@ class Gallery extends Component {
                   }
                 </div>
               </div>
-              <div className='gallery-page_images-container'>
-                <div className='gallery-page_images'
-                  style={!this.state ? null :
-                    {
-                      height: `${this.state.imgContainerHeight}px`,
-                      marginTop: `${this.state.showFilterOptions ? 50 : 20}px`
-                    }
-                  }
-                >
-                  {this.state.filteredImages.map((image, i) =>
-                    <div className='gallery-page_images_image' key={i}>
-                      <img src={`${image.url}`} value={i} alt=''
-                        onClick={this.zoomOnImage}
-                        onLoad={this.state.initialLoad ? this.imagesOnLoad : null}
-                      ></img>
+              {this.state.currentFilterValue && 
+                <h2>{this.state.currentFilterValue}</h2>
+              }
+              <Spring
+                from={{ opacity: 1 }}
+                to={{
+                  opacity: this.state.filterImagesFadeOut ? 0 : 1
+                }}
+                config={config.gentle}
+              >
+                {props =>
+                  <div style={props} className='gallery-page_images-container'>
+                    <div className='gallery-page_images'
+                      style={!this.state ? null :
+                        {
+                          height: `${this.state.imgContainerHeight}px`,
+                          marginTop: `${this.state.showFilterOptions ? 50 : 20}px`
+                        }
+                      }
+                    >
+                      {this.state.filteredImages.map((image, i) =>
+                        <div className='gallery-page_images_image' key={i}>
+                          <img src={`${image.url}`} value={i} alt=''
+                            onClick={this.zoomOnImage}
+                            onLoad={this.state.initialLoad ? this.imagesOnLoad : null}
+                          ></img>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </div>
+                  </div>
+                }
+              </Spring>
               {this.state.zoom &&
                 <Zoom
                   zoomedImageURL={this.state.zoomedImageURL}
