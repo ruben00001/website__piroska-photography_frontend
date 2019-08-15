@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+// import { plus} from "@fortawesome/free-solid-svg-icons";
+import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
 import { strapiAPI } from '../../enviroment/strapi-api';
 import { Accordion, Button } from 'react-bootstrap/';
 import { Spring, config } from 'react-spring/renderprops';
@@ -227,7 +228,27 @@ class Gallery extends Component {
         >
           {props =>
             <div style={props} className='gallery-page_container'>
-              <Accordion defaultActiveKey="0">
+              <h1 className='gallery-page_title'>Gallery</h1>
+              <div className='gallery-page_filter'>
+                <div className='gallery-page_filter_first-line'>
+                  <FontAwesomeIcon className='gallery-page_filter_icon' icon={faPlusSquare}></FontAwesomeIcon>
+                  <h3>filter</h3>
+                </div>
+                <div className='gallery-page_filter_second-line'>
+                  <div className='gallery-page_filter_second-line_dashed-line'></div>
+                  <div className='gallery-page_filter_second-line_options'>
+                    <div className='gallery-page_filter_second-line_options_1'>
+                      <FontAwesomeIcon className='gallery-page_filter_icon' icon={faPlusSquare}></FontAwesomeIcon>
+                      <h3>by date</h3>
+                    </div>
+                    <div className='gallery-page_filter_second-line_options_2'>
+                      <FontAwesomeIcon className='gallery-page_filter_icon' icon={faPlusSquare}></FontAwesomeIcon>
+                      <h3 className='gallery-page_filter_second-line_options_2'>category</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* <Accordion defaultActiveKey="0">
                 <Accordion.Toggle onClick={this.test} as={Button} variant="link" eventKey="1" className='gallery-page_title'>
                   Categories
                   <FontAwesomeIcon className='gallery-page_title_icon' icon={faCaretDown}></FontAwesomeIcon>
@@ -240,7 +261,7 @@ class Gallery extends Component {
                     )}
                   </div>
                 </Accordion.Collapse>
-              </Accordion>
+              </Accordion> */}
               <div className='gallery-page_images-container'>
                 <div className='gallery-page_images'
                   style={!this.state ? null :
