@@ -32,6 +32,7 @@
 
       h3 {
         font-variant: small-caps;
+        text-transform: lowercase;
         margin-left: 15px;
         cursor: pointer;
       }
@@ -55,6 +56,7 @@
 
           h3 {
             font-variant: small-caps;
+            text-transform: lowercase;
             margin-left: 15px;
             cursor: pointer;
           }
@@ -132,10 +134,6 @@
     }
   }
 
-  &_images-container {
-    // border: $border
-  }
-
   &_images {
     // border: 1px solid black;
     display: flex;
@@ -147,6 +145,7 @@
 
     &_title {
       font-variant: small-caps;
+      text-transform: lowercase;
       font-size: 50px;
       margin-bottom: 10px;
     }

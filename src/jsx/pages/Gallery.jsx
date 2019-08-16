@@ -170,24 +170,28 @@ class Gallery extends Component {
   showAllImages = () => {
     let imagesContainerHeight = (this.state.imagesTotalHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace;
 
-    if(this.state.currentFilterValue) {
+    if (this.state.currentFilterValue) {
       this.setState({
         filterImagesFadeOut: true
       });
       setTimeout(() => {
         this.setState({
+          showFilterOptions: !this.state.showFilterOptions
+        });
+      }, 350);
+      setTimeout(() => {
+        this.setState({
           filteredImages: this.state.images,
           imgContainerHeight: imagesContainerHeight,
           numImages: this.state.images.length,
-          currentFilterValue: null,
-          showFilterOptions: !this.state.showFilterOptions
+          currentFilterValue: null
         });
       }, 500);
       setTimeout(() => {
         this.setState({
           filterImagesFadeOut: false
         })
-      }, 1400);
+      }, 1200);
     }
   };
 
@@ -196,7 +200,7 @@ class Gallery extends Component {
       zoomedImageURL: e.currentTarget.src,
       zoom: true,
       zoomedImageKey: Number(e.currentTarget.getAttribute('value'))
-    }, () => console.log(this.state.zoomedImageKey));
+    });
   }
 
   exitZoom = () => {
@@ -346,7 +350,7 @@ class Gallery extends Component {
                 config={config.gentle}
               >
                 {props =>
-                  <div style={{...props, marginTop: `${this.state.showFilterOptions ? 50 : 20}px`}} className='gallery-page_images-container'>
+                  <div style={{ ...props, marginTop: `${this.state.showFilterOptions ? 50 : 20}px` }} className='gallery-page_images-container'>
                     {this.state.currentFilterValue &&
                       <h2 className='gallery-page_images_title'>{this.state.currentFilterValue}</h2>
                     }
@@ -369,20 +373,22 @@ class Gallery extends Component {
                   </div>
                 }
               </Spring>
-              {this.state.zoom &&
-                <Zoom
-                  zoomedImageURL={this.state.zoomedImageURL}
-                  previousPicture={this.previousPicture}
-                  nextPicture={this.nextPicture}
-                  exitZoom={this.exitZoom}
-                  pictureNum={this.state.zoomedImageKey + 1}
-                  pgnationBG={(100 / this.state.numImages) * (this.state.zoomedImageKey + 1)}
-                  numImages={this.state.numImages}
-                />
-              }
             </div>
           }
         </Spring>
+        {this.state.zoom &&
+          <Zoom
+            zoomedImageURL={this.state.zoomedImageURL}
+            previousPicture={this.previousPicture}
+            nextPicture={this.nextPicture}
+            exitZoom={this.exitZoom}
+            pictureNum={this.state.zoomedImageKey + 1}
+            pgnationBG={(100 / this.state.numImages) * (this.state.zoomedImageKey + 1)}
+            numImages={this.state.numImages}
+            imagesName={this.state.currentFilterValue}
+            showZoom={this.state.zoom}
+          />
+        }
       </div>
     )
   }

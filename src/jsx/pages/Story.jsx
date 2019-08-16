@@ -254,6 +254,7 @@ class Story extends Component {
               pictureNum={this.state.zoomedImageKey + 1}
               pgnationBG={(100 / this.props.images.length) * (this.state.zoomedImageKey + 1)}
               numImages={this.props.images.length}
+              imagesName={this.props.title}
             />
           }
         </div>
