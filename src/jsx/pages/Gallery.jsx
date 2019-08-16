@@ -134,7 +134,6 @@ class Gallery extends Component {
 
 
   filterImages = (filter) => {
-    console.log(filter);
     let filteredImages = [];
     let filteredImagesHeight = 0;
     let imagesContainerHeight = 0;
@@ -149,7 +148,6 @@ class Gallery extends Component {
       });
     }
     else if (filter === 'none') {
-      // filteredImages = this.state.images;
       filteredImagesHeight = this.state.imagesTotalHeight;
 
       setTimeout(() => {
@@ -158,10 +156,10 @@ class Gallery extends Component {
         });
       }, 350);
     }
-    else if (filter === 'date') {
-      this.filterImages = this.state.images.sort((a, b) => {
-        return a.date - b.date
-      });
+    else if (filter === 'newest' || filter === 'oldest') {
+      filteredImages = filter === 'newest' ? 
+        this.state.images.concat().sort((a, b) => { return a.date - b.date }) : this.state.images.concat().sort((a, b) => { return b.date - a.date });
+        
       filteredImagesHeight = this.state.imagesTotalHeight;
     }
 
@@ -183,34 +181,6 @@ class Gallery extends Component {
         filterImagesFadeOut: false
       })
     }, 1600);
-  };
-
-  showAllImages = () => {
-    let imagesContainerHeight = (this.state.imagesTotalHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace;
-
-    if (this.state.displayFilterValue) {
-      this.setState({
-        filterImagesFadeOut: true
-      });
-      setTimeout(() => {
-        this.setState({
-          showFilterOptions: !this.state.showFilterOptions
-        });
-      }, 350);
-      setTimeout(() => {
-        this.setState({
-          filteredImages: this.state.images,
-          imgContainerHeight: imagesContainerHeight,
-          numImages: this.state.images.length,
-          displayFilterValue: null
-        });
-      }, 500);
-      setTimeout(() => {
-        this.setState({
-          filterImagesFadeOut: false
-        })
-      }, 1200);
-    }
   };
 
   zoomOnImage = (e) => {
@@ -314,13 +284,15 @@ class Gallery extends Component {
                           <div className='gallery-page_filter_second-line_dashed-line'></div>
                           {this.state.showDateFilter &&
                             <div className='gallery-page_filter_second-line_options_1_content'>
-                              <div className='gallery-page_filter_second-line_options_1_content_item'>
+                              <div className='gallery-page_filter_second-line_options_1_content_item'
+                                onClick={_ => { this.filterImages('newest') }}
+                              >
                                 <FontAwesomeIcon className='gallery-page_filter_second-line_options_1_content_item_icon' icon={faEye}></FontAwesomeIcon>
-                                <div
-                                // onClick={this.filterImagesByDate}
-                                >most recent</div>
+                                <div>most recent</div>
                               </div>
-                              <div className='gallery-page_filter_second-line_options_1_content_item'>
+                              <div className='gallery-page_filter_second-line_options_1_content_item'
+                                onClick={_ => this.filterImages('oldest')}
+                              >
                                 <FontAwesomeIcon className='gallery-page_filter_second-line_options_1_content_item_icon' icon={faEye}></FontAwesomeIcon>
                                 <div>oldest first</div>
                               </div>
@@ -345,7 +317,7 @@ class Gallery extends Component {
                               {this.state.tags && this.state.tags.map(tag =>
                                 <div className='gallery-page_filter_second-line_options_2_content_item'
                                   onClick={_ => {
-                                    this.setState({ currentFilterValue: tag.name }, _ => this.filterImages('category'));        
+                                    this.setState({ currentFilterValue: tag.name }, _ => this.filterImages('category'));
                                   }}
                                   key={tag.id} value={tag.name}
                                 >
@@ -417,3 +389,33 @@ class Gallery extends Component {
 }
 
 export default withRouter(Gallery);
+
+
+
+// showAllImages = () => {
+//   let imagesContainerHeight = (this.state.imagesTotalHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace;
+
+//   if (this.state.displayFilterValue) {
+//     this.setState({
+//       filterImagesFadeOut: true
+//     });
+//     setTimeout(() => {
+//       this.setState({
+//         showFilterOptions: !this.state.showFilterOptions
+//       });
+//     }, 350);
+//     setTimeout(() => {
+//       this.setState({
+//         filteredImages: this.state.images,
+//         imgContainerHeight: imagesContainerHeight,
+//         numImages: this.state.images.length,
+//         displayFilterValue: null
+//       });
+//     }, 500);
+//     setTimeout(() => {
+//       this.setState({
+//         filterImagesFadeOut: false
+//       })
+//     }, 1200);
+//   }
+// };
