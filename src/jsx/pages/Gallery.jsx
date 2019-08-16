@@ -170,11 +170,25 @@ class Gallery extends Component {
   showAllImages = () => {
     let imagesContainerHeight = (this.state.imagesTotalHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace;
 
-    this.setState({
-      filteredImages: this.state.images,
-      imgContainerHeight: imagesContainerHeight,
-      numImages: this.state.images.length
-    });
+    if(this.state.currentFilterValue) {
+      this.setState({
+        filterImagesFadeOut: true
+      });
+      setTimeout(() => {
+        this.setState({
+          filteredImages: this.state.images,
+          imgContainerHeight: imagesContainerHeight,
+          numImages: this.state.images.length,
+          currentFilterValue: null,
+          showFilterOptions: !this.state.showFilterOptions
+        });
+      }, 500);
+      setTimeout(() => {
+        this.setState({
+          filterImagesFadeOut: false
+        })
+      }, 1400);
+    }
   };
 
   zoomOnImage = (e) => {
@@ -219,7 +233,6 @@ class Gallery extends Component {
     }
   }
 
-
   test = () => {
     console.log(this.state.imagesHeights);
   }
@@ -251,8 +264,8 @@ class Gallery extends Component {
               <div className='gallery-page_filter'>
                 <div className='gallery-page_filter_first-line'
                   onClick={() => {
-                    this.setState({ showFilterOptions: !this.state.showFilterOptions });
-                    if (this.state.showFilterOptions) this.showAllImages()
+                    if (this.state.currentFilterValue) this.showAllImages();
+                    else this.setState({ showFilterOptions: !this.state.showFilterOptions });
                   }}
                 >
                   {this.state.showFilterOptions ?
@@ -313,9 +326,7 @@ class Gallery extends Component {
                                   {this.state.currentFilterValue === tag.name ?
                                     <FontAwesomeIcon className='gallery-page_filter_second-line_options_2_content_item_icon' icon={faEyeSolid}></FontAwesomeIcon> :
                                     <FontAwesomeIcon className='gallery-page_filter_second-line_options_2_content_item_icon' icon={faEye}></FontAwesomeIcon>
-
                                   }
-
                                   <div>{tag.name}</div>
                                 </div>
                               )}
@@ -327,9 +338,6 @@ class Gallery extends Component {
                   }
                 </div>
               </div>
-              {this.state.currentFilterValue && 
-                <h2>{this.state.currentFilterValue}</h2>
-              }
               <Spring
                 from={{ opacity: 1 }}
                 to={{
@@ -338,12 +346,14 @@ class Gallery extends Component {
                 config={config.gentle}
               >
                 {props =>
-                  <div style={props} className='gallery-page_images-container'>
+                  <div style={{...props, marginTop: `${this.state.showFilterOptions ? 50 : 20}px`}} className='gallery-page_images-container'>
+                    {this.state.currentFilterValue &&
+                      <h2 className='gallery-page_images_title'>{this.state.currentFilterValue}</h2>
+                    }
                     <div className='gallery-page_images'
                       style={!this.state ? null :
                         {
-                          height: `${this.state.imgContainerHeight}px`,
-                          marginTop: `${this.state.showFilterOptions ? 50 : 20}px`
+                          height: `${this.state.imgContainerHeight}px`
                         }
                       }
                     >
