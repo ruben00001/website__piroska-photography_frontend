@@ -25,7 +25,7 @@ class Gallery extends Component {
       zoomedImageKey: null,
       imagesTotalHeight: 0,
       imgContainerHeight: 0,
-      imagesHeights: [],
+      imageHeights: [],
       imageContainerVars: { columns: 0, extraspace: 0 },
       filter: 0,
       numImages: 0,
@@ -38,6 +38,7 @@ class Gallery extends Component {
       showDateFilter: false,
       showCategoryFilter: false,
       currentFilterValue: null,
+      displayFilterValue: null,
       filterImagesFadeOut: false
     }
   }
@@ -68,7 +69,8 @@ class Gallery extends Component {
               {
                 url: image.image.url,
                 tags: image.tags.map(tag => tag.name),
-                key: image.id
+                key: image.id,
+                date: Number(image.createdAt.substring(0, 10).split('').filter(item => item !== '-').join(''))
               }
             )
           }),
@@ -98,7 +100,7 @@ class Gallery extends Component {
   imagesOnLoad = (e) => {
     this.setState({
       imagesTotalHeight: this.state.imagesTotalHeight + e.currentTarget.offsetHeight,
-      imagesHeights: [...this.state.imagesHeights, e.currentTarget.offsetHeight],
+      imageHeights: [...this.state.imageHeights, e.currentTarget.offsetHeight],
       numImagesLoaded: this.state.numImagesLoaded + 1
     }, _ => {
       if (this.state.numImagesLoaded === this.state.numImages) {
@@ -131,46 +133,62 @@ class Gallery extends Component {
   }
 
 
-  filterImages = (e) => {
+  filterImages = (filter) => {
+    console.log(filter);
+    let filteredImages = [];
     let filteredImagesHeight = 0;
     let imagesContainerHeight = 0;
-    let filterValue = e.currentTarget.getAttribute('value')
+    let filterValue = this.state.currentFilterValue;
 
+    if (filter === 'category') {
+      filteredImages = this.state.images.filter((image, i) => {
+        if (image.tags.includes(filterValue)) {
+          filteredImagesHeight += this.state.imageHeights[i]
+          return image.tags.includes(filterValue)
+        }
+      });
+    }
+    else if (filter === 'none') {
+      // filteredImages = this.state.images;
+      filteredImagesHeight = this.state.imagesTotalHeight;
 
-    let filteredImages = this.state.images.filter((image, i) => {
-      if (image.tags.includes(filterValue)) {
-        filteredImagesHeight += this.state.imagesHeights[i]
-
-        return image.tags.includes(filterValue)
-      }
-    });
+      setTimeout(() => {
+        this.setState({
+          showFilterOptions: !this.state.showFilterOptions
+        });
+      }, 350);
+    }
+    else if (filter === 'date') {
+      this.filterImages = this.state.images.sort((a, b) => {
+        return a.date - b.date
+      });
+      filteredImagesHeight = this.state.imagesTotalHeight;
+    }
 
     imagesContainerHeight = (filteredImagesHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace;
 
     this.setState({
       filterImagesFadeOut: true
     })
-
     setTimeout(() => {
       this.setState({
         imgContainerHeight: imagesContainerHeight,
-        filteredImages: filteredImages,
+        filteredImages: filter === 'none' ? this.state.images : filteredImages,
         numImages: filteredImages.length,
-        currentFilterValue: filterValue
+        displayFilterValue: filter === 'category' ? filterValue : null
       });
     }, 500);
-
     setTimeout(() => {
       this.setState({
         filterImagesFadeOut: false
       })
-    }, 1400);
+    }, 1600);
   };
 
   showAllImages = () => {
     let imagesContainerHeight = (this.state.imagesTotalHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace;
 
-    if (this.state.currentFilterValue) {
+    if (this.state.displayFilterValue) {
       this.setState({
         filterImagesFadeOut: true
       });
@@ -184,7 +202,7 @@ class Gallery extends Component {
           filteredImages: this.state.images,
           imgContainerHeight: imagesContainerHeight,
           numImages: this.state.images.length,
-          currentFilterValue: null
+          displayFilterValue: null
         });
       }, 500);
       setTimeout(() => {
@@ -238,7 +256,7 @@ class Gallery extends Component {
   }
 
   test = () => {
-    console.log(this.state.imagesHeights);
+    console.log(this.state.images);
   }
 
   render() {
@@ -264,11 +282,11 @@ class Gallery extends Component {
         >
           {props =>
             <div style={props} className='gallery-page_container'>
-              <h1 className='gallery-page_title'>Gallery</h1>
+              <h1 onClick={this.test} className='gallery-page_title'>Gallery</h1>
               <div className='gallery-page_filter'>
                 <div className='gallery-page_filter_first-line'
                   onClick={() => {
-                    if (this.state.currentFilterValue) this.showAllImages();
+                    if (this.state.displayFilterValue) this.filterImages('none');
                     else this.setState({ showFilterOptions: !this.state.showFilterOptions });
                   }}
                 >
@@ -298,7 +316,9 @@ class Gallery extends Component {
                             <div className='gallery-page_filter_second-line_options_1_content'>
                               <div className='gallery-page_filter_second-line_options_1_content_item'>
                                 <FontAwesomeIcon className='gallery-page_filter_second-line_options_1_content_item_icon' icon={faEye}></FontAwesomeIcon>
-                                <div>most recent</div>
+                                <div
+                                // onClick={this.filterImagesByDate}
+                                >most recent</div>
                               </div>
                               <div className='gallery-page_filter_second-line_options_1_content_item'>
                                 <FontAwesomeIcon className='gallery-page_filter_second-line_options_1_content_item_icon' icon={faEye}></FontAwesomeIcon>
@@ -324,10 +344,12 @@ class Gallery extends Component {
                             <div className='gallery-page_filter_second-line_options_2_content'>
                               {this.state.tags && this.state.tags.map(tag =>
                                 <div className='gallery-page_filter_second-line_options_2_content_item'
-                                  onClick={this.filterImages}
+                                  onClick={_ => {
+                                    this.setState({ currentFilterValue: tag.name }, _ => this.filterImages('category'));        
+                                  }}
                                   key={tag.id} value={tag.name}
                                 >
-                                  {this.state.currentFilterValue === tag.name ?
+                                  {this.state.displayFilterValue === tag.name ?
                                     <FontAwesomeIcon className='gallery-page_filter_second-line_options_2_content_item_icon' icon={faEyeSolid}></FontAwesomeIcon> :
                                     <FontAwesomeIcon className='gallery-page_filter_second-line_options_2_content_item_icon' icon={faEye}></FontAwesomeIcon>
                                   }
@@ -351,8 +373,8 @@ class Gallery extends Component {
               >
                 {props =>
                   <div style={{ ...props, marginTop: `${this.state.showFilterOptions ? 50 : 20}px` }} className='gallery-page_images-container'>
-                    {this.state.currentFilterValue &&
-                      <h2 className='gallery-page_images_title'>{this.state.currentFilterValue}</h2>
+                    {this.state.displayFilterValue &&
+                      <h2 className='gallery-page_images_title'>{this.state.displayFilterValue}</h2>
                     }
                     <div className='gallery-page_images'
                       style={!this.state ? null :
@@ -385,7 +407,7 @@ class Gallery extends Component {
             pictureNum={this.state.zoomedImageKey + 1}
             pgnationBG={(100 / this.state.numImages) * (this.state.zoomedImageKey + 1)}
             numImages={this.state.numImages}
-            imagesName={this.state.currentFilterValue}
+            imagesName={this.state.displayFilterValue}
             showZoom={this.state.zoom}
           />
         }
