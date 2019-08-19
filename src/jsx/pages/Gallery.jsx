@@ -152,14 +152,15 @@ class Gallery extends Component {
 
       setTimeout(() => {
         this.setState({
-          showFilterOptions: !this.state.showFilterOptions
+          showFilterOptions: !this.state.showFilterOptions,
+          currentFilterValue: null
         });
       }, 350);
     }
     else if (filter === 'newest' || filter === 'oldest') {
-      filteredImages = filter === 'newest' ? 
-        this.state.images.concat().sort((a, b) => { return a.date - b.date }) : this.state.images.concat().sort((a, b) => { return b.date - a.date });
-        
+      filteredImages = filter === 'newest' ?
+        this.state.images.concat().sort((a, b) => { return b.date - a.date }) : this.state.images.concat().sort((a, b) => { return a.date - b.date });
+
       filteredImagesHeight = this.state.imagesTotalHeight;
     }
 
@@ -235,6 +236,7 @@ class Gallery extends Component {
         <LoadingScreen
           loadingWidgetOut={!this.state.loadingWidgetOut}
           stopLoader={this.state.stopLoader}
+          removeLoader={this.state.titlesIn}
         />
         {this.state.imagesLoaded &&
           <React.Fragment>
@@ -264,7 +266,7 @@ class Gallery extends Component {
                     <FontAwesomeIcon className='gallery-page_filter_icon' icon={faMinusSquare}></FontAwesomeIcon> :
                     <FontAwesomeIcon className='gallery-page_filter_icon' icon={faPlusSquare}></FontAwesomeIcon>
                   }
-                  <h3>{this.state.showFilterOptions ? 'un' : null}filter</h3>
+                  <h3>{this.state.currentFilterValue ? 'un' : null}filter</h3>
                 </div>
                 <div className='gallery-page_filter_second-line'>
                   <div className='gallery-page_filter_second-line_dashed-line'></div>

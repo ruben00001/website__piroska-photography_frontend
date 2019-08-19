@@ -124,11 +124,22 @@ class Home extends Component {
               </div>
             }
           </Spring>
+          {/* <Spring
+            from={{ opacity: 0 }}
+            to={{
+              opacity: this.state.showLoadingText ? 1 : 0
+            }}
+            config={config.slow}
+          >
+            {propsA =>
+              <h3 style={propsA} className='loading-screen_loading'>loading...</h3>
+            }
+          </Spring> */}
         </div>
         {this.state.showPage &&
           <Navbar2 />
         }
-        <Spring
+        {/* <Spring
           from={{ opacity: 0, transform: 'scale(0.85)' }}
           to={{ opacity: !this.state.showPage ? 0 : 1, transform: !this.state.scalePage ? 'scale(0.85)' : 'scale(1)' }}
           config={config.slow}
@@ -143,7 +154,7 @@ class Home extends Component {
               </div>
             </div>
           }
-        </Spring>
+        </Spring> */}
       </div>
     )
   }

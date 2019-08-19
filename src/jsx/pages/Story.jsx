@@ -164,6 +164,7 @@ class Story extends Component {
         <LoadingScreen
           loadingWidgetOut={!this.state.loadingWidgetOut}
           stopLoader={this.state.stopLoader}
+          removeLoader={this.state.titlesIn}
         />
         {this.state.imagesLoaded &&
           <React.Fragment>

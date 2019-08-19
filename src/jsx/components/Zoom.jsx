@@ -6,11 +6,11 @@ import { faTimes, faChevronRight, faChevronLeft } from "@fortawesome/free-solid-
 const Zoom = (props) => {
   return (
     <Spring
-      from={{ opacity: 0 }}
+      from={{ opacity: 0, transform: 'scale(0.95)' }}
       to={{
-        opacity: 1
+        opacity: 1,
+        transform: 'scale(1)'
       }}
-      config={config.stiff}
     >
       {propsA =>
         <div style={propsA} className='zoom'>

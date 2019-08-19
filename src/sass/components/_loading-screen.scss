@@ -9,4 +9,12 @@
   display: flex;
   justify-content: center;
   align-content: center;
+
+  &_loading {
+    position: absolute;
+    top: calc(50% + 90px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-variant: small-caps;
+  }
 }

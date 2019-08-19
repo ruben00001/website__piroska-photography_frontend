@@ -36,7 +36,6 @@ class LoadingWidget extends Component {
     return (
       <div className='loading-widget'>
         <p>01{this.state.num1}&deg;01{this.state.num2}</p>
-        <h1>{this.props.hello}</h1>
       </div>
     )
   }
