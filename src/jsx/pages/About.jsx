@@ -34,7 +34,9 @@ class About extends Component {
     return (
       <div className='about'>
         {/* <Logo /> */}
-        <Navbar2 />
+        <Navbar2
+          white={true}
+        />
         <div className='about_image'>
           <img src={require('../../img/PeopleInRain.jpg')} alt=''></img>
         </div>
@@ -56,7 +58,7 @@ class About extends Component {
                 </div>
               </div>
               <div className='about_personal'>
-                <p className='about_personal_description'>piroska markus lives in london, <br/> originally from budapest <br/> and soon to travel across the world.<br/><br/>In her photgraphy she tries to capture <br/>beauty in all its forms. <br/><br/>She has three children,<br/> loves her home in Abbey Wood <br/> and enjoys taking long walks.<br/><br/>get in touch.</p>
+                <p className='about_personal_description'>piroska markus lives in london, <br /> originally from budapest <br /> and soon to travel across the world.<br /><br />In her photgraphy she tries to capture <br />beauty in all its forms. <br /><br />She has three children,<br /> loves her home in Abbey Wood <br /> and enjoys taking long walks.<br /><br />get in touch.</p>
               </div>
             </div>
           }

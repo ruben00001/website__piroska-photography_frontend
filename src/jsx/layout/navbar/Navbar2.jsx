@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { Spring, config } from 'react-spring/renderprops';
-import Toggler from './NavbarToggler';
+import NavbarToggler from './NavbarToggler';
 
 
 class Navbar2 extends Component {
@@ -20,7 +20,7 @@ class Navbar2 extends Component {
     })
   }
 
-  goPage = (e) => {    
+  goPage = (e) => {
     let route = `/${e.currentTarget.getAttribute('value')}`;
     this.setState({
       leavePage: true
@@ -34,10 +34,13 @@ class Navbar2 extends Component {
   render() {
     return (
       <div className='navbar'>
-        <Toggler onClick={this.openNav} />
+        <NavbarToggler
+          onClick={this.openNav}
+          white={this.props.white}
+        />
         <Spring
           from={{ transform: 'translate(0, -100vh)' }}
-          to={{ transform: !this.state.openNav ? 'translate(0, -100vh)' : 'translate(0, 0)'}}
+          to={{ transform: !this.state.openNav ? 'translate(0, -100vh)' : 'translate(0, 0)' }}
           config={config.slow}
         >
           {props =>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSpring, config, animated, interpolate } from "react-spring";
 
-function Navbar2(props) {
+function NavbarToggler(props) {
   const [toggle, setToggle] = React.useState(false);
 
   const p1 = useSpring({
@@ -15,7 +15,7 @@ function Navbar2(props) {
   });
 
   const p3 = useSpring({
-    c: toggle ? 'white' : 'black',
+    c: props.white ? 'white' : toggle ? 'white' : 'black',
     config: config.molasses
   });
 
@@ -45,4 +45,4 @@ function Navbar2(props) {
   );
 }
 
-export default Navbar2;
+export default NavbarToggler;
