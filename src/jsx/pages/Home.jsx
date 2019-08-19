@@ -159,6 +159,7 @@ class Home extends Component {
         {this.state.showPage &&
           <Navbar2 
             currentPage={'/home'}
+            noLogo={true}
           />
         }
         <Spring

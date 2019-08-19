@@ -15,10 +15,6 @@ class Navbar2 extends Component {
     }
   }
 
-  componentDidMount() {
-
-  }
-
   openNav = () => {
     this.setState({
       openNav: !this.state.openNav
@@ -62,6 +58,7 @@ class Navbar2 extends Component {
         <NavbarToggler
           onClick={this.openNav}
           white={this.props.white}
+          noLogo={this.props.noLogo}
         />
         <Spring
           from={{ transform: 'translate(0, -100vh)' }}
@@ -70,9 +67,11 @@ class Navbar2 extends Component {
         >
           {props =>
             <div style={props} className='navbar_open'>
-              <div className='navbar_logo'>
-                <p>Piros <br /> Photography.</p>
-              </div>
+              {this.state.currentPage === '/home' &&
+                <div className='navbar_logo navbar_logo--home'>
+                  <p>Piros <br /> Photography.</p>
+                </div>
+              }
               <div className='navbar_links-container'>
                 <p onClick={this.goPage} className='navbar_link' value='home'>Home.</p>
                 <p onClick={this.goPage} className='navbar_link' value='stories'>Stories.</p>

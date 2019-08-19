@@ -9,12 +9,10 @@
     height: 100vh;
     display: flex;
     justify-content: center;
-    // align-items: flex-start;
     background-color: white;
 
     @media (max-width: 500px) {
       align-items: flex-start;
-      // margin-top: 80px;
     }
   }
 
@@ -68,28 +66,86 @@
   &_title {
     position: absolute;
     font-variant: small-caps;
-    color: $main-color;
-    // border: $border;
+    
+    @media (max-width: 600px) {
+      color: white;
+    }
 
     &--main {
-      top: 400px;
-      left: -6vw;
+      top: 35vh;
+      left: -100px;
       font-size: 140px;
+      transform: translateX(-10px);
 
+      @media (max-width: 1920px) {
+        font-size: 120px;
+      }
       @media (max-width: 1680px) {
         font-size: 100px;
+      }
+      @media (max-width: 1400px) {
+        font-size: 70px;
+        left: -70px;
+        transform: translateX(-6px);
+      }
+      @media (max-width: 1100px) {
+        font-size: 60px;
+        left: -60px;
+        transform: translateX(-5px);
+      }
+      @media (max-width: 800px) {
+        font-size: 48px;
+        left: -45px;
+        transform: translateX(-3px);
+      }
+      @media (max-width: 600px) {
+        font-size: 50px;
+        left: 4px;
+        top: 47%;
+        transform: translateX(0px);
       }
     }
 
     &--catalogue {
       top: 50px;
-      left: -6vw;
+      left: -100px;
       font-size: 30px;
-      font-variant: none;
+
+      @media (max-width: 1680px) {
+        font-size: 28px;
+      }
+      @media (max-width: 1400px) {
+        font-size: 26px;
+        left: -70px;
+      }
+      @media (max-width: 1100px) {
+        font-size: 22px;
+        left: -60px;
+        top: 25px;
+      }
+      @media (max-width: 800px) {
+        font-size: 18px;
+        left: -45px;
+        top: 20px;
+      }
+      @media (max-width: 600px) {
+        font-size: 18px;
+        left: 4px;
+        top: 27px;
+        color: $main-color;
+      }
     }
 
     &--locations {
       right: 0;
+
+      @media (max-width: 1100px) {
+        font-size: 25px;
+      }
+      @media (max-width: 600px) {
+        bottom: 0;
+        right: 4px;
+      }
     }
 
     // @media (max-width: 1680px) {

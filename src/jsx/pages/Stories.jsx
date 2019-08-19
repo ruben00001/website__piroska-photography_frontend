@@ -176,7 +176,7 @@ class Stories extends Component {
                                 <Navbar2
                                     currentPage={'/stories'}
                                 />
-                                <Logo />
+                                {/* <Logo /> */}
                             </React.Fragment>
                         }
                         <div className='stories-page_title'>
