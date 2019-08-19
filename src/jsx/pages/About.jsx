@@ -32,23 +32,25 @@ class About extends Component {
 
   render() {
     return (
-      <div className='about'>
-        {/* <Logo /> */}
-        <Navbar2
-          white={true}
-        />
-        <div className='about_image'>
-          <img src={require('../../img/PeopleInRain.jpg')} alt=''></img>
-        </div>
-        <Spring
-          from={{ opacity: 1 }}
-          to={{
-            opacity: this.state.imageLoaded ? 1 : 1
-          }}
-          config={config.slow}
-        >
-          {props =>
-            <div style={props} className='about_container'>
+      <Spring
+        from={{ opacity: 0 }}
+        to={{
+          opacity: this.state.imageLoaded ? 1 : 0
+        }}
+        config={config.slow}
+      >
+        {props =>
+          <div style={props} className='about'>
+            {/* <Logo /> */}
+            <Navbar2
+              white={true}
+            />
+            <div className='about_image'>
+              <img src={require('../../img/PeopleInRain.jpg')} alt=''
+                onLoad={_ => this.setState({ imageLoaded: true })}
+              ></img>
+            </div>
+            <div className='about_container'>
               <div className='about_info'>
                 <p className='about_info_email'>piros.cards<span className='about_info_at'>@</span>gmail.com</p>
                 <div className='about_info_facebook'>
@@ -58,12 +60,13 @@ class About extends Component {
                 </div>
               </div>
               <div className='about_personal'>
-                <p className='about_personal_description'>piroska markus lives in london, <br /> originally from budapest <br /> and soon to travel across the world.<br /><br />In her photgraphy she tries to capture <br />beauty in all its forms. <br /><br />She has three children,<br /> loves her home in Abbey Wood <br /> and enjoys taking long walks.<br /><br />get in touch.</p>
+                <p className='about_personal_description'>piroska markus lives in london, <br />is originally from budapest <br /> and soon to travel across the world.<br /><br />In her photgraphy she tries to capture <br />beauty in all its forms. <br /><br />She has three children,<br /> loves her home in Abbey Wood <br /> and enjoys taking long walks.<br /><br />get in touch.</p>
               </div>
             </div>
-          }
-        </Spring>
-      </div>
+          </div>
+        }
+      </Spring>
+
     );
   }
 }
