@@ -80,7 +80,14 @@ class Stories extends Component {
             })
     }
 
-
+    componentDidUpdate() {
+        if (this.props.location.state && this.props.location.state.storyToStories && this.state.leftPage) {
+            this.setState({
+                leftPage: false
+            });
+            this.introFromChildRoute();
+        }
+    }
 
 
     imagesOnLoad = () => {
@@ -155,12 +162,6 @@ class Stories extends Component {
 
 
     render() {
-        if(this.props.location.state && this.props.location.state.storyToStories && this.state.leftPage) {
-            this.setState({
-                leftPage: false
-            });
-            this.introFromChildRoute();
-        }
         return (
             <React.Fragment>
                 <Route exact path="/stories" render={() =>
