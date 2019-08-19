@@ -240,7 +240,9 @@ class Gallery extends Component {
         />
         {this.state.imagesLoaded &&
           <React.Fragment>
-            <Navbar2 />
+            <Navbar2
+              currentPage={'/gallery'}
+            />
             <Logo />
           </React.Fragment>
         }

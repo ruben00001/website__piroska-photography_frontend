@@ -33,6 +33,8 @@ class Story extends Component {
   componentDidMount() {
     window.scrollTo(0, 0) // a bug where page loads to bottom
     this.setImageContainerStyles(this.props.images);
+    console.log('STORY LOADED');
+
   }
 
   setImageContainerStyles = (images) => {
@@ -168,7 +170,9 @@ class Story extends Component {
         />
         {this.state.imagesLoaded &&
           <React.Fragment>
-            <Navbar2 />
+            <Navbar2
+              currentPage={'/story'}
+            />
             <Logo />
           </React.Fragment>
         }

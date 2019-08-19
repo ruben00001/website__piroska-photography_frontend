@@ -157,7 +157,9 @@ class Home extends Component {
           </React.Fragment>
         }
         {this.state.showPage &&
-          <Navbar2 />
+          <Navbar2 
+            currentPage={'/home'}
+          />
         }
         <Spring
           from={{ opacity: 0, transform: 'scale(0.85)' }}

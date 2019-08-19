@@ -31,15 +31,12 @@ class Stories extends Component {
     homeURL = strapiAPI;
 
     componentDidMount() {
-        window.onpopstate = (e) => {
+        window.onpopstate = () => {
             if (this.state.leftPage) {
                 setTimeout(() => {
                     window.scrollTo(0, 0);
                 }, 10);
-                this.triggerIntroFromChildRoute()
-                this.setState({
-                    leftPage: false
-                })
+                this.introFromChildRoute()
             }
         }
         Axios.get(`${this.homeURL}/essays`)
@@ -91,12 +88,12 @@ class Stories extends Component {
             numImagesLoaded: this.state.numImagesLoaded + 1,
         }, _ => {
             if (this.state.numImagesLoaded === this.state.stories.length) {
-                this.triggerIntroAnimations();
+                this.introAnimations();
             }
         })
     }
 
-    triggerIntroAnimations = () => {
+    introAnimations = () => {
         setTimeout(() => {
             this.setState({
                 imagesLoaded: true
@@ -119,13 +116,11 @@ class Stories extends Component {
         }, 2000);
     }
 
-    triggerIntroFromChildRoute = () => {
-        if (this.state.leftPage) {
-            this.triggerIntroAnimations();
-            this.setState({
-                leftPage: false
-            })
-        }
+    introFromChildRoute = () => {
+        this.introAnimations();
+        this.setState({
+            leftPage: false
+        });
     }
 
     showStory = (e) => {
@@ -160,6 +155,12 @@ class Stories extends Component {
 
 
     render() {
+        if(this.props.location.state && this.props.location.state.storyToStories && this.state.leftPage) {
+            this.setState({
+                leftPage: false
+            });
+            this.introFromChildRoute();
+        }
         return (
             <React.Fragment>
                 <Route exact path="/stories" render={() =>
@@ -171,7 +172,9 @@ class Stories extends Component {
                         />
                         {this.state.imagesLoaded &&
                             <React.Fragment>
-                                <Navbar2 />
+                                <Navbar2
+                                    currentPage={'/stories'}
+                                />
                                 <Logo />
                             </React.Fragment>
                         }

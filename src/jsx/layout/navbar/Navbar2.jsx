@@ -11,13 +11,12 @@ class Navbar2 extends Component {
     this.state = {
       openNav: false,
       leavePage: false,
+      currentPage: props.currentPage
     }
   }
 
   componentDidMount() {
-    console.log('====================================');
-    console.log(this.props.history);
-    console.log('====================================');
+
   }
 
   openNav = () => {
@@ -28,13 +27,33 @@ class Navbar2 extends Component {
 
   goPage = (e) => {
     let route = `/${e.currentTarget.getAttribute('value')}`;
-    this.setState({
-      leavePage: true
-    }, _ => {
-      setTimeout(() => {
-        this.props.history.push(route)
-      }, 1200);
-    })
+
+    if (this.state.currentPage === '/story' && route === '/stories') {
+      this.setState({
+        leavePage: true
+      }, _ => {
+        setTimeout(() => {
+          this.props.history.push({
+            pathname: route,
+            state: {
+              storyToStories: true
+            }
+          })
+        }, 1200);
+      })
+    }
+
+    if (route !== this.state.currentPage) {
+      this.setState({
+        leavePage: true
+      }, _ => {
+        setTimeout(() => {
+          if (route === '/home') this.props.history.push('/')
+          else this.props.history.push(route)
+        }, 1200);
+      })
+    }
+    return;
   }
 
   render() {
@@ -55,7 +74,7 @@ class Navbar2 extends Component {
                 <p>Piros <br /> Photography.</p>
               </div>
               <div className='navbar_links-container'>
-                <p onClick={this.goPage} className='navbar_link' value='/'>Home.</p>
+                <p onClick={this.goPage} className='navbar_link' value='home'>Home.</p>
                 <p onClick={this.goPage} className='navbar_link' value='stories'>Stories.</p>
                 <p onClick={this.goPage} className='navbar_link' value='gallery'>Gallery.</p>
                 <p onClick={this.goPage} className='navbar_link' value='about'>About.</p>
