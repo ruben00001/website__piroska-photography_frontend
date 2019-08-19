@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// import Navigation from '../layout/Navbar';
+import Logo from '../components/Logo';
+import Navbar2 from '../layout/navbar/Navbar2';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
 import { strapiAPI } from '../../enviroment/strapi-api';
+import { Spring, config } from 'react-spring/renderprops';
 
 class About extends Component {
   constructor(props) {
@@ -9,7 +13,8 @@ class About extends Component {
 
     this.state = {
       picture: null,
-      description: null
+      description: null,
+      imageLoaded: false
     }
   }
 
@@ -17,33 +22,48 @@ class About extends Component {
 
   componentDidMount() {
     axios.get(`${this.homeURL}/abouts`)
-    .then(response => {
-      this.setState({
-        picture: response.data[0].picture.url,
-        description: response.data[0].description
+      .then(response => {
+        this.setState({
+          picture: response.data[0].picture.url,
+          description: response.data[0].description
+        });
       });
-    });
   }
 
   render() {
-    return ( 
+    return (
       <div className='about'>
-        {/* <Navigation /> */}
-        <div className='about_container'>
-          <div className='about_image'>
-            <img src={`${this.state.picture}`} alt=''></img>
-          </div>
-          <div className='about_info'>
-            <p className='about_info_text'>{this.state.description}</p>  
-            <div className='about_info_links'>
-              <p>Email: piros.cards@gmail.com</p>
-              <a href='https://www.facebook.com/SeeInPictures/' target='_blank' rel="noopener noreferrer"><p >Facebook</p></a>  
-            </div>  
-          </div>
-        </div> 
+        {/* <Logo /> */}
+        <Navbar2 />
+        <div className='about_image'>
+          <img src={require('../../img/PeopleInRain.jpg')} alt=''></img>
+        </div>
+        <Spring
+          from={{ opacity: 1 }}
+          to={{
+            opacity: this.state.imageLoaded ? 1 : 1
+          }}
+          config={config.slow}
+        >
+          {props =>
+            <div style={props} className='about_container'>
+              <div className='about_info'>
+                <p className='about_info_email'>piros.cards<span className='about_info_at'>@</span>gmail.com</p>
+                <div className='about_info_facebook'>
+                  <p>facebook</p>
+                  <FontAwesomeIcon className='about_info_facebook_arrow' icon={faLongArrowAltRight}></FontAwesomeIcon>
+                  <a href='https://www.facebook.com/SeeInPictures/' target='_blank' rel="noopener noreferrer"><p ><span className='about_info_at'>@</span>seeinpictures</p></a>
+                </div>
+              </div>
+              <div className='about_personal'>
+                <p className='about_personal_description'>piroska markus lives in london, <br/> originally from budapest <br/> and soon to travel across the world.<br/><br/>In her photgraphy she tries to capture <br/>beauty in all its forms. <br/><br/>She has three children,<br/> loves her home in Abbey Wood <br/> and enjoys taking long walks.<br/><br/>get in touch.</p>
+              </div>
+            </div>
+          }
+        </Spring>
       </div>
     );
   }
 }
- 
+
 export default About;

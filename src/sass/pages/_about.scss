@@ -1,93 +1,66 @@
 .about {
-  background-color: #FAF9F8;
   width: 100%;
   min-height: 100vh;
-  border: 1px solid #FAF9F8;
-
-  &_container {
-
-    display: flex;
-    width: 80%;
-    max-width: 1400px;
-    margin: 0 auto;
-    margin-top: 25vh;
-
-    @media ( max-width:  959px ) {
-      width: 90%;
-      margin-top: 20vh;
-    }
-
-    @media ( max-width:  413px ) {
-      width: 94%;
-    }
-
-    @media ( max-width:  359px ) {
-      margin-top: 13vh;
-      width: 90%;
-    }
-  }
+  overflow: hidden;
 
   &_image {
-    width: 180px;
-    height: 180px;
-    flex-shrink: 0;
-    // float: left;
-
-    @media ( max-width:  1100px ) {
-      height: 140px;
-    }
-
-    @media ( max-width:  959px ) {
-      height: 110px;
-    }
+    // border: $border;
+    width: 100%;
+    height: 30vh;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: 50% 10%;
     }
   }
 
+  &_container {
+    margin: auto;
+    width: 90%;
+    margin-top: 20px;
+  }
+
   &_info {
-    transform: translateY(-10px);
-    padding: 0px 100px 0 100px;
+    display: flex;
+    font-variant: small-caps;
+    font-size: 22px;
 
-    &_text {
-      font-size: 20px;
-      // line-height: 30px;
-
-      @media ( max-width:  959px ) {
-        padding: 0px 50px 0 80px;
-      }
-
-      @media ( max-width:  500px ) {
-        padding: 0px 35px 0 35px;
-      }
-
-      @media ( max-width:  413px ) {
-        padding: 0px 20px 0 20px;
-        font-size: 18px;
-      }
+    &_at {
+      font-size: 18px;
     }
 
-    &_links {
+    &_email {
+      margin-right: 50px;
+      width: 240px;
+    }
+
+    &_facebook {
+      display: flex;
 
       p {
-        font-size: 20px;
-        margin-top: 18px;
+        margin-right: 12px;
       }
-  
-      p:first-of-type {
-        margin-top: 100px;
-  
-        @media ( max-width:  959px ) {
-          margin-top: 50px;
-        }
-  
-        @media ( max-width:  413px ) {
-          font-size: 18px;
-        }
+
+      &_arrow {
+        margin-right: 12px;
+        transform: translateY(9px);
       }
+    }
+  }
+
+  &_personal {
+    margin-top: 80px;
+    margin-left: 290px;
+
+    &_description {
+      width: 600px;
+      font-variant: small-caps;
+      text-transform: lowercase;
+      font-size: 36px;
+      line-height: 35px;
+      transform: translateY(-14px);
     }
   }
 }
