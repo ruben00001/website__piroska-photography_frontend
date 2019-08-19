@@ -28,11 +28,22 @@ class Home extends Component {
       menuOpen: false,
       openNav: false,
       loadingWidgetOut: false,
-      stopLoader: false
+      stopLoader: false,
+      removeLoading: false
     }
   }
 
   componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        showLoadingText: true
+      });
+      setTimeout(() => {
+        this.setState({
+          showLoadingText: false
+        });
+      }, 1500);
+    }, 15000);
     Axios.get(`${this.homeURL}/homes`)
       .then(response => {
         this.setState({
@@ -53,22 +64,27 @@ class Home extends Component {
       this.setState({
         stopLoader: true
       })
-    }, 900)
+    }, 900);
     setTimeout(_ => {
       this.setState({
         loadingWidgetOut: true
       })
-    }, 1300)
+    }, 1300);
     setTimeout(_ => {
       this.setState({
         showPage: true
       })
-    }, 1850)
+    }, 1850);
     setTimeout(_ => {
       this.setState({
         scalePage: true,
       })
-    }, 2050)
+    }, 2050);
+    setTimeout(_ => {
+      this.setState({
+        removeLoading: true,
+      })
+    }, 2350);
   }
 
   changeMenu = () => {
@@ -110,36 +126,40 @@ class Home extends Component {
   render() {
     return (
       <div className='home'>
-        <div className='loading-screen'>
-          <Spring
-            from={{ transform: 'translateY(100px)' }}
-            to={{ transform: !this.state.loadingWidgetOut ? 'translateY(0px)' : 'translateY(-100px)' }}
-            config={config.slow}
-          >
-            {props =>
-              <div style={props}>
-                <LoadingWidget
-                  stopLoader={this.state.stopLoader}
-                />
-              </div>
-            }
-          </Spring>
-          {/* <Spring
-            from={{ opacity: 0 }}
-            to={{
-              opacity: this.state.showLoadingText ? 1 : 0
-            }}
-            config={config.slow}
-          >
-            {propsA =>
-              <h3 style={propsA} className='loading-screen_loading'>loading...</h3>
-            }
-          </Spring> */}
-        </div>
+        {!this.state.removeLoading &&
+          <React.Fragment>
+            <div className='loading-screen'>
+              <Spring
+                from={{ transform: 'translateY(100px)' }}
+                to={{ transform: !this.state.loadingWidgetOut ? 'translateY(0px)' : 'translateY(-100px)' }}
+                config={config.slow}
+              >
+                {props =>
+                  <div style={props}>
+                    <LoadingWidget
+                      stopLoader={this.state.stopLoader}
+                    />
+                  </div>
+                }
+              </Spring>
+            </div>
+            <Spring
+              from={{ opacity: 0 }}
+              to={{
+                opacity: this.state.showLoadingText ? 1 : 0
+              }}
+              config={config.slow}
+            >
+              {propsA =>
+                <h3 style={propsA} className='loading-screen_loading'>loading</h3>
+              }
+            </Spring>
+          </React.Fragment>
+        }
         {this.state.showPage &&
           <Navbar2 />
         }
-        {/* <Spring
+        <Spring
           from={{ opacity: 0, transform: 'scale(0.85)' }}
           to={{ opacity: !this.state.showPage ? 0 : 1, transform: !this.state.scalePage ? 'scale(0.85)' : 'scale(1)' }}
           config={config.slow}
@@ -154,7 +174,7 @@ class Home extends Component {
               </div>
             </div>
           }
-        </Spring> */}
+        </Spring>
       </div>
     )
   }

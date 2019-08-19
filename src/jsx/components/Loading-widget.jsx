@@ -24,7 +24,7 @@ class LoadingWidget extends Component {
 
   changeNum = (stateKey) => {
     if (!this.props.stopLoader) {
-      let interval = this.rdmNum(300, 1400);
+      let interval = this.rdmNum(700, 1800);
       this.setState({ [stateKey]: Math.floor(this.rdmNum(1, 9)) });
       setTimeout(() => {
         this.changeNum(stateKey)
