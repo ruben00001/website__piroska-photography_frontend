@@ -29,11 +29,13 @@
 
     &_at {
       font-size: 18px;
+      user-select: text;
     }
 
     &_email {
       margin-right: 50px;
       width: 240px;
+      user-select: text;
     }
 
     &_facebook {
