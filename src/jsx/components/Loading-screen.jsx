@@ -30,7 +30,7 @@ const LoadingScreen = (props) => {
                 transform: props.loadingWidgetOut ? 'translateY(0%)' : 'translateY(-100%)',
                 display: props.removeLoader ? 'none' : 'flex'
               }}
-              config={config.molasses}
+              config={config.slow}
             >
               {propsA =>
                 <div style={propsA}>
