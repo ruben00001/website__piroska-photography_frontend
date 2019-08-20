@@ -243,7 +243,6 @@ class Gallery extends Component {
             <Navbar2
               currentPage={'/gallery'}
             />
-            <Logo />
           </React.Fragment>
         }
         <Spring

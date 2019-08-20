@@ -173,7 +173,6 @@ class Story extends Component {
             <Navbar2
               currentPage={'/story'}
             />
-            <Logo />
           </React.Fragment>
         }
         <div className='story-page_main-container'>

@@ -62,6 +62,7 @@
 
     &_title {
       font-family: $main-font;
+      text-transform: lowercase;
 
       @media ( max-width: 960px ) {
         height: 60px;

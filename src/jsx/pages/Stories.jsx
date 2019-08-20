@@ -227,7 +227,8 @@ class Stories extends Component {
                                                 <div className={`stories-page_story_title`}>
                                                     <h3>{story.title}</h3>
                                                 </div>
-                                                <img onLoad={this.imagesOnLoad} className='stories-page_story_image' src={`${story.mainImageURL}`} value={story.key} alt=''
+                                                <img className='stories-page_story_image' src={`${story.mainImageURL}`} value={story.key} alt=''
+                                                    onLoad={this.imagesOnLoad}
                                                     onClick={this.showStory}
                                                 >
                                                 </img>

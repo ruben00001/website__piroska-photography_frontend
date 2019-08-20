@@ -34,16 +34,20 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        showLoadingText: true
-      });
-      setTimeout(() => {
-        this.setState({
-          showLoadingText: false
-        });
-      }, 1500);
-    }, 15000);
+    // setInterval(() => {
+    //   this.setState({
+    //     showLoadingText: true
+    //   });
+    //   setTimeout(() => {
+    //     this.setState({
+    //       showLoadingText: false
+    //     });
+    //   }, 5000);
+    // }, 10000);
+    this.setState({
+      showLoadingText: true
+    });
+
     Axios.get(`${this.homeURL}/homes`)
       .then(response => {
         this.setState({
@@ -162,7 +166,7 @@ class Home extends Component {
             noLogo={true}
           />
         }
-        <Spring
+        {/* <Spring
           from={{ opacity: 0, transform: 'scale(0.85)' }}
           to={{ opacity: !this.state.showPage ? 0 : 1, transform: !this.state.scalePage ? 'scale(0.85)' : 'scale(1)' }}
           config={config.slow}
@@ -177,7 +181,7 @@ class Home extends Component {
               </div>
             </div>
           }
-        </Spring>
+        </Spring> */}
       </div>
     )
   }
