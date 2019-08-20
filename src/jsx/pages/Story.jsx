@@ -7,7 +7,6 @@ import { strapiAPI } from '../../enviroment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
 import Zoom from '../components/Zoom';
 import LoadingScreen from '../components/Loading-screen';
-import Logo from '../components/Logo';
 
 class Story extends Component {
   constructor(props) {
@@ -41,29 +40,21 @@ class Story extends Component {
     let style = {};
     let styles = [];
     let widthLeft = 0;
-    if (window.innerWidth < 600) {
-      images.forEach(_ => {
+
+    images.forEach((image, i) => {
+      if (i % 2 === 0) {
+        widthLeft = this.rdmNum(35, 65)
         style = {
-          width: '100%'
+          width: `${widthLeft}%`
         }
-        styles.push(style);
-      });
-    } else {
-      images.forEach((image, i) => {
-        if (i % 2 === 0) {
-          widthLeft = this.rdmNum(35, 65)
-          style = {
-            width: `${widthLeft}%`
-          }
-        } else {
-          style = {
-            width: `${100 - widthLeft}%`,
-            textAlign: 'right'
-          }
+      } else {
+        style = {
+          width: `${100 - widthLeft}%`,
+          textAlign: 'right'
         }
-        styles.push(style);
-      });
-    }
+      }
+      styles.push(style);
+    });
 
     this.setState({
       imageContainerStyles: styles
@@ -113,8 +104,6 @@ class Story extends Component {
     })
   }
 
-  // story = 0; // declaration saves writing. Set to be this.state.story above
-
   nextPicture = () => {
     if (this.state.zoomedImageKey + 1 === this.props.images.length) {
       this.setState({
@@ -148,19 +137,15 @@ class Story extends Component {
   }
 
   goToNextStory = () => {
-    this.props.state.images[this.state.story + 1] ? this.setState({ story: this.state.story + 1 }) : this.setState({ story: 0 })
-    window.scrollTo(0, 0)
-    // this.props.state.images[this.state.story + 1] ? this.setState({ story: this.state.story + 1 }) : this.setState({ story: 0 })
-    // window.scrollTo(0, 0)
+    this.props.state.images[this.state.story + 1] ? this.setState({ story: this.state.story + 1 }) : this.setState({ story: 0 });
+    window.scrollTo(0, 0);
   }
 
   nextStoryStyle = () => {
-    this.state.nextStoryStyle.opacity === 0.5 ? this.setState({ nextStoryStyle: { opacity: 1 } }) : this.setState({ nextStoryStyle: { opacity: 0.5 } })
+    this.state.nextStoryStyle.opacity === 0.5 ? this.setState({ nextStoryStyle: { opacity: 1 } }) : this.setState({ nextStoryStyle: { opacity: 0.5 } });
   }
 
   render() {
-    // const story = this.state.story;
-
     return (
       <div className='story-page'>
         <LoadingScreen

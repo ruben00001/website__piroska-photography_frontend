@@ -130,8 +130,8 @@ class Home extends Component {
           <React.Fragment>
             <div className='loading-screen'>
               <Spring
-                from={{ transform: 'translateY(100px)' }}
-                to={{ transform: !this.state.loadingWidgetOut ? 'translateY(0px)' : 'translateY(-100px)' }}
+                from={{ transform: 'translateY(100%)' }}
+                to={{ transform: !this.state.loadingWidgetOut ? 'translateY(0%)' : 'translateY(-100%)' }}
                 config={config.slow}
               >
                 {props =>
