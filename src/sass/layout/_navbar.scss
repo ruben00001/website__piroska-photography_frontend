@@ -17,13 +17,17 @@
     top: 28px;
     right: 25px;
   }
+  @media (max-width: 500px) {
+    top: 20px;
+    right: 20px;
+  }
 
   &_toggler {
     z-index: 2;
     cursor: pointer;
 
     &_line {
-      width: 26px;
+      width: 22px;
       height: 2.5px;
       background-color: $main-color;
 
@@ -53,6 +57,17 @@
     font-variant: small-caps;
     background-color: transparent !important;
 
+    @media (max-width: 1100px) {
+      top: 25px;
+      left: 25px;
+      font-size: 18px;
+    }
+    @media (max-width: 800px) {
+      top: 20px;
+      left: 20px;
+      font-size: 15px;
+    }
+
     &--home {
       position: absolute;
       color: white;
@@ -75,7 +90,10 @@
       font-size: 60px;
     }
     @media (max-width: 1100px) {
-      font-size: 50px;
+      font-size: 45px;
+    }
+    @media (max-width: 800px) {
+      font-size: 30px;
     }
   }
 }

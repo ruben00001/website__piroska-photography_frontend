@@ -17,22 +17,20 @@ const LoadingScreen = (props) => {
     <Spring
       from={{ display: 'block' }}
       to={{
-        opacity: 1,
         display: props.removeLoader ? 'none' : 'block'
       }}
-      config={config.slow}
     >
       {propsA =>
         <div style={propsA}>
           <div className='loading-screen' >
             <Spring
-              from={{ opacity: 0, transform: 'translateY(0px)', display: 'flex' }}
+              from={{ opacity: 0, transform: 'translateY(0%)', display: 'flex' }}
               to={{
                 opacity: 1,
-                transform: props.loadingWidgetOut ? 'translateY(0px)' : 'translateY(-100px)',
+                transform: props.loadingWidgetOut ? 'translateY(0%)' : 'translateY(-100%)',
                 display: props.removeLoader ? 'none' : 'flex'
               }}
-              config={config.slow}
+              config={config.molasses}
             >
               {propsA =>
                 <div style={propsA}>
