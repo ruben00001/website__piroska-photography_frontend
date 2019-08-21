@@ -8,7 +8,6 @@ import { Spring, config } from 'react-spring/renderprops';
 import { withRouter } from "react-router-dom";
 import Zoom from '../components/Zoom';
 import LoadingScreen from '../components/Loading-screen';
-import Logo from '../components/Logo';
 import Navbar2 from '../layout/navbar/Navbar2';
 
 class Gallery extends Component {
@@ -232,7 +231,8 @@ class Gallery extends Component {
 
   render() {
     return (
-      <div className='gallery-page'>
+      <div className='gallery-page'
+      >
         <LoadingScreen
           loadingWidgetOut={!this.state.loadingWidgetOut}
           stopLoader={this.state.stopLoader}
@@ -256,7 +256,7 @@ class Gallery extends Component {
           {props =>
             <div style={props} className='gallery-page_container'>
               <h1 onClick={this.test} className='gallery-page_title'>Gallery</h1>
-              <div className='gallery-page_filter'>
+              <div style={{overflow: 'hidden'}} className='gallery-page_filter'>
                 <div className='gallery-page_filter_first-line'
                   onClick={() => {
                     if (this.state.displayFilterValue) this.filterImages('none');

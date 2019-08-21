@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSpring, config, animated, interpolate } from "react-spring";
+import { Global } from '../../../data/globals';
 
 function NavbarToggler(props) {
   const [toggle, setToggle] = React.useState(false);
@@ -15,7 +16,7 @@ function NavbarToggler(props) {
   });
 
   const p3 = useSpring({
-    c: props.white ? 'white' : toggle ? 'white' : 'black',
+    c: props.white ? 'white' : toggle ? 'white' : Global.mainColor,
     config: config.molasses
   });
 
