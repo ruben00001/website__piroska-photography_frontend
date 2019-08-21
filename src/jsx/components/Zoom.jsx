@@ -25,10 +25,11 @@ const Zoom = (props) => {
           >
             <img src={props.zoomedImageURL} alt=''></img>
           </div>
-          <div className='zoom_hover-box'
-            onMouseEnter={_ => setShowControl(!showControl)}
-            onMouseLeave={_ => setShowControl(!showControl)}
-          ></div>
+          {!showControl &&
+            <div className='zoom_hover-box'
+              onMouseEnter={_ => setShowControl(true)}
+            ></div>
+          }
           <Spring
             from={{ opacity: 0, transform: 'translateY(-100%)' }}
             to={{
@@ -38,7 +39,9 @@ const Zoom = (props) => {
             config={config.slow}
           >
             {propsB =>
-              <div style={propsB}  className='zoom_info'>
+              <div style={propsB} className='zoom_info'
+                onMouseLeave={_ => setShowControl(false)}
+              >
                 <FontAwesomeIcon onClick={props.exitZoom} className='zoom_x' icon={faTimes}></FontAwesomeIcon>
                 <div className='zoom_info_control'>
                   <FontAwesomeIcon onClick={props.previousPicture} className='zoom_arrow zoom_arrow--left' icon={faChevronLeft}></FontAwesomeIcon>
