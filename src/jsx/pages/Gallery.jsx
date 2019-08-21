@@ -45,19 +45,34 @@ class Gallery extends Component {
   homeURL = strapiAPI;
 
   componentDidMount() {
-    if (window.innerWidth > 800) {
+    if (window.innerWidth > 1100) {
       this.setState({
         imageContainerVars: { columns: 4, extraspace: 240 }
       })
     }
-    if (window.innerWidth > 500 && window.innerWidth <= 800) {
+    if (window.innerWidth > 1000 && window.innerWidth <= 1100) {
       this.setState({
-        imageContainerVars: { columns: 3, extraspace: 130 }
+        imageContainerVars: { columns: 4, extraspace: 190 }
       })
     }
-    if (window.innerWidth <= 500) {
+    if (window.innerWidth > 800 && window.innerWidth <= 1000) {
       this.setState({
-        imageContainerVars: { columns: 2, extraspace: 130 }
+        imageContainerVars: { columns: 4, extraspace: 180 }
+      })
+    }
+    if (window.innerWidth > 500 && window.innerWidth <= 800) {
+      this.setState({
+        imageContainerVars: { columns: 3, extraspace: 160 }
+      })
+    }
+    if (window.innerWidth > 320 && window.innerWidth <= 500) {
+      this.setState({
+        imageContainerVars: { columns: 2, extraspace: 140 }
+      })
+    }
+    if (window.innerWidth <= 320) {
+      this.setState({
+        imageContainerVars: { columns: 2, extraspace: 120 }
       })
     }
     axios.get(`${this.homeURL}/galleries`)
@@ -257,46 +272,46 @@ class Gallery extends Component {
             <div style={props} className='gallery-page_container'>
               <h1 onClick={this.test} className='gallery-page_title'>Gallery</h1>
               <div style={{overflow: 'hidden'}} className='gallery-page_filter'>
-                <div className='gallery-page_filter_first-line'
+                <div className='gallery-page_filter_line gallery-page_filter_line--1'
                   onClick={() => {
                     if (this.state.displayFilterValue) this.filterImages('none');
                     else this.setState({ showFilterOptions: !this.state.showFilterOptions });
                   }}
                 >
                   {this.state.showFilterOptions ?
-                    <FontAwesomeIcon className='gallery-page_filter_icon' icon={faMinusSquare}></FontAwesomeIcon> :
-                    <FontAwesomeIcon className='gallery-page_filter_icon' icon={faPlusSquare}></FontAwesomeIcon>
+                    <FontAwesomeIcon className='gallery-page_filter_icon gallery-page_filter_icon--box' icon={faMinusSquare}></FontAwesomeIcon> :
+                    <FontAwesomeIcon className='gallery-page_filter_icon gallery-page_filter_icon--box' icon={faPlusSquare}></FontAwesomeIcon>
                   }
-                  <h3>{this.state.currentFilterValue ? 'un' : null}filter</h3>
+                  <h3 className='gallery-page_filter_title'>{this.state.currentFilterValue ? 'un' : null}filter</h3>
                 </div>
-                <div className='gallery-page_filter_second-line'>
+                <div className='gallery-page_filter_line'>
                   <div className='gallery-page_filter_second-line_dashed-line'></div>
                   {this.state.showFilterOptions &&
                     <div className='gallery-page_filter_second-line_options'>
                       <div className='gallery-page_filter_second-line_options'>
-                        <div className='gallery-page_filter_second-line_options_title'
+                        <div className='gallery-page_filter_line gallery-page_filter_line--1'
                           onClick={() => { this.setState({ showDateFilter: !this.state.showDateFilter }) }}
                         >
                           {this.state.showDateFilter ?
-                            <FontAwesomeIcon className='gallery-page_filter_icon' icon={faMinusSquare}></FontAwesomeIcon> :
-                            <FontAwesomeIcon className='gallery-page_filter_icon' icon={faPlusSquare}></FontAwesomeIcon>
+                            <FontAwesomeIcon className='gallery-page_filter_icon gallery-page_filter_icon--box' icon={faMinusSquare}></FontAwesomeIcon> :
+                            <FontAwesomeIcon className='gallery-page_filter_icon gallery-page_filter_icon--box' icon={faPlusSquare}></FontAwesomeIcon>
                           }
-                          <h3>by date</h3>
+                          <h3 className='gallery-page_filter_title'>by date</h3>
                         </div>
-                        <div className='gallery-page_filter_second-line_options_1'>
+                        <div className='gallery-page_filter_second-line_options_option'>
                           <div className='gallery-page_filter_second-line_dashed-line'></div>
                           {this.state.showDateFilter &&
-                            <div className='gallery-page_filter_second-line_options_1_content'>
-                              <div className='gallery-page_filter_second-line_options_1_content_item'
+                            <div className='gallery-page_filter_second-line_options_option_content gallery-page_filter_second-line_options_option_content--1'>
+                              <div className='gallery-page_filter_item gallery-page_filter_item--1'
                                 onClick={_ => { this.filterImages('newest') }}
                               >
-                                <FontAwesomeIcon className='gallery-page_filter_second-line_options_1_content_item_icon' icon={faEye}></FontAwesomeIcon>
+                                <FontAwesomeIcon className='gallery-page_filter_icon gallery-page_filter_icon--eye' icon={faEye}></FontAwesomeIcon>
                                 <div>most recent</div>
                               </div>
-                              <div className='gallery-page_filter_second-line_options_1_content_item'
+                              <div className='gallery-page_filter_item gallery-page_filter_item--1'
                                 onClick={_ => this.filterImages('oldest')}
                               >
-                                <FontAwesomeIcon className='gallery-page_filter_second-line_options_1_content_item_icon' icon={faEye}></FontAwesomeIcon>
+                                <FontAwesomeIcon className='gallery-page_filter_icon gallery-page_filter_icon--eye' icon={faEye}></FontAwesomeIcon>
                                 <div>oldest first</div>
                               </div>
                             </div>
@@ -304,29 +319,29 @@ class Gallery extends Component {
                         </div>
                       </div>
                       <div className='gallery-page_filter_second-line_options'>
-                        <div className='gallery-page_filter_second-line_options_title'
+                        <div className='gallery-page_filter_line gallery-page_filter_line--1'
                           onClick={() => { this.setState({ showCategoryFilter: !this.state.showCategoryFilter }) }}
                         >
                           {this.state.showCategoryFilter ?
-                            <FontAwesomeIcon className='gallery-page_filter_icon' icon={faMinusSquare}></FontAwesomeIcon> :
-                            <FontAwesomeIcon className='gallery-page_filter_icon' icon={faPlusSquare}></FontAwesomeIcon>
+                            <FontAwesomeIcon className='gallery-page_filter_icon gallery-page_filter_icon--box' icon={faMinusSquare}></FontAwesomeIcon> :
+                            <FontAwesomeIcon className='gallery-page_filter_icon gallery-page_filter_icon--box' icon={faPlusSquare}></FontAwesomeIcon>
                           }
-                          <h3>category</h3>
+                          <h3 className='gallery-page_filter_title'>category</h3>
                         </div>
-                        <div className='gallery-page_filter_second-line_options_2'>
+                        <div className='gallery-page_filter_second-line_options_option'>
                           <div className='gallery-page_filter_second-line_dashed-line'></div>
                           {this.state.showCategoryFilter &&
-                            <div className='gallery-page_filter_second-line_options_2_content'>
+                            <div className='gallery-page_filter_second-line_options_option_content gallery-page_filter_second-line_options_option_content--2'>
                               {this.state.tags && this.state.tags.map(tag =>
-                                <div className='gallery-page_filter_second-line_options_2_content_item'
+                                <div className='gallery-page_filter_item gallery-page_filter_item--2'
                                   onClick={_ => {
                                     this.setState({ currentFilterValue: tag.name }, _ => this.filterImages('category'));
                                   }}
                                   key={tag.id} value={tag.name}
                                 >
                                   {this.state.displayFilterValue === tag.name ?
-                                    <FontAwesomeIcon className='gallery-page_filter_second-line_options_2_content_item_icon' icon={faEyeSolid}></FontAwesomeIcon> :
-                                    <FontAwesomeIcon className='gallery-page_filter_second-line_options_2_content_item_icon' icon={faEye}></FontAwesomeIcon>
+                                    <FontAwesomeIcon className='gallery-page_filter_icon gallery-page_filter_icon--eye' icon={faEyeSolid}></FontAwesomeIcon> :
+                                    <FontAwesomeIcon className='gallery-page_filter_icon gallery-page_filter_icon--eye' icon={faEye}></FontAwesomeIcon>
                                   }
                                   <div>{tag.name}</div>
                                 </div>
