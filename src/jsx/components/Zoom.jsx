@@ -48,7 +48,7 @@ const Zoom = (props) => {
                     <div className="zoom_info_counter_number">0{props.pictureNum}.</div>
                     <Spring
                       from={{}}
-                      to={{ background: `linear-gradient(to right, white, white ${props.pgnationBG}%, rgb(28, 123, 187) ${props.pgnationBG}%, rgb(28, 123, 187) 100%)` }}
+                      to={{ background: `linear-gradient(to right, rgb(28, 123, 187), rgb(28, 123, 187) ${props.pgnationBG}%, white ${props.pgnationBG}%, white 100%)` }}
                     >
                       {propsB => (
                         <div style={propsB} className="zoom_info_counter_line"></div>
