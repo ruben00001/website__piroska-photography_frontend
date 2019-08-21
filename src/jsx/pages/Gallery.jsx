@@ -271,7 +271,7 @@ class Gallery extends Component {
           {props =>
             <div style={props} className='gallery-page_container'>
               <h1 onClick={this.test} className='gallery-page_title'>Gallery</h1>
-              <div style={{overflow: 'hidden'}} className='gallery-page_filter'>
+              <div style={{ overflow: 'hidden' }} className='gallery-page_filter'>
                 <div className='gallery-page_filter_line gallery-page_filter_line--1'
                   onClick={() => {
                     if (this.state.displayFilterValue) this.filterImages('none');
@@ -362,7 +362,10 @@ class Gallery extends Component {
                 config={config.gentle}
               >
                 {props =>
-                  <div style={{ ...props, marginTop: `${this.state.showFilterOptions ? 50 : 20}px` }} className='gallery-page_images-container'>
+                  <div style={{
+                    ...props,
+                    marginTop: `${this.state.showFilterOptions ? window.innerWidth < 500 ? 30 : 50 : 20}px`
+                  }} className='gallery-page_images-container'>
                     {this.state.displayFilterValue &&
                       <h2 className='gallery-page_images_title'>{this.state.displayFilterValue}</h2>
                     }
