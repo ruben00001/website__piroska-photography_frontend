@@ -52,7 +52,7 @@ class Gallery extends Component {
     }
     if (window.innerWidth > 1000 && window.innerWidth <= 1100) {
       this.setState({
-        imageContainerVars: { columns: 4, extraspace: 190 }
+        imageContainerVars: { columns: 4, extraspace: 180 }
       })
     }
     if (window.innerWidth > 800 && window.innerWidth <= 1000) {

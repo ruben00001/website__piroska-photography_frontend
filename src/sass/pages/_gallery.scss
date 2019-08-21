@@ -20,33 +20,42 @@
     @media (max-width: 1600px) {
       font-size: 200px;
     }
+
     @media (max-width: 1500px) {
       font-size: 190px;
     }
+
     @media (max-width: 1400px) {
       font-size: 175px;
     }
+
     @media (max-width: 1300px) {
       font-size: 165px;
     }
+
     @media (max-width: 1100px) {
       font-size: 140px;
       margin-top: 117px;
     }
+
     @media (max-width: 1000px) {
       font-size: 130px;
     }
+
     @media (max-width: 800px) {
       font-size: 110px;
       margin-top: 104px;
     }
+
     @media (max-width: 500px) {
       font-size: 80px;
       margin-top: 90px;
     }
+
     @media (max-width: 500px) {
       font-size: 70px;
     }
+
     @media (max-width: 320px) {
       font-size: 60px;
     }
@@ -72,11 +81,29 @@
       cursor: pointer;
 
       &--box {
+        font-size: 16px;
 
+        @media (max-width: 1300px) {
+          font-size: 14px;
+        }
+        @media (max-width: 1100px) {
+          font-size: 13px;
+        }
+        @media (max-width: 800px) {
+          font-size: 12px;
+          transform: translateY(-1px);
+        }
       }
 
       &--eye {
         font-size: 14px;
+
+        @media (max-width: 1100px) {
+          font-size: 12px;
+        }
+        @media (max-width: 800px) {
+          font-size: 11px;
+        }
       }
     }
 
@@ -85,31 +112,92 @@
       text-transform: lowercase;
       margin-left: 15px;
       cursor: pointer;
+
+      @media (max-width: 1300px) {
+        font-size: 24px;
+      }
+      @media (max-width: 1100px) {
+        font-size: 22px;
+        margin-left: 11px;
+      }
+      @media (max-width: 800px) {
+        font-size: 20px;
+        margin-left: 9px;
+      }
     }
 
     &_item {
       display: flex;
       align-items: center;
+      padding-left: 8px;
       font-variant: small-caps;
       font-size: 20px;
       border: 1px dashed $main-color;
       cursor: pointer;
-      padding-left: 8px;
+
+      @media (max-width: 1500px) {
+        font-size: 19px;
+      }
+      @media (max-width: 1400px) {
+        font-size: 18px;
+      }
+      @media (max-width: 1300px) {
+        font-size: 17px;
+      }
+      @media (max-width: 1100px) {
+        font-size: 15px;
+        padding-left: 7px;
+      }
+      @media (max-width: 800px) {
+        font-size: 13px;
+        padding-left: 7px;
+      }
 
       &--1 {
         margin: 25px 80px 25px 0px;
-        padding-right: 8px;
+        padding-right: 14px;
+
+        @media (max-width: 800px) {
+          margin: 17px 60px 20px 0px;
+          padding-right: 14px;
+        }
       }
 
       &--2 {
         width: 228px;
         margin-top: 15px;
         margin-right: 10px;
+
+        @media (max-width: 1500px) {
+          width: 218px;
+        }
+        @media (max-width: 1400px) {
+          width: 210px;
+        }
+        @media (max-width: 1300px) {
+          width: 199px;
+        }
+        @media (max-width: 1100px) {
+          width: 180px;
+        }
+        @media (max-width: 800px) {
+          width: 153px;
+          margin-right: 7px;
+          margin-top: 11px;
+        }
       }
 
       div {
         padding-left: 10px;
         transform: translateY(-3px);
+
+        @media (max-width: 1100px) {
+          padding-left: 7px;
+        }
+        @media (max-width: 800px) {
+          padding-left: 6px;
+          transform: translateY(-1.5px);
+        }
       }
     }
 
@@ -120,26 +208,53 @@
         width: 1.5px;
         margin-left: 6px;
         border-left: 1.5px dashed $main-color;
+
+        @media (max-width: 800px) {
+          margin-left: 4.5px;
+        }
       }
 
       &_options {
         margin-left: 20px;
+
+        @media (max-width: 1400px) {
+          margin-left: 16px;
+        }
+        @media (max-width: 1100px) {
+          margin-left: 13px;
+        }
+        @media (max-width: 800px) {
+          margin-left: 10px;
+        }
 
         &_option {
           display: flex;
 
           &_content {
             display: flex;
+            margin-left: 50px;
+
+            @media (max-width: 1400px) {
+              margin-left: 40px;
+            }
+            @media (max-width: 1100px) {
+              margin-left: 34px;
+            }
+            @media (max-width: 800px) {
+              margin-left: 27px;
+            }
 
             &--1 {
               justify-content: space-between;
-              margin-left: 50px;
             }
 
             &--2 {
               flex-wrap: wrap;
               margin-top: 10px;
-              margin-left: 50px;
+
+              @media (max-width: 800px) {
+                margin-top: 7px;
+              }
             }
           }
         }
@@ -148,7 +263,6 @@
   }
 
   &_images {
-    border: 1px solid black;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
