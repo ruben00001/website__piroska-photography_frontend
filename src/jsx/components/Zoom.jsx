@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Spring, config } from 'react-spring/renderprops';
-import { Transition, animated } from 'react-spring';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 // import { Global } from '../../data/globals';
