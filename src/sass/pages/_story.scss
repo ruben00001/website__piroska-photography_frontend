@@ -2,15 +2,14 @@
 
   &_main-container {
     position: relative;
-    max-width: 1400px;
+    width: 90%;
+    max-width: 1800px;
     margin: auto;
     margin-top: 230px;
     padding-bottom: 300px;
     overflow: auto;
   
-    @media (max-width: 1600px) {
-      max-width: 90%;
-    }
+
     @media (max-width: 1300px) {
       margin-top: 220px;
     }
@@ -18,7 +17,7 @@
       margin-top: 180px;
     }
     @media (max-width: 800px) {
-      max-width: 96%;
+      width: 96%;
       margin-top: 120px;
       padding-bottom: 130px;
     }

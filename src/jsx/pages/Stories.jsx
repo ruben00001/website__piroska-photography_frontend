@@ -7,7 +7,6 @@ import Story from './Story';
 import { strapiAPI } from '../../enviroment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
 import LoadingScreen from '../components/Loading-screen';
-import Logo from '../components/Logo';
 
 
 class Stories extends Component {
@@ -165,7 +164,9 @@ class Stories extends Component {
         return (
             <React.Fragment>
                 <Route exact path="/stories" render={() =>
-                    <div className='stories-page'>
+                    <div className='stories-page'
+                        style={{ pointerEvents: this.state.titlesIn ? 'auto' : 'none' }}
+                    >
                         <LoadingScreen
                             loadingWidgetOut={!this.state.loadingWidgetOut}
                             stopLoader={this.state.stopLoader}
@@ -252,7 +253,7 @@ class Stories extends Component {
                     </div>
                 } />
                 {this.storyRoutes}
-            </React.Fragment>
+            </React.Fragment >
         )
     }
 }

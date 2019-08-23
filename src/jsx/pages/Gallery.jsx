@@ -45,14 +45,30 @@ class Gallery extends Component {
   homeURL = strapiAPI;
 
   componentDidMount() {
-    if (window.innerWidth > 1100) {
+    document.body.style.overflow = 'hidden'; //prevent scrollbar appearing on load. Reintroduced after images load
+    if (window.innerWidth > 1800) { //images height needs to be defined for flex-direction column to work
       this.setState({
-        imageContainerVars: { columns: 4, extraspace: 240 }
+        imageContainerVars: { columns: 4, extraspace: 370 }
+      })
+    }
+    if (window.innerWidth > 1600 && window.innerWidth <= 1800) {
+      this.setState({
+        imageContainerVars: { columns: 4, extraspace: 300 }
+      })
+    }
+    if (window.innerWidth > 1400 && window.innerWidth <= 1600) {
+      this.setState({
+        imageContainerVars: { columns: 4, extraspace: 290 }
+      })
+    }
+    if (window.innerWidth > 1100 && window.innerWidth <= 1400) {
+      this.setState({
+        imageContainerVars: { columns: 4, extraspace: 250 }
       })
     }
     if (window.innerWidth > 1000 && window.innerWidth <= 1100) {
       this.setState({
-        imageContainerVars: { columns: 4, extraspace: 180 }
+        imageContainerVars: { columns: 4, extraspace: 190 }
       })
     }
     if (window.innerWidth > 800 && window.innerWidth <= 1000) {
@@ -121,26 +137,27 @@ class Gallery extends Component {
         this.setState({
           imgContainerHeight: (this.state.imagesTotalHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace,
           initialLoad: false
-        })
+        });
         setTimeout(() => {
           this.setState({
             imagesLoaded: true
-          })
+          });
         }, 350);
         setTimeout(_ => {
           this.setState({
             stopLoader: true
-          })
+          });
         }, 800);
         setTimeout(_ => {
           this.setState({
             loadingWidgetOut: true
-          })
+          });
         }, 1300);
         setTimeout(_ => {
           this.setState({
             titlesIn: true
-          })
+          });
+          document.body.style.overflow = 'visible';
         }, 2000);
       }
     })
@@ -247,6 +264,7 @@ class Gallery extends Component {
   render() {
     return (
       <div className='gallery-page'
+        style={{ pointerEvents: this.state.titlesIn ? 'auto' : 'none' }}
       >
         <LoadingScreen
           loadingWidgetOut={!this.state.loadingWidgetOut}
@@ -261,10 +279,9 @@ class Gallery extends Component {
           </React.Fragment>
         }
         <Spring
-          from={{ opacity: 0, pointerEvents: 'none' }}
+          from={{ opacity: 0 }}
           to={{
             opacity: this.state.titlesIn ? 1 : 0,
-            pointerEvents: this.state.titlesIn ? 'auto' : 'none',
           }}
           config={config.slow}
         >
