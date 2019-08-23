@@ -27,7 +27,7 @@ const Zoom = (props) => {
           </div>
           {!showControl &&
             <div className='zoom_hover-box'
-              // onMouseEnter={_ => setShowControl(true)}
+              onClick={_ => setShowControl(!showControl)}
               onMouseEnter={_ => {
                 if (!arrowPressed) {
                   setShowControl(true);
@@ -59,7 +59,7 @@ const Zoom = (props) => {
                 <FontAwesomeIcon onClick={props.exitZoom} className='zoom_x' icon={faTimes}></FontAwesomeIcon>
                 <div className='zoom_info_control'>
                   <FontAwesomeIcon className='zoom_arrow zoom_arrow--left' icon={faChevronLeft}
-                    onClick={_ => { props.previousPicture(); setTimeout(() => { setShowControl(false) }, 400) }}
+                    onClick={_ => { props.previousPicture(); setArrowPressed(true); setTimeout(() => { setShowControl(false) }, 200) }}
                   ></FontAwesomeIcon>
                   <div className="zoom_info_counter">
                     <div className="zoom_info_counter_number">0{props.pictureNum}.</div>
@@ -74,7 +74,7 @@ const Zoom = (props) => {
                     <div className="zoom_info_counter_number">0{props.numImages}.</div>
                   </div>
                   <FontAwesomeIcon className='zoom_arrow zoom_arrow--right' icon={faChevronRight}
-                    onClick={_ => { props.nextPicture(); setArrowPressed(true); setTimeout(() => { setShowControl(false) }, 400) }}
+                    onClick={_ => { props.nextPicture(); setArrowPressed(true); setTimeout(() => { setShowControl(false) }, 200) }}
                   ></FontAwesomeIcon>
                 </div>
                 <div className='zoom_info_images-title'>{props.imagesName}</div>

@@ -1,16 +1,12 @@
 .gallery-page {
-  max-width: 2000px;
+  width: 90%;
+  max-width: 1800px;
   margin: auto;
   padding-bottom: 300px;
   overflow-x: hidden;
 
   @media (max-width: 600px) {
     padding-bottom: 80px;
-  }
-
-  &_container {
-    max-width: 90%;
-    margin: auto;
   }
 
   &_title {
@@ -347,6 +343,7 @@
     width: 100%;
     height: 700px;
     overflow: hidden; //prevents scrollbar appearing on pg load
+    // border: $border;
 
     &_title {
       font-variant: small-caps;

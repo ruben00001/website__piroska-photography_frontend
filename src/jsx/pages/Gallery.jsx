@@ -46,9 +46,14 @@ class Gallery extends Component {
 
   componentDidMount() {
     document.body.style.overflow = 'hidden'; //prevent scrollbar appearing on load. Reintroduced after images load
-    if (window.innerWidth > 1800) { //images height needs to be defined for flex-direction column to work
+    if (window.innerWidth > 2000) { //images height needs to be defined for flex-direction column to work
       this.setState({
         imageContainerVars: { columns: 4, extraspace: 370 }
+      })
+    }
+    if (window.innerWidth > 1800 && window.innerWidth <= 2000) {
+      this.setState({
+        imageContainerVars: { columns: 4, extraspace: 340 }
       })
     }
     if (window.innerWidth > 1600 && window.innerWidth <= 1800) {
@@ -56,14 +61,24 @@ class Gallery extends Component {
         imageContainerVars: { columns: 4, extraspace: 300 }
       })
     }
-    if (window.innerWidth > 1400 && window.innerWidth <= 1600) {
+    if (window.innerWidth > 1500 && window.innerWidth <= 1600) {
       this.setState({
         imageContainerVars: { columns: 4, extraspace: 290 }
       })
     }
-    if (window.innerWidth > 1100 && window.innerWidth <= 1400) {
+    if (window.innerWidth > 1400 && window.innerWidth <= 1500) {
+      this.setState({
+        imageContainerVars: { columns: 4, extraspace: 270 }
+      })
+    }
+    if (window.innerWidth > 1300 && window.innerWidth <= 1400) {
       this.setState({
         imageContainerVars: { columns: 4, extraspace: 250 }
+      })
+    }
+    if (window.innerWidth > 1100 && window.innerWidth <= 1300) {
+      this.setState({
+        imageContainerVars: { columns: 4, extraspace: 230 }
       })
     }
     if (window.innerWidth > 1000 && window.innerWidth <= 1100) {
