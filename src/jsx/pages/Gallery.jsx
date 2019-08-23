@@ -46,66 +46,8 @@ class Gallery extends Component {
 
   componentDidMount() {
     document.body.style.overflow = 'hidden'; //prevent scrollbar appearing on load. Reintroduced after images load
-    if (window.innerWidth > 2000) { //images height needs to be defined for flex-direction column to work
-      this.setState({
-        imageContainerVars: { columns: 4, extraspace: 370 }
-      })
-    }
-    if (window.innerWidth > 1800 && window.innerWidth <= 2000) {
-      this.setState({
-        imageContainerVars: { columns: 4, extraspace: 340 }
-      })
-    }
-    if (window.innerWidth > 1600 && window.innerWidth <= 1800) {
-      this.setState({
-        imageContainerVars: { columns: 4, extraspace: 300 }
-      })
-    }
-    if (window.innerWidth > 1500 && window.innerWidth <= 1600) {
-      this.setState({
-        imageContainerVars: { columns: 4, extraspace: 290 }
-      })
-    }
-    if (window.innerWidth > 1400 && window.innerWidth <= 1500) {
-      this.setState({
-        imageContainerVars: { columns: 4, extraspace: 270 }
-      })
-    }
-    if (window.innerWidth > 1300 && window.innerWidth <= 1400) {
-      this.setState({
-        imageContainerVars: { columns: 4, extraspace: 250 }
-      })
-    }
-    if (window.innerWidth > 1100 && window.innerWidth <= 1300) {
-      this.setState({
-        imageContainerVars: { columns: 4, extraspace: 230 }
-      })
-    }
-    if (window.innerWidth > 1000 && window.innerWidth <= 1100) {
-      this.setState({
-        imageContainerVars: { columns: 4, extraspace: 190 }
-      })
-    }
-    if (window.innerWidth > 800 && window.innerWidth <= 1000) {
-      this.setState({
-        imageContainerVars: { columns: 4, extraspace: 180 }
-      })
-    }
-    if (window.innerWidth > 500 && window.innerWidth <= 800) {
-      this.setState({
-        imageContainerVars: { columns: 3, extraspace: 160 }
-      })
-    }
-    if (window.innerWidth > 320 && window.innerWidth <= 500) {
-      this.setState({
-        imageContainerVars: { columns: 2, extraspace: 140 }
-      })
-    }
-    if (window.innerWidth <= 320) {
-      this.setState({
-        imageContainerVars: { columns: 2, extraspace: 120 }
-      })
-    }
+    this.setImageContainerHeight();
+    window.addEventListener('resize', this.setImageContainerHeight);
     axios.get(`${this.homeURL}/galleries`)
       .then(response => {
         this.setState({
@@ -140,6 +82,30 @@ class Gallery extends Component {
           })
         });
       })
+  }
+
+  setImageContainerHeight = () => {
+    console.log('height changed');
+    
+    let windowWidth = window.innerWidth;
+    const windowParameters = [2000, 1800, 1600, 1500, 1400, 1300, 1100, 1000, 800, 500, 320];
+    const extraSpace = [370, 340, 300, 290, 270, 250, 230, 190, 180, 160, 140, 120];
+    const columns = windowWidth > 800 ? 4 : windowWidth > 500 ? 3 : 2;
+
+    if(windowWidth > 320) {
+      for (let i = 0; i < windowParameters.length; i++) {
+        if(windowWidth > windowParameters[i]) {
+          this.setState({
+            imageContainerVars : { columns: columns, extraspace: extraSpace[i]}
+          });
+          break;
+        }
+      }
+    } else {
+      this.setState({
+        imageContainerVars : { columns: columns, extraspace: 120}
+      });
+    }
   }
 
   imagesOnLoad = (e) => {
