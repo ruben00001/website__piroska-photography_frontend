@@ -62,7 +62,7 @@ const Zoom = (props) => {
                     onClick={_ => { props.previousPicture(); setArrowPressed(true); setTimeout(() => { setShowControl(false) }, 200) }}
                   ></FontAwesomeIcon>
                   <div className="zoom_info_counter">
-                    <div className="zoom_info_counter_number">0{props.pictureNum}.</div>
+                    <div className="zoom_info_counter_number">{props.pictureNum}.</div>
                     <Spring
                       from={{}}
                       to={{ background: `linear-gradient(to right, rgb(28, 123, 187), rgb(28, 123, 187) ${props.pgnationBG}%, white ${props.pgnationBG}%, white 100%)` }}
@@ -71,7 +71,7 @@ const Zoom = (props) => {
                         <div style={propsB} className="zoom_info_counter_line"></div>
                       )}
                     </Spring>
-                    <div className="zoom_info_counter_number">0{props.numImages}.</div>
+                    <div className="zoom_info_counter_number">{props.numImages}.</div>
                   </div>
                   <FontAwesomeIcon className='zoom_arrow zoom_arrow--right' icon={faChevronRight}
                     onClick={_ => { props.nextPicture(); setArrowPressed(true); setTimeout(() => { setShowControl(false) }, 200) }}
