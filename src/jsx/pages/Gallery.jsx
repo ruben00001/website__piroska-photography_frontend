@@ -9,10 +9,16 @@ import { withRouter } from "react-router-dom";
 import Zoom from '../components/Zoom';
 import LoadingScreen from '../components/Loading-screen';
 import Navbar2 from '../layout/navbar/Navbar2';
+import ReactResizeDetector from 'react-resize-detector';
+
 
 class Gallery extends Component {
   constructor(props) {
     super(props)
+
+    // this.state.images.forEach((image, i) => {
+    //   this[`imageRef-${i}`] = React.createRef();
+    // });
 
     this.state = {
       initialLoad: true,
@@ -38,7 +44,9 @@ class Gallery extends Component {
       showCategoryFilter: false,
       currentFilterValue: null,
       displayFilterValue: null,
-      filterImagesFadeOut: false
+      filterImagesFadeOut: false,
+      windowWidth: window.innerWidth,
+      initialImageResize: true
     }
   }
 
@@ -46,8 +54,6 @@ class Gallery extends Component {
 
   componentDidMount() {
     document.body.style.overflow = 'hidden'; //prevent scrollbar appearing on load. Reintroduced after images load
-    this.setImageContainerHeight();
-    window.addEventListener('resize', this.setImageContainerHeight);
     axios.get(`${this.homeURL}/galleries`)
       .then(response => {
         this.setState({
@@ -84,64 +90,106 @@ class Gallery extends Component {
       })
   }
 
+  pageLoadAnimations = () => {
+    setTimeout(() => {
+      this.setState({
+        imagesLoaded: true
+      });
+    }, 350);
+    setTimeout(_ => {
+      this.setState({
+        stopLoader: true
+      });
+    }, 800);
+    setTimeout(_ => {
+      this.setState({
+        loadingWidgetOut: true
+      });
+    }, 1300);
+    setTimeout(_ => {
+      this.setState({
+        titlesIn: true
+      });
+      document.body.style.overflow = 'visible';
+    }, 2000);
+  }
+
   setImageContainerHeight = () => {
-    console.log('height changed');
-    
     let windowWidth = window.innerWidth;
     const windowParameters = [2000, 1800, 1600, 1500, 1400, 1300, 1100, 1000, 800, 500, 320];
-    const extraSpace = [370, 340, 300, 290, 270, 250, 230, 190, 180, 160, 140, 120];
     const columns = windowWidth > 800 ? 4 : windowWidth > 500 ? 3 : 2;
+    const extraSpaces = [370, 340, 300, 290, 270, 250, 230, 190, 180, 160, 140, 120];
 
-    if(windowWidth > 320) {
+    if (windowWidth > 320) {
       for (let i = 0; i < windowParameters.length; i++) {
-        if(windowWidth > windowParameters[i]) {
+        if (windowWidth > windowParameters[i]) {
           this.setState({
-            imageContainerVars : { columns: columns, extraspace: extraSpace[i]}
+            imageContainerVars: { columns: columns, extraspace: extraSpaces[i] }
           });
           break;
         }
       }
     } else {
       this.setState({
-        imageContainerVars : { columns: columns, extraspace: 120}
+        imageContainerVars: { columns: columns, extraspace: 120 }
       });
     }
+
+    // console.log(this.state.imagesTotalHeight, columns, extraSpace);
+
+    // if (windowWidth !== this.state.windowWidth) {
+    //   const changeInWindowWidth = windowWidth / this.state.windowWidth;
+    //   console.log(changeInWindowWidth);
+
+    //   this.setState({
+    //     imagesTotalHeight: this.state.imagesTotalHeight * changeInWindowWidth,
+    //     imgContainerHeight: ((this.state.imagesTotalHeight * changeInWindowWidth) / columns) + extraSpace,
+    //     windowWidth: windowWidth
+    //   }, _ => console.log(this.state.imgContainerHeight));
+    // }
   }
 
-  imagesOnLoad = (e) => {
+  imagesLoad = () => {
+    this.setImageContainerHeight();
+    setTimeout(() => {
+      this.setState({
+        imgContainerHeight: (this.state.imagesTotalHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace,
+        initialLoad: false
+      });
+    }, 200);
+  }
+
+  imageLoad = (e) => {
     this.setState({
       imagesTotalHeight: this.state.imagesTotalHeight + e.currentTarget.offsetHeight,
       imageHeights: [...this.state.imageHeights, e.currentTarget.offsetHeight],
       numImagesLoaded: this.state.numImagesLoaded + 1
     }, _ => {
       if (this.state.numImagesLoaded === this.state.numImages) {
-        this.setState({
-          imgContainerHeight: (this.state.imagesTotalHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace,
-          initialLoad: false
-        });
-        setTimeout(() => {
-          this.setState({
-            imagesLoaded: true
-          });
-        }, 350);
-        setTimeout(_ => {
-          this.setState({
-            stopLoader: true
-          });
-        }, 800);
-        setTimeout(_ => {
-          this.setState({
-            loadingWidgetOut: true
-          });
-        }, 1300);
-        setTimeout(_ => {
-          this.setState({
-            titlesIn: true
-          });
-          document.body.style.overflow = 'visible';
-        }, 2000);
+        this.imagesLoad();
+        this.pageLoadAnimations();
       }
     })
+  }
+
+
+  test = (width) => {
+    if(this.state.titlesIn) {
+      console.log('height changed on resize');
+      
+      this.setImageContainerHeight();
+      setTimeout(() => {
+        console.log(this.state.imageContainerVars);
+        
+        const change = width / this.state.windowWidth;
+        let imageWidthDifference = 1;
+        if(window.innerWidth <= 800) imageWidthDifference = ((width / 3) - 5) / ((width  / 4) - 7.5);
+
+        this.setState({
+          imgContainerHeight: ((this.state.imagesTotalHeight * change * imageWidthDifference) / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace
+        });
+      }, 400);
+    }
   }
 
 
@@ -236,10 +284,6 @@ class Gallery extends Component {
         zoomedImageKey: this.state.zoomedImageKey - 1
       });
     }
-  }
-
-  test = () => {
-    console.log(this.state.images);
   }
 
   render() {
@@ -360,10 +404,11 @@ class Gallery extends Component {
                 config={config.gentle}
               >
                 {props =>
-                  <div style={{
-                    ...props,
-                    marginTop: `${this.state.showFilterOptions ? window.innerWidth < 500 ? 30 : 50 : 20}px`
-                  }} className='gallery-page_images-container'>
+                  <div className='gallery-page_images-container'
+                    style={{
+                      ...props,
+                      marginTop: `${this.state.showFilterOptions ? window.innerWidth < 500 ? 30 : 50 : 20}px`
+                    }}>
                     {this.state.displayFilterValue &&
                       <h2 className='gallery-page_images_title'>{this.state.displayFilterValue}</h2>
                     }
@@ -378,10 +423,16 @@ class Gallery extends Component {
                         <div className='gallery-page_images_image' key={i}>
                           <img src={`${image.url}`} value={i} alt=''
                             onClick={this.zoomOnImage}
-                            onLoad={this.state.initialLoad ? this.imagesOnLoad : null}
-                          ></img>
+                            // onLoad={this.state.initialLoad ? this.test : null}
+                            onLoad={this.state.initialLoad ? this.imageLoad : null}
+                          >
+                          </img>
+                          {/* {!this.state.initialLoad &&
+                            <ReactResizeDetector handleHeight skipOnMount onResize={this.test} />
+                          } */}
                         </div>
                       )}
+                      {/* <ReactResizeDetector handleWidth skipOnMount onResize={this.test} /> */}
                     </div>
                   </div>
                 }
@@ -409,32 +460,3 @@ class Gallery extends Component {
 
 export default withRouter(Gallery);
 
-
-
-// showAllImages = () => {
-//   let imagesContainerHeight = (this.state.imagesTotalHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace;
-
-//   if (this.state.displayFilterValue) {
-//     this.setState({
-//       filterImagesFadeOut: true
-//     });
-//     setTimeout(() => {
-//       this.setState({
-//         showFilterOptions: !this.state.showFilterOptions
-//       });
-//     }, 350);
-//     setTimeout(() => {
-//       this.setState({
-//         filteredImages: this.state.images,
-//         imgContainerHeight: imagesContainerHeight,
-//         numImages: this.state.images.length,
-//         displayFilterValue: null
-//       });
-//     }, 500);
-//     setTimeout(() => {
-//       this.setState({
-//         filterImagesFadeOut: false
-//       })
-//     }, 1200);
-//   }
-// };
