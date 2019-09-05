@@ -23,13 +23,23 @@
   }
 
   &_arrow {
-    font-size: 20px;
+    position: fixed;
+    top: 48vh;
+    font-size: 40px;
     cursor: pointer;
     color: white;
     padding: 2px;
 
-    @media (max-width: 800px) {
-      font-size: 20px;
+    // @media (max-width: 800px) {
+    //   font-size: 20px;
+    // }
+
+    &--right {
+      right: 20px;
+    }
+
+    &--left {
+      left: 20px;
     }
   }
 

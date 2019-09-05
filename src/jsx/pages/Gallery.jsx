@@ -16,9 +16,7 @@ class Gallery extends Component {
   constructor(props) {
     super(props)
 
-    // this.state.images.forEach((image, i) => {
-    //   this[`imageRef-${i}`] = React.createRef();
-    // });
+    this.imgRef = React.createRef();
 
     this.state = {
       initialLoad: true,
@@ -46,7 +44,8 @@ class Gallery extends Component {
       displayFilterValue: null,
       filterImagesFadeOut: false,
       windowWidth: window.innerWidth,
-      initialImageResize: true
+      initialImageResize: true,
+      conmponentsLoadFin: false
     }
   }
 
@@ -112,6 +111,11 @@ class Gallery extends Component {
       });
       document.body.style.overflow = 'visible';
     }, 2000);
+    setTimeout(_ => {
+      this.setState({
+        componentsLoadFin: true
+      });
+    }, 3000);
   }
 
   setImageContainerHeight = () => {
@@ -173,23 +177,24 @@ class Gallery extends Component {
   }
 
 
-  test = (width) => {
-    if(this.state.titlesIn) {
-      console.log('height changed on resize');
-      
-      this.setImageContainerHeight();
-      setTimeout(() => {
-        console.log(this.state.imageContainerVars);
-        
-        const change = width / this.state.windowWidth;
-        let imageWidthDifference = 1;
-        if(window.innerWidth <= 800) imageWidthDifference = ((width / 3) - 5) / ((width  / 4) - 7.5);
+  test = () => {
+    // if (this.state.titlesIn) {
+    //   console.log('height changed on resize');
 
-        this.setState({
-          imgContainerHeight: ((this.state.imagesTotalHeight * change * imageWidthDifference) / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace
-        });
-      }, 400);
-    }
+    //   this.setImageContainerHeight();
+    //   setTimeout(() => {
+    //     console.log(this.state.imageContainerVars);
+
+    //     const change = width / this.state.windowWidth;
+    //     let imageWidthDifference = 1;
+    //     if (window.innerWidth <= 800) imageWidthDifference = ((width / 3) - 5) / ((width / 4) - 7.5);
+
+    //     this.setState({
+    //       imgContainerHeight: ((this.state.imagesTotalHeight * change * imageWidthDifference) / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace
+    //     });
+    //   }, 400);
+    // }
+    if(this.state.componentsLoadFin) window.location.reload();
   }
 
 
@@ -396,47 +401,50 @@ class Gallery extends Component {
                   }
                 </div>
               </div>
-              <Spring
-                from={{ opacity: 1 }}
-                to={{
-                  opacity: this.state.filterImagesFadeOut ? 0 : 1
-                }}
-                config={config.gentle}
-              >
-                {props =>
-                  <div className='gallery-page_images-container'
-                    style={{
-                      ...props,
-                      marginTop: `${this.state.showFilterOptions ? window.innerWidth < 500 ? 30 : 50 : 20}px`
-                    }}>
-                    {this.state.displayFilterValue &&
-                      <h2 className='gallery-page_images_title'>{this.state.displayFilterValue}</h2>
-                    }
-                    <div className='gallery-page_images'
-                      style={!this.state ? null :
-                        {
-                          height: `${this.state.imgContainerHeight}px`
-                        }
+
+                <Spring
+                  from={{ opacity: 1 }}
+                  to={{
+                    opacity: this.state.filterImagesFadeOut ? 0 : 1
+                  }}
+                  config={config.gentle}
+                >
+                  {props =>
+                    <div className='gallery-page_images-container'
+                      style={{
+                        ...props,
+                        marginTop: `${this.state.showFilterOptions ? window.innerWidth < 500 ? 30 : 50 : 20}px`
+                      }}>
+                      {this.state.displayFilterValue &&
+                        <h2 className='gallery-page_images_title'>{this.state.displayFilterValue}</h2>
                       }
-                    >
-                      {this.state.filteredImages.map((image, i) =>
-                        <div className='gallery-page_images_image' key={i}>
-                          <img src={`${image.url}`} value={i} alt=''
-                            onClick={this.zoomOnImage}
-                            // onLoad={this.state.initialLoad ? this.test : null}
-                            onLoad={this.state.initialLoad ? this.imageLoad : null}
-                          >
-                          </img>
-                          {/* {!this.state.initialLoad &&
-                            <ReactResizeDetector handleHeight skipOnMount onResize={this.test} />
-                          } */}
-                        </div>
-                      )}
-                      {/* <ReactResizeDetector handleWidth skipOnMount onResize={this.test} /> */}
+                      <div className='gallery-page_images'
+                        style={!this.state ? null :
+                          {
+                            height: `${this.state.imgContainerHeight}px`
+                          }
+                        }
+                      >
+                        {this.state.filteredImages.map((image, i) =>
+                          <div className='gallery-page_images_image' key={i}>
+                            <img src={`${image.url}`} value={i} alt=''
+                              onClick={this.zoomOnImage}
+                              // onLoad={this.state.initialLoad ? this.test : null}
+                              onLoad={this.state.initialLoad ? this.imageLoad : null}
+                            // ref={this.imgRef}
+                            >
+                            </img>
+                            {/* {!this.state.initialLoad &&
+                                        <ReactResizeDetector handleHeight skipOnMount onResize={this.test} />
+                                      } */}
+                          </div>
+                        )}
+                        <ReactResizeDetector handleWidth skipOnMount onResize={this.test} />
+                      </div>
                     </div>
-                  </div>
-                }
-              </Spring>
+                  }
+                </Spring>
+              
             </div>
           }
         </Spring>

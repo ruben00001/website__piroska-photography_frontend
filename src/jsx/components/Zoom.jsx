@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Spring, config } from 'react-spring/renderprops';
+import { useSwipeable } from 'react-swipeable'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 // import { Global } from '../../data/globals';
@@ -8,6 +9,16 @@ const Zoom = (props) => {
 
   const [showControl, setShowControl] = useState(false);
   const [arrowPressed, setArrowPressed] = useState(false);
+
+  const hideControl = () => {
+    setArrowPressed(true); setTimeout(() => { setShowControl(false) }, 200)
+  }
+
+  const handlers = useSwipeable({
+    onSwipedRight: _ => { props.nextPicture(); hideControl() },
+    onSwipedLeft: _ => { props.previousPicture(); hideControl() },
+    ...config
+  })
 
   return (
     <Spring
@@ -20,9 +31,30 @@ const Zoom = (props) => {
     >
       {propsA =>
         <div style={propsA} className='zoom'>
+          <Spring
+            from={{ opacity: 0 }}
+            to={{
+              opacity: showControl ? 1 : 0,
+            }}
+            config={config.slow}
+          >
+            {propsB =>
+              <div style={propsB}>
+                <FontAwesomeIcon className='zoom_arrow zoom_arrow--left' icon={faChevronLeft}
+                  onClick={_ => { props.previousPicture(); setArrowPressed(true); setTimeout(() => { setShowControl(false) }, 200) }}
+                ></FontAwesomeIcon>
+                <FontAwesomeIcon className='zoom_arrow zoom_arrow--right' icon={faChevronRight}
+                  onClick={_ => { props.nextPicture(); setArrowPressed(true); setTimeout(() => { setShowControl(false) }, 200) }}
+                ></FontAwesomeIcon>
+              </div>
+            }
+          </Spring>
+
           <div className='zoom_image'
             onClick={_ => setShowControl(!showControl)}
+            {...handlers}
           >
+
             <img src={props.zoomedImageURL} alt=''></img>
           </div>
           {!showControl &&
@@ -58,9 +90,6 @@ const Zoom = (props) => {
               >
                 <FontAwesomeIcon onClick={props.exitZoom} className='zoom_x' icon={faTimes}></FontAwesomeIcon>
                 <div className='zoom_info_control'>
-                  <FontAwesomeIcon className='zoom_arrow zoom_arrow--left' icon={faChevronLeft}
-                    onClick={_ => { props.previousPicture(); setArrowPressed(true); setTimeout(() => { setShowControl(false) }, 200) }}
-                  ></FontAwesomeIcon>
                   <div className="zoom_info_counter">
                     <div className="zoom_info_counter_number">{props.pictureNum}.</div>
                     <Spring
@@ -73,9 +102,6 @@ const Zoom = (props) => {
                     </Spring>
                     <div className="zoom_info_counter_number">{props.numImages}.</div>
                   </div>
-                  <FontAwesomeIcon className='zoom_arrow zoom_arrow--right' icon={faChevronRight}
-                    onClick={_ => { props.nextPicture(); setArrowPressed(true); setTimeout(() => { setShowControl(false) }, 200) }}
-                  ></FontAwesomeIcon>
                 </div>
                 <div className='zoom_info_images-title'>{props.imagesName}</div>
               </div>
