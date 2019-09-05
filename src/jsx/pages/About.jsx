@@ -41,7 +41,6 @@ class About extends Component {
       >
         {props =>
           <div style={props} className='about'>
-            {/* <Logo /> */}
             <Navbar2
               white={true}
             />
@@ -53,10 +52,15 @@ class About extends Component {
             <div className='about_container'>
               <div className='about_info'>
                 <p className='about_info_email'>piros.cards<span className='about_info_at'>@</span>gmail.com</p>
-                <div className='about_info_facebook'>
+                <div className='about_info_link'>
                   <p>facebook</p>
-                  <FontAwesomeIcon className='about_info_facebook_arrow' icon={faLongArrowAltRight}></FontAwesomeIcon>
-                  <a href='https://www.facebook.com/SeeInPictures/' target='_blank' rel="noopener noreferrer"><p ><span className='about_info_at'>@</span>seeinpictures</p></a>
+                  <FontAwesomeIcon className='about_info_link_arrow' icon={faLongArrowAltRight}></FontAwesomeIcon>
+                  <a href='https://www.facebook.com/SeeInPictures/' target='_blank' rel="noopener noreferrer"><p><span className='about_info_at'>@</span>seeinpictures</p></a>
+                </div>
+                <div className='about_info_link about_info_link--youtube'>
+                  <p>youtube</p>
+                  <FontAwesomeIcon className='about_info_link_arrow' icon={faLongArrowAltRight}></FontAwesomeIcon>
+                  <a href='https://www.youtube.com/playlist?list=PLdAjHO5OZG7y9CGvEG3Cf3ZgcaCL_p9fZ ' target='_blank'><p><span className='about_info_at'>@</span>piroska markus</p></a>
                 </div>
               </div>
               <div className='about_personal'>

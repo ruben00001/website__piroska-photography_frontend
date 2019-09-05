@@ -14,9 +14,17 @@ const Zoom = (props) => {
     setArrowPressed(true); setTimeout(() => { setShowControl(false) }, 200)
   }
 
+  const nextPicture = () => {
+    props.nextPicture(); hideControl();
+  }
+
+  const previousPicture = () => {
+    props.previousPicture(); hideControl();
+  }
+
   const handlers = useSwipeable({
-    onSwipedRight: _ => { props.nextPicture(); hideControl() },
-    onSwipedLeft: _ => { props.previousPicture(); hideControl() },
+    onSwipedRight: _ => nextPicture(),
+    onSwipedLeft: _ => previousPicture(),
     ...config
   })
 
@@ -41,10 +49,10 @@ const Zoom = (props) => {
             {propsB =>
               <div style={propsB}>
                 <FontAwesomeIcon className='zoom_arrow zoom_arrow--left' icon={faChevronLeft}
-                  onClick={_ => { props.previousPicture(); setArrowPressed(true); setTimeout(() => { setShowControl(false) }, 200) }}
+                  onClick={_ => previousPicture() }
                 ></FontAwesomeIcon>
                 <FontAwesomeIcon className='zoom_arrow zoom_arrow--right' icon={faChevronRight}
-                  onClick={_ => { props.nextPicture(); setArrowPressed(true); setTimeout(() => { setShowControl(false) }, 200) }}
+                  onClick={_ => nextPicture() }
                 ></FontAwesomeIcon>
               </div>
             }
