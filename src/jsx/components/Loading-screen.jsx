@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Spring, config } from 'react-spring/renderprops';
+import Loader from 'react-loader-spinner';
 import LoadingWidget from './Loading-widget';
+import { Global } from '../../data/globals';
 
 const LoadingScreen = (props) => {
 
@@ -49,7 +51,15 @@ const LoadingScreen = (props) => {
             config={config.slow}
           >
             {propsA =>
-              <h3 style={propsA} className='loading-screen_loading'>loading...</h3>
+              <div style={propsA} className='loading-screen_loading'>
+                <h3>loading</h3>
+                <Loader
+                  type="TailSpin"
+                  color={Global.mainColor}
+                  height={20}
+                  width={20}
+                />
+              </div>
             }
           </Spring>
         </div>

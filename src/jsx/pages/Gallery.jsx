@@ -3,7 +3,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye as faEyeSolid } from "@fortawesome/free-solid-svg-icons";
 import { faPlusSquare, faMinusSquare, faEye } from "@fortawesome/free-regular-svg-icons";
-import { strapiAPI } from '../../enviroment/strapi-api';
+import { strapiAPI } from '../../environment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
 import { withRouter } from "react-router-dom";
 import Zoom from '../components/Zoom';

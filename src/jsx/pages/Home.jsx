@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import { strapiAPI } from '../../enviroment/strapi-api';
+import { strapiAPI } from '../../environment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
 import { withRouter } from 'react-router';
 import Navbar2 from '../layout/navbar/Navbar2';
 import LoadingWidget from '../components/Loading-widget';
+import Loader from 'react-loader-spinner';
+import { Global } from '../../data/globals';
 
 
 class Home extends Component {
@@ -22,7 +24,7 @@ class Home extends Component {
       changeBackground: false,
       scalePage: false,
       timerDuration: 20,
-      showLoadingText: 0,
+      showLoadingText: false,
       leaveAnimation: false,
       changeLeaveColor: false,
       menuOpen: false,
@@ -151,13 +153,21 @@ class Home extends Component {
               config={config.slow}
             >
               {propsA =>
-                <h3 style={propsA} className='loading-screen_loading'>loading</h3>
+                <div style={propsA} className='loading-screen_loading'>
+                  <h3>loading</h3>
+                  <Loader
+                    type="TailSpin"
+                    color={Global.mainColor}
+                    height={20}
+                    width={20}
+                  />
+                </div>
               }
             </Spring>
           </React.Fragment>
         }
         {this.state.showPage &&
-          <Navbar2 
+          <Navbar2
             currentPage={'/home'}
             noLogo={true}
           />
@@ -170,7 +180,7 @@ class Home extends Component {
           {props =>
             <div style={props} className='home_main-container'>
               <div className='home_image'>
-                <img onLoad={this.onImageLoad} src={`${this.state.image}`} alt=''></img>
+                {/* <img onLoad={this.onImageLoad} src={`${this.state.image}`} alt=''></img> */}
                 <h1 className='home_title home_title--main'>Piros <br /> Photography</h1>
                 <h2 className='home_title home_title--catalogue'>CATALOGUE N&deg;001 </h2>
                 <h2 className='home_title home_title--locations'>london &nbsp; budapest &nbsp; the world</h2>

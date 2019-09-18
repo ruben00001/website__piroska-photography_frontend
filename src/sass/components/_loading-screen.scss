@@ -28,14 +28,12 @@
   }
 
   &_loading {
-    position: absolute;
+    position: fixed;
     top: calc(50% + 90px);
     left: 50%;
     transform: translateX(-50%);
-    font-variant: small-caps;
-    font-size: 30px;
-    letter-spacing: 3px;
-    font-weight: bold;
+    display: flex;
+    align-items: center;
 
     @media(max-width: 1400px) {
       top: calc(50% + 40px);
@@ -51,8 +49,29 @@
       letter-spacing: 2px;
     }
     @media(max-width: 320px) {
+      top: calc(50% + 60px);
       font-size: 16px;
       letter-spacing: 1.2px;
+    }
+
+    h3 {
+      font-weight: normal;
+      font-size: 15px;
+      letter-spacing: 3px;
+      margin-right: 20px;
+
+      @media(max-width: 1000px) {
+        font-size: 13px;
+        letter-spacing: 2.5px;
+      }
+      @media(max-width: 800px) {
+        font-size: 12px;
+        letter-spacing: 1.8px;
+      }
+      @media(max-width: 320px) {
+        font-size: 11px;
+        letter-spacing: 1px;
+      }
     }
   }
 }
