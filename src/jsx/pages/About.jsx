@@ -51,7 +51,7 @@ class About extends Component {
             </div>
             <div className='about_container'>
               <div className='about_info'>
-                <p className='about_info_email'>piros.cards<span className='about_info_at'>@</span>gmail.com</p>
+                <p className='about_info_email'>pirospixs<span className='about_info_at'>@</span>gmail.com</p>
                 <div className='about_info_link'>
                   <p>facebook</p>
                   <FontAwesomeIcon className='about_info_link_arrow' icon={faLongArrowAltRight}></FontAwesomeIcon>
@@ -64,7 +64,7 @@ class About extends Component {
                 </div>
               </div>
               <div className='about_personal'>
-                <p className='about_personal_description'>piroska markus lives in london, <br />is originally from budapest <br /> and soon to travel across the world.<br /><br />In her photgraphy she tries to capture <br />beauty in all its forms. <br /><br />She has three children,<br /> loves her home in Abbey Wood <br /> and enjoys taking long walks.<br /><br />get in touch.</p>
+                <p className='about_personal_description'>piroska markus lives in london and <br />is originally from budapest. <br />In her photgraphy she tries to capture <br />beauty and ugliness in all its forms. <br /><br />She has worked in many organisations <br /> in the UK for the last thirty years<br />  supporting vulnerable people - <br />including homeless people, <br /> adults with learning and physical disabilities<br /> and people who were abused as children. <br /><br /> She is active in political and social movements<br /> and wants to see how people live <br /> in different parts of the world. <br />She  left her job in September <span>2019</span><br /> to travel to Central and South America. <br /><br /> She has three amazing grown up children <br /> whom she considers her biggest achievements. <br/>She occasionally writes political essays and novels. <br />Her writings have been published <br />in a number of countries.</p>
               </div>
             </div>
           </div>
