@@ -36,15 +36,15 @@
     align-items: center;
 
     @media(max-width: 1400px) {
-      top: calc(50% + 40px);
+      top: calc(50% + 90px);
     }
     @media(max-width: 1000px) {
-      top: calc(50% + 35px);
+      top: calc(50% + 85px);
       font-size: 24px;
       letter-spacing: 2.5px;
     }
     @media(max-width: 800px) {
-      top: calc(50% + 30px);
+      top: calc(50% + 70px);
       font-size: 20px;
       letter-spacing: 2px;
     }
@@ -74,4 +74,8 @@
       }
     }
   }
+}
+
+.x {
+  border: 3px solid red;
 }

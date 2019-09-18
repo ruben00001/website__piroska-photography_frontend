@@ -7,6 +7,7 @@ import Navbar2 from '../layout/navbar/Navbar2';
 import LoadingWidget from '../components/Loading-widget';
 import Loader from 'react-loader-spinner';
 import { Global } from '../../data/globals';
+import mainImage from '../../img/Erith.jpg'
 
 
 class Home extends Component {
@@ -36,7 +37,8 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    setInterval(() => {
+
+    this.showLoadingText = setInterval(() => {
       this.setState({
         showLoadingText: true
       });
@@ -46,6 +48,7 @@ class Home extends Component {
         });
       }, 5000);
     }, 15000);
+
     Axios.get(`${this.homeURL}/homes`)
       .then(response => {
         this.setState({
@@ -56,7 +59,13 @@ class Home extends Component {
       })
   }
 
+  componentWillUnmount() {
+    clearInterval(this.showLoadingText);
+  }
+
   homeURL = strapiAPI;
+
+  showLoadingText;
 
   onImageLoad = () => {
     this.setState({
@@ -180,7 +189,7 @@ class Home extends Component {
           {props =>
             <div style={props} className='home_main-container'>
               <div className='home_image'>
-                {/* <img onLoad={this.onImageLoad} src={`${this.state.image}`} alt=''></img> */}
+                <img onLoad={this.onImageLoad} src={mainImage} alt=''></img>
                 <h1 className='home_title home_title--main'>Piros <br /> Photography</h1>
                 <h2 className='home_title home_title--catalogue'>CATALOGUE N&deg;001 </h2>
                 <h2 className='home_title home_title--locations'>london &nbsp; budapest &nbsp; the world</h2>
