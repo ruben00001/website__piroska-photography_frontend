@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Logo from '../components/Logo';
-import Navbar2 from '../layout/navbar/Navbar2';
+import Navbar from '../layout/navbar/Navbar';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
-import { strapiAPI } from '../../enviroment/strapi-api';
+import { strapiAPI } from '../../environment/strapi-api';
 import { Spring, config } from 'react-spring/renderprops';
 
 class About extends Component {
@@ -41,7 +40,7 @@ class About extends Component {
       >
         {props =>
           <div style={props} className='about'>
-            <Navbar2
+            <Navbar
               white={true}
             />
             <div className='about_image'>
@@ -60,7 +59,7 @@ class About extends Component {
                 <div className='about_info_link about_info_link--youtube'>
                   <p>youtube</p>
                   <FontAwesomeIcon className='about_info_link_arrow' icon={faLongArrowAltRight}></FontAwesomeIcon>
-                  <a href='https://www.youtube.com/playlist?list=PLdAjHO5OZG7y9CGvEG3Cf3ZgcaCL_p9fZ ' target='_blank'><p><span className='about_info_at'>@</span>piroska markus</p></a>
+                  <a href='https://www.youtube.com/playlist?list=PLdAjHO5OZG7y9CGvEG3Cf3ZgcaCL_p9fZ ' target='_blank' rel="noopener noreferrer"><p><span className='about_info_at'>@</span>piroska markus</p></a>
                 </div>
               </div>
               <div className='about_personal'>

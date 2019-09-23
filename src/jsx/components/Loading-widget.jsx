@@ -18,12 +18,14 @@ class LoadingWidget extends Component {
     }, 1300);
   }
 
+  triggerNumChanges;
+
   rdmNum = (x, y) => {
     return x + Math.random() * (y - x);
   }
 
   changeNum = (stateKey) => {
-    if (!this.props.stopLoader) {
+    if (!this.props.stopLoadingWidget) {
       let interval = this.rdmNum(700, 1800);
       this.setState({ [stateKey]: Math.floor(this.rdmNum(1, 9)) });
       setTimeout(() => {

@@ -1,59 +1,45 @@
 import React, { Component } from 'react';
+import { withRouter } from "react-router-dom";
 import axios from 'axios';
+import { Spring, config } from 'react-spring/renderprops';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye as faEyeSolid } from "@fortawesome/free-solid-svg-icons";
 import { faPlusSquare, faMinusSquare, faEye } from "@fortawesome/free-regular-svg-icons";
-import { strapiAPI } from '../../environment/strapi-api';
-import { Spring, config } from 'react-spring/renderprops';
-import { withRouter } from "react-router-dom";
-import Zoom from '../components/Zoom';
-import LoadingScreen from '../components/Loading-screen';
-import Navbar2 from '../layout/navbar/Navbar2';
-import ReactResizeDetector from 'react-resize-detector';
+import { strapiAPI } from '../../../environment/strapi-api';
+import withZoom from '../../components/withZoom';
+import withLoadingScreen from '../../components/withLoadingScreen';
+import { Images } from './Images';
 
 
 class Gallery extends Component {
   constructor(props) {
     super(props)
 
-    this.imgRef = React.createRef();
-
     this.state = {
-      initialLoad: true,
       images: null,
       tags: null,
       filteredImages: [],
-      zoom: false,
-      zoomedImageURL: null,
-      zoomedImageKey: null,
-      imagesTotalHeight: 0,
-      imgContainerHeight: 0,
-      imageHeights: [],
-      imageContainerVars: { columns: 0, extraspace: 0 },
-      filter: 0,
       numImages: 0,
+      imagesTotalHeight: 0,
+      imageHeights: [],
       numImagesLoaded: 0,
-      imagesLoaded: false,
-      loadingWidgetOut: false,
-      stopLoader: false,
-      titlesIn: false,
+      imageContainerVars: { columns: 0, extraspace: 0 },
+      currentFilterValue: null,
       showFilterOptions: false,
+      displayFilterValue: null,
       showDateFilter: false,
       showCategoryFilter: false,
-      currentFilterValue: null,
-      displayFilterValue: null,
       filterImagesFadeOut: false,
-      windowWidth: window.innerWidth,
-      initialImageResize: true,
+      imgContainerHeight: 0,
+      initialLoad: true,
       conmponentsLoadFin: false
     }
   }
 
-  homeURL = strapiAPI;
 
   componentDidMount() {
     document.body.style.overflow = 'hidden'; //prevent scrollbar appearing on load. Reintroduced after images load
-    axios.get(`${this.homeURL}/galleries`)
+    axios.get(`${strapiAPI}/galleries`)
       .then(response => {
         this.setState({
           images: response.data.map(image => {
@@ -73,8 +59,11 @@ class Gallery extends Component {
           filteredImages: this.state.images,
           numImages: this.state.images.length
         });
+      })
+      .then(_ => {
+        this.props.defineImageDetails(this.state.displayFilterValue, this.state.numImages);
       });
-    axios.get(`${this.homeURL}/tags`)
+    axios.get(`${strapiAPI}/tags`)
       .then(response => {
         this.setState({
           tags: response.data.map(tag => {
@@ -89,33 +78,30 @@ class Gallery extends Component {
       })
   }
 
-  pageLoadAnimations = () => {
-    setTimeout(() => {
-      this.setState({
-        imagesLoaded: true
-      });
-    }, 350);
-    setTimeout(_ => {
-      this.setState({
-        stopLoader: true
-      });
-    }, 800);
-    setTimeout(_ => {
-      this.setState({
-        loadingWidgetOut: true
-      });
-    }, 1300);
-    setTimeout(_ => {
-      this.setState({
-        titlesIn: true
-      });
-      document.body.style.overflow = 'visible';
-    }, 2000);
-    setTimeout(_ => {
-      this.setState({
-        componentsLoadFin: true
-      });
-    }, 3000);
+
+  onImageLoad = (e) => {
+    this.setState({
+      imagesTotalHeight: this.state.imagesTotalHeight + e.currentTarget.offsetHeight,
+      imageHeights: [...this.state.imageHeights, e.currentTarget.offsetHeight],
+      numImagesLoaded: this.state.numImagesLoaded + 1
+    }, _ => {
+      if (this.state.numImagesLoaded === this.state.numImages) {
+        this.setImageContainerHeight();
+        setTimeout(() => {
+          this.setState({
+            imgContainerHeight: (this.state.imagesTotalHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace,
+            initialLoad: false
+          });
+        }, 200);
+        document.body.style.overflow = 'visible';
+        this.props.onImagesLoad();
+        setTimeout(() => { // allow for refresh of page when images finished loading
+          this.setState({
+            componentsLoadFin: true
+          });
+        }, 4850);
+      }
+    })
   }
 
   setImageContainerHeight = () => {
@@ -138,65 +124,7 @@ class Gallery extends Component {
         imageContainerVars: { columns: columns, extraspace: 120 }
       });
     }
-
-    // console.log(this.state.imagesTotalHeight, columns, extraSpace);
-
-    // if (windowWidth !== this.state.windowWidth) {
-    //   const changeInWindowWidth = windowWidth / this.state.windowWidth;
-    //   console.log(changeInWindowWidth);
-
-    //   this.setState({
-    //     imagesTotalHeight: this.state.imagesTotalHeight * changeInWindowWidth,
-    //     imgContainerHeight: ((this.state.imagesTotalHeight * changeInWindowWidth) / columns) + extraSpace,
-    //     windowWidth: windowWidth
-    //   }, _ => console.log(this.state.imgContainerHeight));
-    // }
   }
-
-  imagesLoad = () => {
-    this.setImageContainerHeight();
-    setTimeout(() => {
-      this.setState({
-        imgContainerHeight: (this.state.imagesTotalHeight / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace,
-        initialLoad: false
-      });
-    }, 200);
-  }
-
-  imageLoad = (e) => {
-    this.setState({
-      imagesTotalHeight: this.state.imagesTotalHeight + e.currentTarget.offsetHeight,
-      imageHeights: [...this.state.imageHeights, e.currentTarget.offsetHeight],
-      numImagesLoaded: this.state.numImagesLoaded + 1
-    }, _ => {
-      if (this.state.numImagesLoaded === this.state.numImages) {
-        this.imagesLoad();
-        this.pageLoadAnimations();
-      }
-    })
-  }
-
-
-  test = () => {
-    // if (this.state.titlesIn) {
-    //   console.log('height changed on resize');
-
-    //   this.setImageContainerHeight();
-    //   setTimeout(() => {
-    //     console.log(this.state.imageContainerVars);
-
-    //     const change = width / this.state.windowWidth;
-    //     let imageWidthDifference = 1;
-    //     if (window.innerWidth <= 800) imageWidthDifference = ((width / 3) - 5) / ((width / 4) - 7.5);
-
-    //     this.setState({
-    //       imgContainerHeight: ((this.state.imagesTotalHeight * change * imageWidthDifference) / this.state.imageContainerVars.columns) + this.state.imageContainerVars.extraspace
-    //     });
-    //   }, 400);
-    // }
-    if(this.state.componentsLoadFin) window.location.reload();
-  }
-
 
   filterImages = (filter) => {
     let filteredImages = [];
@@ -240,7 +168,7 @@ class Gallery extends Component {
         filteredImages: filter === 'none' ? this.state.images : filteredImages,
         numImages: filteredImages.length,
         displayFilterValue: filter === 'category' ? filterValue : null
-      });
+      }, _ => this.props.defineImageDetails(this.state.displayFilterValue, this.state.numImages));
     }, 500);
     setTimeout(() => {
       this.setState({
@@ -249,69 +177,22 @@ class Gallery extends Component {
     }, 1600);
   };
 
-  zoomOnImage = (e) => {
-    this.setState({
-      zoomedImageURL: e.currentTarget.src,
-      zoom: true,
-      zoomedImageKey: Number(e.currentTarget.getAttribute('value'))
-    });
+  refreshPage = () => { // for now refresh page when width of image container changes (i.e when window changes size)
+    if (this.state.componentsLoadFin) window.location.reload();
   }
 
-  exitZoom = () => {
-    this.setState({
-      zoom: false
-    })
-  }
-
-  nextPicture = () => {
-    if (this.state.zoomedImageKey + 1 === this.state.filteredImages.length) {
-      this.setState({
-        zoomedImageURL: `${this.state.filteredImages[0].url}`,
-        zoomedImageKey: 0
-      });
-    } else {
-      this.setState({
-        zoomedImageURL: `${this.state.filteredImages[this.state.zoomedImageKey + 1].url}`,
-        zoomedImageKey: this.state.zoomedImageKey + 1
-      })
-    }
-  }
-
-  previousPicture = () => {
-    if (this.state.zoomedImageKey === 0) {
-      this.setState({
-        zoomedImageURL: `${this.state.filteredImages[this.state.filteredImages.length - 1].url}`,
-        zoomedImageKey: this.state.filteredImages.length - 1
-      });
-    } else {
-      this.setState({
-        zoomedImageURL: `${this.state.filteredImages[this.state.zoomedImageKey - 1].url}`,
-        zoomedImageKey: this.state.zoomedImageKey - 1
-      });
-    }
-  }
 
   render() {
+    const { animatePage, zoomOnImage } = this.props;
+
     return (
       <div className='gallery-page'
-        style={{ pointerEvents: this.state.titlesIn ? 'auto' : 'none' }}
+        style={{ pointerEvents: animatePage ? 'auto' : 'none' }}
       >
-        <LoadingScreen
-          loadingWidgetOut={!this.state.loadingWidgetOut}
-          stopLoader={this.state.stopLoader}
-          removeLoader={this.state.titlesIn}
-        />
-        {this.state.imagesLoaded &&
-          <React.Fragment>
-            <Navbar2
-              currentPage={'/gallery'}
-            />
-          </React.Fragment>
-        }
         <Spring
           from={{ opacity: 0 }}
           to={{
-            opacity: this.state.titlesIn ? 1 : 0,
+            opacity: animatePage ? 1 : 0,
           }}
           config={config.slow}
         >
@@ -320,10 +201,10 @@ class Gallery extends Component {
               <h1 onClick={this.test} className='gallery-page_title'>Gallery</h1>
               <div style={{ overflow: 'hidden' }} className='gallery-page_filter'>
                 <div className='gallery-page_filter_line gallery-page_filter_line--1'
-                  onClick={() => {
-                    if (this.state.displayFilterValue) this.filterImages('none');
-                    else this.setState({ showFilterOptions: !this.state.showFilterOptions });
-                  }}
+                  onClick={() => this.state.displayFilterValue ?
+                    this.filterImages('none') :
+                    this.setState({ showFilterOptions: !this.state.showFilterOptions })
+                  }
                 >
                   {this.state.showFilterOptions ?
                     <FontAwesomeIcon className='gallery-page_filter_icon gallery-page_filter_icon--box' icon={faMinusSquare}></FontAwesomeIcon> :
@@ -401,70 +282,24 @@ class Gallery extends Component {
                   }
                 </div>
               </div>
-
-                <Spring
-                  from={{ opacity: 1 }}
-                  to={{
-                    opacity: this.state.filterImagesFadeOut ? 0 : 1
-                  }}
-                  config={config.gentle}
-                >
-                  {props =>
-                    <div className='gallery-page_images-container'
-                      style={{
-                        ...props,
-                        marginTop: `${this.state.showFilterOptions ? window.innerWidth < 500 ? 30 : 50 : 20}px`
-                      }}>
-                      {this.state.displayFilterValue &&
-                        <h2 className='gallery-page_images_title'>{this.state.displayFilterValue}</h2>
-                      }
-                      <div className='gallery-page_images'
-                        style={!this.state ? null :
-                          {
-                            height: `${this.state.imgContainerHeight}px`
-                          }
-                        }
-                      >
-                        {this.state.filteredImages.map((image, i) =>
-                          <div className='gallery-page_images_image' key={i}>
-                            <img src={`${image.url}`} value={i} alt=''
-                              onClick={this.zoomOnImage}
-                              // onLoad={this.state.initialLoad ? this.test : null}
-                              onLoad={this.state.initialLoad ? this.imageLoad : null}
-                            // ref={this.imgRef}
-                            >
-                            </img>
-                            {/* {!this.state.initialLoad &&
-                                        <ReactResizeDetector handleHeight skipOnMount onResize={this.test} />
-                                      } */}
-                          </div>
-                        )}
-                        <ReactResizeDetector handleWidth skipOnMount onResize={this.test} />
-                      </div>
-                    </div>
-                  }
-                </Spring>
-              
+              <Images
+                filterImagesFadeOut={this.state.filterImagesFadeOut}
+                showFilterOptions={this.state.showFilterOptions}
+                displayFilterValue={this.state.displayFilterValue}
+                isState={this.state}
+                imgContainerHeight={this.state.imgContainerHeight}
+                filteredImages={this.state.filteredImages}
+                zoomOnImage={zoomOnImage}
+                initialLoad={this.state.initialLoad}
+                onImageLoad={this.onImageLoad}
+                refreshPage={this.refreshPage}
+              />
             </div>
           }
         </Spring>
-        {this.state.zoom &&
-          <Zoom
-            zoomedImageURL={this.state.zoomedImageURL}
-            previousPicture={this.previousPicture}
-            nextPicture={this.nextPicture}
-            exitZoom={this.exitZoom}
-            pictureNum={this.state.zoomedImageKey + 1}
-            pgnationBG={(100 / this.state.numImages) * (this.state.zoomedImageKey + 1)}
-            numImages={this.state.numImages}
-            imagesName={this.state.displayFilterValue}
-            showZoom={this.state.zoom}
-          />
-        }
       </div>
     )
   }
 }
 
-export default withRouter(Gallery);
-
+export default withLoadingScreen(withZoom(withRouter(Gallery), 'Gallery'), '/gallery');

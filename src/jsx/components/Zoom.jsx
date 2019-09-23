@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Spring, config } from 'react-spring/renderprops';
-import { useSwipeable } from 'react-swipeable'
+import { useSwipeable } from 'react-swipeable';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-// import { Global } from '../../data/globals';
 
 const Zoom = (props) => {
 
@@ -14,19 +13,18 @@ const Zoom = (props) => {
     setArrowPressed(true); setTimeout(() => { setShowControl(false) }, 200)
   }
 
-  const nextPicture = () => {
-    props.nextPicture(); hideControl();
+  const changePicture = direction => {
+    props.changePicture(direction);
+    hideControl();
   }
 
-  const previousPicture = () => {
-    props.previousPicture(); hideControl();
-  }
+  const pgnationBG = (100 / props.numImages) * (props.imageNum);
 
   const handlers = useSwipeable({
-    onSwipedRight: _ => nextPicture(),
-    onSwipedLeft: _ => previousPicture(),
+    onSwipedRight: _ => props.changePicture('next'),
+    onSwipedLeft: _ => props.changePicture('previous'),
     ...config
-  })
+  });
 
   return (
     <Spring
@@ -49,21 +47,19 @@ const Zoom = (props) => {
             {propsB =>
               <div style={propsB}>
                 <FontAwesomeIcon className='zoom_arrow zoom_arrow--left' icon={faChevronLeft}
-                  onClick={_ => previousPicture() }
-                ></FontAwesomeIcon>
+                  onClick={_ => changePicture('previous')}
+                />
                 <FontAwesomeIcon className='zoom_arrow zoom_arrow--right' icon={faChevronRight}
-                  onClick={_ => nextPicture() }
-                ></FontAwesomeIcon>
+                  onClick={_ => changePicture('next')}
+                />
               </div>
             }
           </Spring>
-
           <div className='zoom_image'
             onClick={_ => setShowControl(!showControl)}
             {...handlers}
           >
-
-            <img src={props.zoomedImageURL} alt=''></img>
+            <img src={props.imgURL} alt=''></img>
           </div>
           {!showControl &&
             <div className='zoom_hover-box'
@@ -85,27 +81,20 @@ const Zoom = (props) => {
             }}
             config={config.slow}
           >
-            {propsB =>
-              <div style={propsB} className='zoom_info'
-                onMouseLeave={_ => {
-                  if (!arrowPressed) {
-                    setShowControl(false);
-                  } else {
-                    setArrowPressed(true);
-                  }
-                }}
-
+            {propsC =>
+              <div style={propsC} className='zoom_info'
+                onMouseLeave={_ => { !arrowPressed ? setShowControl(false) : setArrowPressed(true) }}
               >
                 <FontAwesomeIcon onClick={props.exitZoom} className='zoom_x' icon={faTimes}></FontAwesomeIcon>
                 <div className='zoom_info_control'>
                   <div className="zoom_info_counter">
-                    <div className="zoom_info_counter_number">{props.pictureNum}.</div>
+                    <div className="zoom_info_counter_number">{props.imageNum}.</div>
                     <Spring
                       from={{}}
-                      to={{ background: `linear-gradient(to right, rgb(28, 123, 187), rgb(28, 123, 187) ${props.pgnationBG}%, white ${props.pgnationBG}%, white 100%)` }}
+                      to={{ background: `linear-gradient(to right, rgb(28, 123, 187), rgb(28, 123, 187) ${pgnationBG}%, white ${pgnationBG}%, white 100%)` }}
                     >
-                      {propsB => (
-                        <div style={propsB} className="zoom_info_counter_line"></div>
+                      {propsD => (
+                        <div style={propsD} className="zoom_info_counter_line"></div>
                       )}
                     </Spring>
                     <div className="zoom_info_counter_number">{props.numImages}.</div>
