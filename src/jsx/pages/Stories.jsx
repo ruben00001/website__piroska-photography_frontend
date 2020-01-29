@@ -29,7 +29,7 @@ class Stories extends Component {
 
       if (screenWidth >= 800) screenWidth -= scrollbarWidth;
 
-      const pageContainerWidth = screenWidth * 0.9 >= 1800 ? 1800 * 0.9 : screenWidth > 500 ? screenWidth * 0.9 : screenWidth * 0.95;
+      const pageContainerWidth = screenWidth * 0.9 >= 1800 ? 1800 : screenWidth > 500 ? screenWidth * 0.9 : screenWidth * 0.95;
       
       switch (pageContainerWidth) {
         case pageContainerWidth <= 320 :
