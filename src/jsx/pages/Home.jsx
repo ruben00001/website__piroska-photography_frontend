@@ -1,7 +1,6 @@
 import React from 'react';
 import { Spring, config } from 'react-spring/renderprops';
 import { withRouter } from 'react-router';
-import mainImage from '../../img/Erith.jpg';
 import withLoadingScreen from '../components/withLoadingScreen';
 
 const Home = props => {
@@ -20,11 +19,18 @@ const Home = props => {
         {props => (
           <div style={props} className='home_main-container'>
             <div className='home_image'>
-              <img onLoad={onImagesLoad} src={mainImage} alt=''></img>
+              <img
+                onLoad={onImagesLoad}
+                alt=''
+                src={`https://res.cloudinary.com/dmez60vl2/image/upload/w_${
+                  window.innerWidth > 500
+                    ? Math.round(window.innerWidth * 0.8)
+                    : window.innerWidth
+                },q_auto:best,f_auto/v1580384541/Erith_zinnr7.jpg`}
+              />
               <h1 className='home_title home_title--main'>
                 Piros <br /> Photography
               </h1>
-              {/* <h2 className='home_title home_title--catalogue'>CATALOGUE N&deg;001 </h2> */}
               <h2 className='home_title home_title--locations'>
                 london &nbsp; budapest &nbsp; the world
               </h2>

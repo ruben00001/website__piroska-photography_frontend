@@ -149,7 +149,7 @@ class Stories extends Component {
                 </div>
                 <div className='stories-page_title_sub'>
                   <SpringSlideUp showTitles={animatePage}>
-                    <h2>Humans and the world told through my camera</h2>
+                    <h2>Humans and the world through my camera</h2>
                   </SpringSlideUp>
                 </div>
               </div>
