@@ -196,17 +196,6 @@ class Story extends Component {
             )}
           </Spring>
         </div>
-        {/* {this.state.leavePage &&
-          <Spring
-            from={{ transform: 'translate(100%, 0)' }}
-            to={{ transform: this.state.leavePage ? 'translate(0%, 0)' : 'translate(100%, 0)' }}
-            config={config.slow}
-          >
-            {props =>
-              <div style={props} className='page-transition'></div>
-            }
-          </Spring>
-        } */}
       </div>
     );
   }

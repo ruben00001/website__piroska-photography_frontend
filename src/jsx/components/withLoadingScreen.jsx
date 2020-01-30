@@ -32,15 +32,16 @@ const withLoadingScreen = (WrappedComponent, navPage, navNoLogo) => {
     }
 
     componentWillUnmount() {
-      if(this.state.removeLoadingWidget) {
+      // if(this.state.removeLoadingWidget) {
         this.setState({
           showLoadingReminder: false
         });
         clearInterval(this.showLoadingReminder);
-      }
+        this.showLoadingReminder = 0;
+      // }
     }
 
-    showLoadingReminder;
+    // showLoadingReminder;
 
     onImagesLoad = () => {
       const timeOut = (state, time) => {
@@ -56,12 +57,6 @@ const withLoadingScreen = (WrappedComponent, navPage, navNoLogo) => {
       timeOut('showPage', 3350);
       timeOut('animatePage', 3550);
       timeOut('imageLoading', 3850);
-    }
-
-    writeXX = () => {
-      console.log('====================================');
-      console.log('HELLO');
-      console.log('====================================');
     }
 
 

@@ -25,7 +25,10 @@ export const Images = props => {
     setImgWidth(imgWidth);
   }, []);
 
-
+  const handleZoom = e => {
+    props.passImagesToZoom();
+    props.zoomOnImage(e);
+  }
 
 
   return (
@@ -71,7 +74,8 @@ export const Images = props => {
                     )}`}
                     value={i}
                     alt=''
-                    onClick={props.zoomOnImage}
+                    onClick={e => handleZoom(e)}
+                    // onClick={props.zoomOnImage}
                     onLoad={props.initialLoad ? props.onImageLoad : null}
                   />
                 </div>
