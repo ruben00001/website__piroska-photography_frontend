@@ -66,6 +66,7 @@
   &_title {
     position: absolute;
     font-variant: small-caps;
+    font-weight: 400;
     
     @media (max-width: 600px) {
       color: white;

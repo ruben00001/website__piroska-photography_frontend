@@ -258,7 +258,7 @@ class Gallery extends Component {
               <h1 onClick={this.test} className='gallery-page_title'>
                 Gallery
               </h1>
-              <div
+              {/* <div
                 style={{ overflow: 'hidden' }}
                 className='gallery-page_filter'
               >
@@ -406,7 +406,7 @@ class Gallery extends Component {
                     </div>
                   )}
                 </div>
-              </div>
+              </div> */}
               <Images
                 passImagesToZoom={_ =>
                   this.props.passImagesToZoom(this.state.filteredImages)
